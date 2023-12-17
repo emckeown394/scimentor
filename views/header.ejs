@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/styles.css">
+
+</head>
+<body>
+    
+    <header class="header">
+        <section class="flex">
+
+            <a href="homepage.ejs" class="logo">SciMentor</a>
+    
+            <form action="" method="post" class="search-form">
+                <input type="text" name="search_box" placeholder="search courses...">
+                <button type="submit" class="fas fa-search" name="search_box"></button>
+            </form>
+    
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+
+            <div class="profile">
+                <img src="/images/pic-1.jpg" alt="">
+                <h3>name</h3>
+                <span>student</span>
+                <a href="profile.html" class="btn">view profile</a>
+                <div class="flex-btn">
+                    <a href="login.html" class="option-btn">login</a>
+                    <a href="register.html" class="option-btn">register</a>
+                </div>
+            </div>
+    
+        </section>
+    </header>
+    
+<script src="/script.js"></script>
+</body>
+</html>
