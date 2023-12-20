@@ -30,7 +30,7 @@ db.connect((err)=> {
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname,+ "/public"));
 app.use(session({
-    secret: 'web-dev-2023', 
+    secret: 'sw-dev-2023', 
     resave: false,
     saveUninitialized: true
   }));
@@ -42,6 +42,14 @@ app.get("/", (req,res) => {
     const loggedin = req.session.loggedin || false;
       res.render('homepage', {loggedin});
   });
+
+app.get("/signup", async (req,res) => {
+  res.render('signup');
+});
+
+app.get("/login", async (req,res) => {
+  res.render('login');
+});
 
 
 //server

@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@1&family=Kumbh+Sans:wght@400;700&display=swap');
+
+:root{
+    --main-color:#3c89e7;
+    --red:#e74c3c;
+    --orange:#f39c12;
+    --white:#fff;
+    --black:#2c3e50;
+    --light-color:#888;
+    --light-bg:#eee;
+    --border:.1rem solid rgba(0,0,0,.2);
+
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'ABeeZee', sans-serif;
+    color: var(--black);
+    text-align: center; /* Center text content within the body */
+}
+
+h1 {
+    color: var(--orange);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center; 
+}
+
+.card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.form-label {
+    color: var(--black);
+}
+
+.form-control {
+    margin-bottom: 15px;
+    background-color: var(--light-bg);
+}
+
+/* Input fields */
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border-radius: 8px;
+    border: none;
+    background: #f1f1f1e0;
+  }
+  
+  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    color: black;
+    outline: none;
+  }
+
+/* Buttons*/
+.btn-primary {
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #c6840a; /* Darker Teal on hover */
+}
+
+.ar {
+    margin-top: 15px;
+    color: var(--black)
+}
+
+.login__btn {
+    text-align: center;
+}
+
+.button {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #1565c0; /* Darker Blue on hover */
+}
+
+.privacy-link {
+    color: #2196f3; /* Blue for the link */
+}
+
+.privacy-link:hover {
+    text-decoration: underline;
+}
