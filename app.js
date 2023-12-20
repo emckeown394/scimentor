@@ -39,9 +39,13 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 //homepage
 app.get("/", (req,res) => {
-    const loggedin = req.session.loggedin || false;
-      res.render('homepage', {loggedin});
+      res.render('index');
   });
+
+app.get("/homepage", (req,res) => {
+  const loggedin = req.session.loggedin || false;
+     res.render('homepage', {loggedin});
+});
 
 app.get("/signup", async (req,res) => {
   res.render('signup');

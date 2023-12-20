@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@1&family=Kumbh+Sans:wght@400;700&display=swap');
+
+:root {
+    --main-color: #3c89e7;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --white: #fff;
+    --black: #2c3e50;
+    --light-color: #888;
+    --light-bg: #eee;
+    --border: .1rem solid rgba(0, 0, 0, .2);
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'ABeeZee', sans-serif;
+    color: var(--black);
+    text-align: center;
+    margin: 0;
+}
+
+.index-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.index-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.index-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-button {
+    background-color: var(--orange);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.signup-button:hover {
+    background-color: #c6840a; /* Darker Orange on hover */
+}
+
+.login-button {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.login-button:hover {
+    background-color: #1565c0; /* Darker Blue on hover */
+}
+
+.logo__image img {
+    max-width: auto; 
+    height: 150px;
+}
