@@ -26,6 +26,7 @@
     color: #fff;
 }
 
+/* change scrollbar to blue colour to match theme */
 *::-webkit-scrollbar{
     height: .5rem;
     width: 1rem;
@@ -114,3 +115,81 @@ section{
     gap: 1.5rem;
 }
 
+
+/* homepage */
+
+.heading{
+    font-size: 3.5rem;
+    padding: 1rem;
+}
+
+.sub_name{
+    font-size: 2rem;
+    color: var(--main-color);
+}
+
+.subjects .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.subjects .box-container .box{
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+/* glow on hover */
+.subjects .box-container .box:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+}
+
+.subjects .box-container .box .thumbnail{
+    width: 100%;
+    border-radius: .5rem;
+    height: 55rem;
+    padding: 1rem;
+}
+
+/* Responsiveness for tablet screens (768px) */
+@media (max-width: 768px) {
+    .subjects .box-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .heading {
+        font-size: 2.5rem;
+    }
+
+    .sub_name {
+        font-size: 1.5rem;
+    }
+
+    .subjects .box-container .box {
+        padding: 1.5rem;
+    }
+}
+
+/* Responsiveness for phone screens (450px) */
+@media (max-width: 450px) {
+    .subjects .box-container {
+        grid-template-columns: 1fr;
+    }
+
+    .heading {
+        font-size: 2rem;
+    }
+
+    .sub_name {
+        font-size: 1.2rem;
+    }
+
+    .subjects .box-container .box {
+        padding: 1rem;
+    }
+}

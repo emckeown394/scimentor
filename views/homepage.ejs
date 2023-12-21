@@ -14,11 +14,31 @@
 </head>
 <body>
     <%- include ('header') %>
-    <div>
-        <h1>
-            Homepage
-        </h1>
-    </div>
+    <section class="subjects">
+
+        <h1 class="heading">Subjects</h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <h1 class="sub_name">Biology</h1>
+                <img src="/images/biology.png" class="thumbnail">
+                <a href="topic" class="inline-btn">View Topics</a>
+            </div>
+
+            <div class="box">
+                <h1 class="sub_name">Chemistry</h1>
+                <img src="/images/chemistry.png" class="thumbnail">
+                <a href="topic" class="inline-btn">View Topics</a>
+            </div>
+
+            <div class="box">
+                <h1 class="sub_name">Physics</h1>
+                <img src="/images/physics.png" class="thumbnail">
+                <a href="topic" class="inline-btn">View Topics</a>
+            </div>
+        </div>
+    </section>
     <%- include ('footer') %>
 </body>
 </html>
