@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/styles.css">
+   <link rel="stylesheet" href="/public/topics.css">
+   
+</head>
+<body>
+    <%- include ('header') %>
+    <section class="topics">
+
+        <h1 class="heading">All Topics</h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <h1 class="top_name">Living things and their habitats - habitats and food chains</h1>
+                <img src="" class="thumbnail">
+                <a href="topic" class="inline-btn">Learn</a>
+            </div>
+
+            <div class="box">
+                <h1 class="top_name">Plants - functions of parts and life cycles</h1>
+                <img src="" class="thumbnail">
+                <a href="topic" class="inline-btn">Learn</a>
+            </div>
+
+            <div class="box">
+                <h1 class="top_name">Animals including humans - teeth, eating and digestion</h1>
+                <img src="" class="thumbnail">
+                <a href="topic" class="inline-btn">Learn</a>
+            </div>
+        </div>
+    </section>
+    <%- include ('footer') %>
+</body>
+</html>

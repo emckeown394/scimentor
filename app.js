@@ -37,20 +37,44 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true}));
 
 
-//homepage
+//index page
 app.get("/", (req,res) => {
       res.render('index');
   });
 
-app.get("/homepage", (req,res) => {
-  const loggedin = req.session.loggedin || false;
-     res.render('homepage', {loggedin});
+//homepage
+// app.get("/homepage", (req,res) => {
+//   const loggedin = req.session.loggedin || false;
+//      res.render('homepage', {loggedin});
+// });
+
+app.get("/homepage", (req, res) => {
+  let readsql = "SELECT id, name, image FROM subjects";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let rowdata = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('homepage', { title: 'Homepage', rowdata, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load homepage');
+    }
+  });
 });
 
+// topics
+app.get("/topics", (req,res) => {
+  const loggedin = req.session.loggedin || false;
+     res.render('topics', {loggedin});
+});
+
+//signup
 app.get("/signup", async (req,res) => {
   res.render('signup');
 });
 
+//login
 app.get("/login", async (req,res) => {
   res.render('login');
 });
