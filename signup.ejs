@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/signup.css">
+   <link rel="stylesheet" href="/public/header_footer.css">
+
+
+</head>
+<body>
+    <h1>SIGNUP</h1>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <form action="/signup" method="POST">
+                <div class="mb-3">
+                    <label for="name-reg" class="form-label">name <span>*</span></label>
+                    <input type="text" class="form-control" id="name-reg" name="name" required>                        
+                </div>
+                <div class="mb-3">
+                    <label for="email-reg" class="form-label">email <span>*</span></label>
+                    <input type="email" class="form-control" id="email-reg" name="email" required>                        
+                </div>
+                <div class="mb-3">
+                    <label for="password-reg" class="form-label">password <span>*</span></label>
+                    <input type="password" class="form-control" id="password-reg" name="password" required>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="password-reg" class="form-label">confirm password <span>*</span></label>
+                    <input type="password" class="form-control" id="conf-password-reg" name="password" required>
+                </div> -->
+                <div class="mb-3">
+                    <p>select profile image <span>*</span></p>
+                    <input type="file" accept="image/*" id="img-reg" name="image" required>                        
+                </div>
+                <div>
+                    <p>By creating an account you agree to our <a href="/privacy" class="privacy-link">Terms & Privacy</a>.</p>
+                </div>
+                <button type="submit" class="btn btn-primary">SIGNUP</button>
+            </form>
+
+            <p class="ar">Already registered?</p>
+            <div class="login__btn"> <a href="/login" class="button">LOGIN</a></div>
+        </div>
+    </div>
+</div>
+
+<script src="/app.js"></script>
+
+<%- include ('footer') %>
+</body>
+</html>
