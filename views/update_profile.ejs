@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/signup.css">
+   <link rel="stylesheet" href="/public/header_footer.css">
+</head>
+<body>
+    <%- include ('header') %>
+
+    <h1 class="heading">Update Profile</h1>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="/update-profile" method="POST">
+                    <div class="mb-3">
+                        <label for="name-upd" class="form-label">your name</label>
+                        <input type="text" class="form-control" id="name-upd" name="name" placeholder="enter your name">                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="email-upd" class="form-label">your email</label>
+                        <input type="email" class="form-control" id="email-upd" name="email" placeholder="enter your email">                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-upd" class="form-label">new password</label>
+                        <input type="password" class="form-control" id="password-upd" name="password" placeholder="enter your new password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-upd" class="form-label">confirm password</label>
+                        <input type="password" class="form-control" id="password-upd" name="password" placeholder="confirm your new password">
+                    </div>
+                    <div class="mb-3">
+                        <p>change profile image</p>
+                        <input type="file" accept="image/*" id="img-upd" name="image">                        
+                    </div>
+                    <div>
+                        <p>Are you sure your new details are correct?</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+</body>
+</html>

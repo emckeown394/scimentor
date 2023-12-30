@@ -20,24 +20,18 @@
         <h1 class="heading">All Topics</h1>
 
         <div class="box-container">
-
-            <div class="box">
-                <h1 class="top_name">Living things and their habitats - habitats and food chains</h1>
-                <img src="" class="thumbnail">
-                <a href="topic" class="inline-btn">Learn</a>
-            </div>
-
-            <div class="box">
-                <h1 class="top_name">Plants - functions of parts and life cycles</h1>
-                <img src="" class="thumbnail">
-                <a href="topic" class="inline-btn">Learn</a>
-            </div>
-
-            <div class="box">
-                <h1 class="top_name">Animals including humans - teeth, eating and digestion</h1>
-                <img src="" class="thumbnail">
-                <a href="topic" class="inline-btn">Learn</a>
-            </div>
+            <% topicData.forEach((topics) => { %>
+                <div class="box-container" data-topics-id="<%= topics.id %>">
+                    <div class="box">
+                        <h1 class="top_name"><%= topics.name %></h1>
+                        <h1 class="sub_type"><%= topics.subject_type %></h1>
+                        <img src="<%= topics.image %>" class="thumbnail">
+                        <div>
+                            <a href="/topics/<%= topics.id %>" class="inline-btn">Learn</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
         </div>
     </section>
     <%- include ('footer') %>

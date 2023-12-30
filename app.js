@@ -42,12 +42,6 @@ app.get("/", (req,res) => {
       res.render('index');
   });
 
-//homepage
-// app.get("/homepage", (req,res) => {
-//   const loggedin = req.session.loggedin || false;
-//      res.render('homepage', {loggedin});
-// });
-
 app.get("/homepage", (req, res) => {
   let readsql = "SELECT id, name, image FROM subjects";
   connection.query(readsql, (err, rows) => {
@@ -64,9 +58,29 @@ app.get("/homepage", (req, res) => {
 });
 
 // topics
-app.get("/topics", (req,res) => {
-  const loggedin = req.session.loggedin || false;
-     res.render('topics', {loggedin});
+app.get("/topics", (req, res) => {
+  let readsql = "SELECT id, name, subject_type, image FROM topics";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('topics', { title: 'Topics', topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//profile page
+app.get("/profile", (req,res) => {
+  res.render('profile');
+});
+
+//update profile page
+app.get("/update_profile", (req,res) => {
+  res.render('update_profile');
 });
 
 //signup

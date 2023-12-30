@@ -19,35 +19,16 @@
         <h1 class="heading">Subjects</h1>
 
         <div class="box-container">
-
-            <div class="box">
-                <h1 class="sub_name">Biology</h1>
-                <img src="/images/biology.png" class="thumbnail">
-                <a href="topics" class="inline-btn">View Topics</a>
-            </div>
-
-            <div class="box">
-                <h1 class="sub_name">Chemistry</h1>
-                <img src="/images/chemistry.png" class="thumbnail">
-                <a href="topics" class="inline-btn">View Topics</a>
-            </div>
-
-            <div class="box">
-                <h1 class="sub_name">Physics</h1>
-                <img src="/images/physics.png" class="thumbnail">
-                <a href="topics" class="inline-btn">View Topics</a>
-            </div>
-        </div>
-
-        <% rowdata.forEach((subjects) => { %>
-            <div class="box-container" data-subjects-id="<%= subjects.id %>">
-                <div class="box">
-                    <h1 class="sub_name"><%= subjects.name %></h1>
-                    <img src="<%= subjects.image %>" class="thumbnail">
-                    <a href="topics" class="inline-btn">View Topics</a>
+            <% rowdata.forEach((subjects) => { %>
+                <div class="box-container" data-subjects-id="<%= subjects.id %>">
+                    <div class="box">
+                        <h1 class="sub_name"><%= subjects.name %></h1>
+                        <img src="<%= subjects.image %>" class="thumbnail">
+                        <a href="topics" class="inline-btn">View Topics</a>
+                    </div>
                 </div>
-            </div>
-        <% }) %>
+            <% }) %>
+        </div>
     </section>
     <%- include ('footer') %>
 </body>

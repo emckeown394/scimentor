@@ -23,6 +23,10 @@ h1 {
     color: var(--orange);
 }
 
+span{
+    color: var(--red);
+}
+
 .container {
     display: flex;
     flex-direction: column;
