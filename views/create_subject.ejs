@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Subject</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/signup.css">
+   <link rel="stylesheet" href="/public/header_footer.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <h1>CREATE SUBJECT</h1>
+
+    <div class="container mt-4">
+        <div class="card">               
+            <div class="card-body">
+                <form action="create_subject" method="POST">
+                    <div class="mb-3">
+                        <label for="sub-name" class="form-label">subject name</label>
+                        <input type="text" class="form-control" id="sub-name" name="sub-name" required>                         
+                    </div>
+                    <div class="mb-3">
+                        <label for="sub-img" class="form-label">url for subject image</label>
+                        <input type="text" class="form-control" id="sub-img" name="sub-img" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <%- include ('footer') %>

@@ -1,0 +1,13 @@
+.logo__container {
+    background-color: var(--white); 
+    color: #fff; 
+    padding: 1rem; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: auto;
+    max-height: 100px;
+}

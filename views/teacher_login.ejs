@@ -14,7 +14,9 @@
 
 </head>
 <body>
-    <h1>LOGIN</h1>
+    <%- include ('logo_top') %>
+
+    <h1>TEACHER LOGIN</h1>
 
     <% if (locals.error) { %>
         <p class="err_msg"><%= locals.error %></p>
@@ -33,7 +35,7 @@
                         <input type="password" class="form-control" id="password-reg" name="password" required>
                     </div>
                     <div>
-                        <a><input type="checkbox" onclick="myFunction()" style="margin-bottom: 15px" style="color: #f1f1f1;"> Show Password</a>
+                        <a><input type="checkbox" onclick="togglePasswordVisibility()" style="margin-bottom: 15px" style="color: #f1f1f1;"> Show Password</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
@@ -43,5 +45,18 @@
 
     <!-- footer -->
     <%- include ('footer') %>
+
+    <!-- js to toggle password visability -->
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("password-reg");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Homepage</title>
+    <title>Teacher Homepage</title>
 
     <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -25,11 +25,15 @@
                         <h1 class="sub_name"><%= subjects.name %></h1>
                         <img src="<%= subjects.image %>" class="thumbnail">
                         <a href="topics" class="inline-btn">View Topics</a>
+                        <a href="" class="delete-btn">Delete Subject</a>
                     </div>
                 </div>
             <% }) %>
         </div>
     </section>
+    <div class="create">
+        <a href="/create_subject" class="create-btn">Create Subject</a>
+    </div>
     <%- include ('footer') %>
 </body>
 </html>

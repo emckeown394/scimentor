@@ -46,6 +46,12 @@ app.get("/", (req,res) => {
       res.render('index');
   });
 
+//logo top
+app.get("/logo_top", (req,res) => {
+  res.render('logo_top');
+});
+
+//student homepage
 app.get("/homepage", (req, res) => {
   let readsql = "SELECT id, name, image FROM subjects";
   connection.query(readsql, (err, rows) => {
@@ -53,10 +59,26 @@ app.get("/homepage", (req, res) => {
       if (err) throw err;
       let rowdata = rows;
       let loggedIn = req.session.loggedin;
-      res.render('homepage', { title: 'Homepage', rowdata, loggedIn });
+      res.render('homepage', { title: 'Student Homepage', rowdata, loggedIn });
     } catch (err) {
       console.error(err);
-      res.status(500).send('Failed to load homepage');
+      res.status(500).send('Failed to load student homepage');
+    }
+  });
+});
+
+//teacher homepage
+app.get("/teacher_homepage", (req, res) => {
+  let readsql = "SELECT id, name, image FROM subjects";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let rowdata = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('teacher_homepage', { title: 'Teacher Homepage', rowdata, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load teacher homepage');
     }
   });
 });
@@ -293,10 +315,33 @@ app.post('/teacher_login', function(req,res) {
   }
 });
 
+//create subject
+app.get("/create_subject", async (req,res) => {
+  res.render('create_subject');
+});
+
+//adding teacher signup credentials to database
+app.post('/teachers_signup', (req, res) => {
+  const { sub_name, sub_img } = req.body;
+
+  db.query(
+    `INSERT INTO subjects (name, image) VALUES (?, ?)`,
+    [sub_name, sub_img],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('An error occurred during subject creation.');
+      } else {
+        res.redirect('/teacher_homepage');
+      }
+    }
+  );
+});
+
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('connect.sid');
-  res.redirect('/');
+  res.redirect('index');
 });
 
 

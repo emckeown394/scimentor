@@ -57,11 +57,8 @@ section{
 }
 
 .btn,
-.option-btn,
 .delete-btn,
-.inline-btn,
-.inline-option-btn,
-.inline-delete-btn{
+.inline-btn{
     border-radius: .5rem;
     padding: 1rem 3rem;
     font-size: 1.8rem;
@@ -72,17 +69,14 @@ section{
     margin-bottom: .5rem;
 }
 
-.btn,
-.option-btn,
+.btn
 .delete-btn{
     display: block;
     width: 100%;
 
 }
 
-.inline-btn,
-.inline-option-btn,
-.inline-delete-btn{
+.inline-btn{
     display: inline-block;
 }
 
@@ -91,22 +85,13 @@ section{
     background-color: var(--main-color);
 }
 
-.option-btn,
-.inline-option-btn{
-    background-color: var(--orange);
-}
-
-.delete-btn,
-.inline-delete-btn{
+.delete-btn{
     background-color: var(--red);
 }
 
 .btn:hover,
-.option-btn:hover,
 .delete-btn:hover,
-.inline-btn:hover,
-.inline-option-btn:hover,
-.inline-delete-btn:hover{
+.inline-btn:hover{
     background-color: var(--black);
     color: var(--white);
 }
@@ -116,6 +101,25 @@ section{
     gap: 1.5rem;
 }
 
+.create-btn{
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    padding: 1rem 3rem;
+    font-size: 1.8rem;
+    color: var(--white);
+    text-transform: capitalize;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: .5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-btn:hover{
+    background-color: var(--black);
+    color: var(--white);
+}
+
 
 /* homepage */
 
@@ -123,6 +127,13 @@ section{
     font-size: 3.5rem;
     padding: 2rem;
     text-align: center;
+}
+
+.create {
+    text-align: center;
+    justify-content: center;
+    padding: 2rem;
+    margin-bottom: .5rem;
 }
 
 .sub_name{

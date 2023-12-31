@@ -15,7 +15,11 @@
 
 </head>
 <body>
-    <h1>SIGNUP</h1>
+    <%- include ('logo_top') %>
+
+    <h1>STUDENT SIGNUP</h1>
+
+    <p>Ask a parent or guardian for help signing up</p>
 
     <% if (locals.error) { %>
         <p class="err_msg"><%= locals.error %></p>
