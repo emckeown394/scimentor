@@ -4,6 +4,7 @@
     --main-color:#3c89e7;
     --red:#e74c3c;
     --orange:#f39c12;
+    --green:#3cd951;
     --white:#fff;
     --black:#2c3e50;
     --light-color:#888;
@@ -16,7 +17,7 @@ body {
     background-color: var(--light-bg);
     font-family: 'ABeeZee', sans-serif;
     color: var(--black);
-    text-align: center; /* Center text content within the body */
+    text-align: center; 
 }
 
 h1 {
@@ -81,7 +82,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .btn-primary:hover {
-    background-color: #c6840a; /* Darker Teal on hover */
+    background-color: #c6840a; 
 }
 
 .ar {
@@ -103,13 +104,19 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .button:hover {
-    background-color: #1565c0; /* Darker Blue on hover */
+    background-color: #1565c0; 
 }
 
 .privacy-link {
-    color: #2196f3; /* Blue for the link */
+    color: #2196f3; 
 }
 
 .privacy-link:hover {
     text-decoration: underline;
+}
+
+.err_msg {
+    font-size: 1rem;
+    padding: .5rem;
+    color: var(--red);
 }

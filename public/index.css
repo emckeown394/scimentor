@@ -4,6 +4,7 @@
     --main-color: #3c89e7;
     --red: #e74c3c;
     --orange: #f39c12;
+    --green:#3cd951;
     --white: #fff;
     --black: #2c3e50;
     --light-color: #888;
@@ -64,6 +65,19 @@ body {
 
 .login-button:hover {
     background-color: #1565c0; /* Darker Blue on hover */
+}
+
+.t-login-button {
+    background-color: var(--green);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.t-login-button:hover {
+    background-color: #34b345; 
 }
 
 .logo__image img {

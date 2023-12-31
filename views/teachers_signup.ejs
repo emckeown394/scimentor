@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Teachers Signup</title>
 
     <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -17,14 +17,16 @@
 <body>
     <h1>SIGNUP</h1>
 
-    <% if (locals.error) { %>
-        <p class="err_msg"><%= locals.error %></p>
+    <% if (messages.error) { %>
+        <div class="err_msg">
+          <%= messages.error %>
+        </div>
       <% } %>
 
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
-            <form action="/signup" method="POST">
+            <form action="/teachers_signup" method="POST">
                 <div class="mb-3">
                     <label for="name-reg" class="form-label">name <span>*</span></label>
                     <input type="text" class="form-control" id="name-reg" name="name" required>                        
@@ -37,10 +39,6 @@
                     <label for="password-reg" class="form-label">password <span>*</span></label>
                     <input type="password" class="form-control" id="password-reg" name="password" required>
                 </div>
-                <div class="mb-3">
-                    <p>select profile image <span>*</span></p>
-                    <input type="file" accept="image/*" id="img-reg" name="image" required>                        
-                </div>
                 <div>
                     <p>By creating an account you agree to our <a href="/privacy" class="privacy-link">Terms & Privacy</a>.</p>
                 </div>
@@ -48,7 +46,7 @@
             </form>
 
             <p class="ar">Already registered?</p>
-            <div class="login__btn"> <a href="/login" class="button">LOGIN</a></div>
+            <div class="login__btn"> <a href="/teacher_login" class="button">LOGIN</a></div>
         </div>
     </div>
 </div>
