@@ -99,6 +99,22 @@ app.get("/topics", (req, res) => {
   });
 });
 
+//teacher topics
+app.get("/teacher_topics", (req, res) => {
+  let readsql = "SELECT id, name, subject_type, image FROM topics";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('teacher_topics', { title: 'Teacher Topics', topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
 //profile page
 app.get("/profile", (req,res) => {
   res.render('profile');
@@ -175,6 +191,7 @@ app.get("/login", async (req,res) => {
   res.render('login');
 });
 
+//retrieving login credentials to database
 app.post('/login', function(req,res) {
   let email = req.body.email;
   let password = req.body.password;
@@ -279,6 +296,7 @@ app.get("/teacher_login", async (req,res) => {
   res.render('teacher_login');
 });
 
+//retrieving teacher credentials from database
 app.post('/teacher_login', function(req,res) {
   let email = req.body.email;
   let password = req.body.password;
@@ -320,8 +338,8 @@ app.get("/create_subject", async (req,res) => {
   res.render('create_subject');
 });
 
-//adding teacher signup credentials to database
-app.post('/teachers_signup', (req, res) => {
+//adding subject info to database
+app.post('/create_subject', (req, res) => {
   const { sub_name, sub_img } = req.body;
 
   db.query(
@@ -338,12 +356,40 @@ app.post('/teachers_signup', (req, res) => {
   );
 });
 
+//create topic
+app.get("/create_topic", async (req,res) => {
+  res.render('create_topic');
+});
+
+//adding topic info to database
+app.post('/create_topic', (req, res) => {
+  const { top_name, sub_name, sub_img } = req.body;
+
+  db.query(
+    `INSERT INTO topics (name, subject_type, image) VALUES (?, ?, ?)`,
+    [top_name, sub_name, sub_img],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('An error occurred during topic creation.');
+      } else {
+        res.redirect('/teacher_topics');
+      }
+    }
+  );
+});
+
+//quiz
+app.get("/quiz", async (req,res) => {
+  res.render('quiz');
+});
+
+//logout
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('connect.sid');
   res.redirect('index');
 });
-
 
 //server
 app.listen(process.env.PORT || 3000);

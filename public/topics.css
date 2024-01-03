@@ -69,6 +69,25 @@ body {
     background-color: #1a4f9c;
 }
 
+.create-btn{
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    padding: 1rem 3rem;
+    font-size: 1.8rem;
+    color: var(--white);
+    text-transform: capitalize;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: .5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-btn:hover{
+    background-color: var(--black);
+    color: var(--white);
+}
+
 /* Name and type styling */
 .top_name {
     font-size: 1.5rem;

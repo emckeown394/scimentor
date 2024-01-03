@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/styles.css">
+   <link rel="stylesheet" href="/public/topics.css">
+   
+</head>
+<body>
+    <%- include ('teacher_header') %>
+    <section class="topics">
+
+        <h1 class="heading">All Topics</h1>
+
+        <div class="box-container">
+            <% topicData.forEach((topics) => { %>
+                <div class="box-container" data-topics-id="<%= topics.id %>">
+                    <div class="box">
+                        <h1 class="top_name"><%= topics.name %></h1>
+                        <h1 class="sub_type"><%= topics.subject_type %></h1>
+                        <img src="<%= topics.image %>" class="thumbnail">
+                        <div>
+                            <a href="/topics/<%= topics.id %>" class="inline-btn">Learn</a>
+                            <a href="" class="delete-btn">Delete Topic</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <div class="create">
+        <a href="/create_topic" class="create-btn">Create Topic</a>
+    </div>
+    <%- include ('footer') %>
+</body>
+</html>

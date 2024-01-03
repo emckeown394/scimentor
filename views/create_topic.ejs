@@ -16,25 +16,23 @@
 <body>
     <%- include ('teacher_header') %>
 
-    <h1>CREATE SUBJECT</h1>
-
-    <!-- <% if (messages.error) { %>
-        <div class="err_msg">
-          <%= messages.error %>
-        </div>
-      <% } %> -->
+    <h1>CREATE TOPIC</h1>
 
     <div class="container mt-4">
         <div class="card">               
             <div class="card-body">
-                <form action="create_subject" method="POST">
+                <form action="create_topic" method="POST">
+                    <div class="mb-3">
+                        <label for="top-name" class="form-label">topic name</label>
+                        <input type="text" class="form-control" id="top-name" name="top-name" required>                         
+                    </div>
                     <div class="mb-3">
                         <label for="sub-name" class="form-label">subject name</label>
                         <input type="text" class="form-control" id="sub-name" name="sub-name" required>                         
                     </div>
                     <div class="mb-3">
-                        <label for="sub-img" class="form-label">url for subject image</label>
-                        <input type="text" class="form-control" id="sub-img" name="sub-img" required>
+                        <label for="top-img" class="form-label">url for topic image</label>
+                        <input type="text" class="form-control" id="top-img" name="top-img" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form>
