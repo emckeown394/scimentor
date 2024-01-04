@@ -25,6 +25,9 @@ db.connect((err)=> {
     if(err) throw err;
 });
 
+//server
+app.listen(process.env.PORT || 3000);
+console.log(" Server is listening on //localhost:3000/ ");
 
 
 //middleware
@@ -379,6 +382,43 @@ app.post('/create_topic', (req, res) => {
   );
 });
 
+//delete subject
+app.delete('/delete_subject/:id', (req, res) => {
+  const subjectId = req.params.id;
+
+  db.query(
+      'DELETE FROM subjects WHERE id = ?',
+      [subjectId],
+      (err, result) => {
+          if (err) {
+              console.error(err);
+              res.status(500).json({ message: 'Error deleting subject' });
+          } else {
+              res.json({ message: 'Subject deleted successfully' });
+          }
+      }
+  );
+});
+
+// delete topic
+app.delete('/delete_topic/:id', (req, res) => {
+  const topicId = req.params.id;
+
+  db.query(
+      'DELETE FROM topics WHERE id = ?',
+      [topicId],
+      (err, result) => {
+          if (err) {
+              console.error(err);
+              res.status(500).json({ message: 'Error deleting topic' });
+          } else {
+              res.json({ message: 'Topic deleted successfully' });
+          }
+      }
+  );
+});
+
+
 //quiz
 app.get("/quiz", async (req,res) => {
   res.render('quiz');
@@ -390,7 +430,3 @@ app.get('/logout', (req, res) => {
   res.clearCookie('connect.sid');
   res.redirect('index');
 });
-
-//server
-app.listen(process.env.PORT || 3000);
-console.log(" Server is listening on //localhost:3000/ ");

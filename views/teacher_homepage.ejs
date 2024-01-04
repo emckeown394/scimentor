@@ -15,18 +15,14 @@
 <body>
     <%- include ('teacher_header') %>
     <section class="subjects">
-
         <h1 class="heading">Subjects</h1>
-
         <div class="box-container">
             <% rowdata.forEach((subjects) => { %>
-                <div class="box-container" data-subjects-id="<%= subjects.id %>">
-                    <div class="box">
-                        <h1 class="sub_name"><%= subjects.name %></h1>
-                        <img src="<%= subjects.image %>" class="thumbnail">
-                        <a href="topics" class="inline-btn">View Topics</a>
-                        <a href="" class="delete-btn">Delete Subject</a>
-                    </div>
+                <div class="box" data-subjects-id="<%= subjects.id %>">
+                    <h1 class="sub_name"><%= subjects.name %></h1>
+                    <img src="<%= subjects.image %>" class="thumbnail">
+                    <a href="topics" class="inline-btn">View Topics</a>
+                    <a href="" class="delete-btn" data-subject-id="<%= subjects.id %>">Delete Subject</a>
                 </div>
             <% }) %>
         </div>
@@ -35,5 +31,43 @@
         <a href="/create_subject" class="create-btn">Create Subject</a>
     </div>
     <%- include ('footer') %>
+
+    <!-- js to delete subject -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+    
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const subjectId = this.getAttribute('data-subject-id');
+    
+                    // Confirm deletion with the user
+                    const confirmation = confirm('Are you sure you want to delete this subject?');
+    
+                    if (confirmation) {
+                        // Send a request to the server to delete the subject
+                        fetch(`/delete_subject/${subjectId}`, {
+                            method: 'DELETE',
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Subject deleted:', data);
+                            this.closest('.box').remove();
+                            window.alert('Subject deleted successfully!');
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            window.alert('Error deleting the subject. Please try again.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

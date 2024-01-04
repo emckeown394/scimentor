@@ -28,7 +28,7 @@
                         <img src="<%= topics.image %>" class="thumbnail">
                         <div>
                             <a href="/topics/<%= topics.id %>" class="inline-btn">Learn</a>
-                            <a href="" class="delete-btn">Delete Topic</a>
+                            <a href="" class="delete-btn" data-topics-id="<%= topics.id %>">Delete Topic</a>
                         </div>
                     </div>
                 </div>
@@ -39,5 +39,44 @@
         <a href="/create_topic" class="create-btn">Create Topic</a>
     </div>
     <%- include ('footer') %>
+
+    <!-- js to delete topic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+    
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const topicId = this.getAttribute('data-topics-id');
+                    
+                    // Confirm deletion with the user
+                    const confirmation = confirm('Are you sure you want to delete this topic?');
+    
+                    if (confirmation) {
+                        // Send a request to the server to delete the topic
+                        fetch(`/delete_topic/${topicId}`, {
+                            method: 'DELETE',
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Topic deleted:', data);
+                            this.closest('.box').remove();
+                            window.alert('Topic deleted successfully!');
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            window.alert('Error deleting the topic. Please try again.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    
 </body>
 </html>
