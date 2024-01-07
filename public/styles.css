@@ -58,7 +58,8 @@ section{
 
 .btn,
 .delete-btn,
-.inline-btn{
+.inline-btn,
+.quiz-btn{
     border-radius: .5rem;
     padding: 1rem 3rem;
     font-size: 1.8rem;
@@ -70,8 +71,9 @@ section{
 }
 
 .btn
-.delete-btn{
-    display: block;
+.delete-btn
+.quiz-btn{
+    display: inline-block;
     width: 100%;
 
 }
@@ -89,9 +91,14 @@ section{
     background-color: var(--red);
 }
 
+.quiz-btn{
+    background-color: var(--orange);
+}
+
 .btn:hover,
 .delete-btn:hover,
-.inline-btn:hover{
+.inline-btn:hover,
+.quiz-btn:hover{
     background-color: var(--black);
     color: var(--white);
 }
@@ -137,7 +144,7 @@ section{
 }
 
 .sub_name{
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--main-color);
 }
 

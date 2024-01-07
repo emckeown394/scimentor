@@ -21,11 +21,14 @@
                 <div class="box" data-subjects-id="<%= subjects.id %>">
                     <h1 class="sub_name"><%= subjects.name %></h1>
                     <img src="<%= subjects.image %>" class="thumbnail">
-                    <a href="topics" class="inline-btn">View Topics</a>
+                    <a href="/topic/<%= subjects.id %>" class="inline-btn">View Topics</a>
+                    <a href="quiz" class="quiz-btn">Take Quiz</a>
                 </div>
             <% }) %>
         </div>
     </section>
     <%- include ('footer') %>
+    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

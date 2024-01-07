@@ -1,3 +1,7 @@
+.profile{
+    min-height: 75vh;
+}
+
 .profile .details{
     background-color: var(--white);
     border-radius: .5rem;
@@ -18,12 +22,12 @@
 }
 
 .profile .details .user h3{
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: .5rem 0;
 }
 
 .profile .details .user p{
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--light-color);
 }
 
@@ -46,4 +50,9 @@
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 1rem;
+}
+
+.flex h3{
+    font-size: 2rem;
+    margin: .5rem 0;
 }

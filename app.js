@@ -46,8 +46,13 @@ app.use(flash());
 
 //index page
 app.get("/", (req,res) => {
-      res.render('index');
-  });
+  res.render('index');
+});
+
+//header
+app.get("/header", (req, res) => {
+  res.render("header");
+});
 
 //logo top
 app.get("/logo_top", (req,res) => {
@@ -86,7 +91,7 @@ app.get("/teacher_homepage", (req, res) => {
   });
 });
 
-// topics
+//all topics
 app.get("/topics", (req, res) => {
   let readsql = "SELECT id, name, subject_type, image FROM topics";
   connection.query(readsql, (err, rows) => {
@@ -98,6 +103,57 @@ app.get("/topics", (req, res) => {
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//biology topics
+app.get('/topic/:subjectId', (req, res) => {
+  const subjectId = req.params.subjectId;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'biology'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('biology_topics', { title: 'Biology Topics', subjectId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load biology topics page');
+    }
+  });
+});
+
+//chemistry topics
+app.get('/topic/:subjectId', (req, res) => {
+  const subjectId = req.params.subject_id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'chemistry'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('chemistry_topics', { title: 'Chemistry Topics', subjectId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load chemistry topics page');
+    }
+  });
+});
+
+//physics topics
+app.get("/physics_topics", (req, res) => {
+  const subjectId = req.params.subject_id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'physics'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('physics_topics', { title: 'Physics Topics', subjectId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load physics topics page');
     }
   });
 });
@@ -119,8 +175,9 @@ app.get("/teacher_topics", (req, res) => {
 });
 
 //profile page
-app.get("/profile", (req,res) => {
-  res.render('profile');
+app.get("/profile", (req, res) => {
+  const userName = req.session.user ? req.session.user.name : "Guest";
+  res.render("profile", { name: userName });
 });
 
 //update profile page
@@ -195,7 +252,7 @@ app.get("/login", async (req,res) => {
 });
 
 //retrieving login credentials to database
-app.post('/login', function(req,res) {
+app.post('/login', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
@@ -203,30 +260,41 @@ app.post('/login', function(req,res) {
     connection.query(
       'SELECT * FROM students WHERE email = ?',
       [email],
-      function(error, rows, fields) {
+      function (error, rows, fields) {
         if (error) throw error;
         let numrows = rows.length;
 
         if (numrows > 0) {
           const storedPassword = rows[0].password;
-          bcrypt.compare(password, storedPassword, function(err, result) {
+          const userName = rows[0].name;
+          const userEmail = rows[0].email;
+          const userImg = rows[0].image;
+
+          bcrypt.compare(password, storedPassword, function (err, result) {
             if (err) throw err;
 
             if (result) {
+              // Store user information in the session
               req.session.loggedin = true;
               req.session.email = email;
               req.session.student_id = rows[0].id;
+              req.session.user = {
+                name: userName,
+                email: userEmail,
+                image: userImg,
+              };
+
               res.redirect('/homepage');
-            }else{
-              return res.render('login', {error: 'Invalid email or password. Please try again'});
+            } else {
+              return res.render('login', { error: 'Invalid email or password. Please try again' });
             }
           });
-        }else{
-          return res.render('login', {error: 'Invalid email or password. Please try again'});
+        } else {
+          return res.render('login', { error: 'Invalid email or password. Please try again' });
         }
       }
     );
-  }else{
+  } else {
     res.send('Enter Email and Password');
   }
 });
@@ -428,5 +496,5 @@ app.get("/quiz", async (req,res) => {
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('connect.sid');
-  res.redirect('index');
+  res.redirect('/');
 });

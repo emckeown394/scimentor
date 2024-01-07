@@ -1,5 +1,5 @@
 //header animations
-let profile = document.querySelector('.header .flex .profile');
+let profile = document.querySelector('.header .flex .prof');
 
 document.querySelector('#user-btn').onclick = () =>{
     profile.classList.toggle('active');
@@ -11,38 +11,17 @@ window.onscroll = () =>{
     searchForm.classList.remove('active');
 }
 
-//quiz
-// db connection
-// const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'scimentor',
-//     port: '3306'
-// });
+//view topics button
+const viewTopicsButtons = document.querySelectorAll('.inline-btn');
 
-// db.connect((err)=> {
-//     if(err) throw err;
-// });
-  
-//   // Define an API endpoint to get questions
-//   app.get('/api/questions', (req, res) => {
-//     const query = 'SELECT * FROM questions';
-  
-//     pool.query(query, (error, results) => {
-//       if (error) {
-//         console.error('Error fetching questions:', error);
-//         res.status(500).send('Internal Server Error');
-//       } else {
-//         res.json(results);
-//       }
-//     });
-//   });
+viewTopicsButtons.forEach(button => {
+  button.addEventListener('click', function () {
+    const subjectId = this.getAttribute('data-subjects-id');
+    window.location.href = `/topic/${subjectId}`;
+  });
+});
 
-//   //server
-//   app.listen(process.env.PORT || 3000);
-//   console.log(" Server is listening on //localhost:3000/ ");
-
+// quiz
 const questions = [
     {
         question: "Question example?",

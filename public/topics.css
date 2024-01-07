@@ -90,12 +90,12 @@ body {
 
 /* Name and type styling */
 .top_name {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--main-color);
 }
 
 .sub_type {
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: 1rem;
     color: #555;
 }
