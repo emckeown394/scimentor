@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cells</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Overview</a></li>
+                    <li><a href="#section2">What are cells?</a></li>
+                    <li><a href="#section3">What makes up an animal cell?</a></li>
+                    <li><a href="#section4">What makes up a plant cell?</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Animal and Plant Cells</h1>
+                <section id="section1">
+                    <p>• Cells are the smallest unit of life and the building blocks for all organisms.</p>
+                    <p>• Each component of a cell has its own function</p>
+                    <p>• Nucleus, cell membrane, cytoplasm and mitochondria are four cell components that are found in both animal and plant cells.</p>
+                </section>
+                <section id="section2">
+                    <h2>What are cells?</h2>
+                    <p>All life on Earth is made from cells. Without cells, there can be no life.
+    
+                        Almost all cells are so small that you need a 
+                        microscope to see them. Some organisms, like 
+                        bacteria are made of only one cell. These are unicellular 
+                        organisms. Others, like trees and blue whales, are made from 
+                        millions or even billions of cells. These are multicellular organisms.
+                        These often have different types of cells, each with a different function. 
+                        These are specialised cells.</p>
+                </section>
+                <section id="section3">
+                    <h2>What makes up an animal cell?</h2>
+                    <p>Each component in the animal cell has a particular function. Animal cells often have an irregular shape.</p>
+                    <img src="/images/animal_cell.png" class="top_img">
+                    <p>The four key components of most animal cells are:</p>
+                    <p><span class="bold">• Nucleus</span> - this contains the genetic material (DNA) of the organism and controls the cell’s activities.</p>
+                    <p><span class="bold">• Cytoplasm</span> - the liquid that makes up most of the cell in which chemical reactions happen. This is mainly water.</p>
+                    <p><span class="bold">• Cell Membrane</span> - a flexible outer layer that surrounds the cell and controls which substances can pass into and out from it.</p>
+                    <p><span class="bold">• Mitochondria</span> - tiny parts of cells floating in the cytoplasm where energy is released from glucose from food. The mitochondria, 
+                        found in the cell cytoplasm, are where most respiration happens.</p>
+                    <div class="question">
+                        What part of the cell is the flexible outer layer that surrounds the cell and controls which substances can pass into and out from it?
+                    </div>
+                    <button id="revealButton">Reveal Answer</button>
+                    <div class="answer" id="answer">
+                        Cell Membrane
+                    </div>
+                </section>
+                <section id="section4">
+                    <h2>What makes up a plant cell?</h2>
+                    <p>Plant cells often have a regular shape. They have the same cell components as animal cells:a <span class="bold">nucleus, cell membrane, cytoplasm</span> 
+                        and <span class="bold">mitochondria</span>.</p>
+                    
+                        <p>They also have these extra three as well:</p>
+                        <p><span class="bold">• Cell Wall</span> - a tough outer layer of the cell, which contains cellulose to provide strength and support to the plant.</p>
+                        <p><span class="bold">• Vacuole</span> - a space inside the cytoplasm that contains a watery liquid called cell sap. It keeps the cell firm.</p>
+                        <p><span class="bold">• Chloroplasts</span> - structures found in the cells of green parts of plants only (leaves and stems) which contain a green 
+                            pigment called chlorophyll in which photosynthesis occurs.</p>
+                    <img src="/images/plant_cell.png" class="top_img">
+
+                    <div class="question">
+                        What part of the cell is a space inside the cytoplasm that contains a watery liquid called cell sap. It keeps the cell firm?
+                    </div>
+                    <button id="revealButton">Reveal Answer</button>
+                    <div class="answer" id="answer">
+                        Vacuole
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const sectionId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(sectionId);
+
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

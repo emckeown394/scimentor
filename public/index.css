@@ -32,13 +32,18 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
 .index-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.index-buttons a{
+    margin-right: 10px;
 }
 
 .signup-button {
@@ -51,7 +56,7 @@ body {
 }
 
 .signup-button:hover {
-    background-color: #c6840a; /* Darker Orange on hover */
+    background-color: #c6840a; 
 }
 
 .login-button {
@@ -64,7 +69,7 @@ body {
 }
 
 .login-button:hover {
-    background-color: #1565c0; /* Darker Blue on hover */
+    background-color: #1565c0; 
 }
 
 .t-login-button {

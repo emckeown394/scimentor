@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@1&family=Kumbh+Sans:wght@400;700&display=swap');
+
+:root {
+    --main-color: #3c89e7;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --green:#3cd951;
+    --white: #fff;
+    --black: #2c3e50;
+    --light-color: #888;
+    --light-bg: #eee;
+    --border: .1rem solid rgba(0, 0, 0, .2);
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'ABeeZee', sans-serif;
+    color: var(--black);
+    text-align: center;
+    margin: 0;
+}
+
+form {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label, select, textarea {
+    display: block;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

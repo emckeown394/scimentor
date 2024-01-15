@@ -63,3 +63,10 @@ function showQuestion(){
 }
 
 startQuiz();
+
+//reveal answer button
+document.getElementById('revealButton').addEventListener('click', function() {
+    document.getElementById('answer').style.display = 'block';
+});
+
+console.log("JavaScript file loaded");

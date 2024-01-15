@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cells</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Overview</a></li>
+                    <li><a href="#section2">Parts of the digestive system</a></li>
+                    <li><a href="#section3">Process of digestion</a></li>
+                    <li><a href="#section4">Test Question</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>The Digestive System</h1>
+                <section id="section1">
+                    <p>• The digestive system breaks down food into tiny particles which are absorbed into the blood.</p>
+                    <p>• These particles provide energy for the body to grow, repair itself and remain healthy.</p>
+                    <p>• Food that cannot be broken down is released from the body as faeces (poo).</p>
+                </section>
+                <section id="section2">
+                    <h2>Parts of the digestive system</h2>
+                    <p>The digestive system is made up of key parts, each of which has a different function. Food passes through most of these parts in a journey from the mouth to the anus.</p>
+                    <img src="/images/digestive.png" class="top_img">
+                    <p><span class="bold">Mouth</span> - Digestion of food starts in the mouth. Teeth break down the food and mix it with the enzymes in saliva.</p>
+                    <p><span class="bold">Oseophagus</span> - This is a thin tube that connects the mouth to the stomach.</p>
+                    <p><span class="bold">Liver</span> - This releases a chemical called bile into the intestines. Bile breaks down lipids in the food.</p>
+                    <p><span class="bold">Stomach</span> - This is a muscular bag which mixes food and drink with acid.</p>
+                    <p><span class="bold">Pancreas</span> - This releases enzymes into the intestines which break down carbohydrates, protein and lipids in food.</p>
+                    <p><span class="bold">Small Intestine</span> - Here, carbohydrates, proteins and lipids digest. The nutrients produced are then absorbed into the blood.</p>
+                    <p><span class="bold">Large Intestine</span> - Food which cannot be broken down - mainly fibre - passes into the large intestine. Water is absorbed into the blood.</p>
+                    <p><span class="bold">Rectum</span> - Any undigested food passes into the rectum where it is stored as faeces.</p>
+                    <p><span class="bold">Anus</span> - This is the opening at the very end of the digestive system through which faeces leaves the body.</p>
+                    <span class="bold">Did you know?</span>
+                    <p>Your mouth produces about 1.5 litres of saliva each day</p>
+                </section>
+                <section id="section3">
+                    <h2>Process of digestion</h2>
+                    <h3>Mechanical and chemical digestion</h3>
+                    <p>Teeth break down food in the mouth mechanically, this means they grind it up. Chemical digestion occurs when enzymes digest food into nutrients.</p>
+                    <p><span class="bold">Bile</span> is produced by your liver and stored in the gall bladder. This is released into the small intestine to break down large molecules of 
+                        lipids into smaller ones.</p>
+                    <h3>Moving food through the digestive system</h3>
+                    <p>Digested food is moved through the <span class="bold">oesophagus</span>, and small and large intestines by muscles in their linings. Squeezing a tennis ball through a pair of tights is a good model for this process.</p>
+                        <h3>Absorbing food and water</h3>
+                    <p>The intestines have lots of tiny folds in them which create a large surface area for absorbing nutrients and water. In the small intestine there are also specialised 
+                        structures called <span class="bold">villi</span> which have a tiny hair-like structure poking into the small intestine to absorb digested food.</p>
+                    <img src="/images/villi.png" class="top_img">
+                    <p class="img_desc">Villi in the intestine</p>
+                    <span class="bold">Did you know?</span>
+                    <p>If we stretched out all the folds in the small intestine this would be the size of a tennis court</p>
+                    <div class="question">
+                        What is produced by your liver and stored in the gall bladder?
+                    </div>
+                    <button id="revealButton">Reveal Answer</button>
+                    <div class="answer" id="answer">
+                        Bile
+                    </div>
+                </section>
+                <section id="section4">
+                    <h2>Test Question</h2>
+                    <div class="question">
+                        Put the parts of the digestive system in the order that food travels through them.
+                        <p>a. oesophagus</p>
+                        <p>b. stomach</p>
+                        <p>c. anus</p>
+                        <p>d. large intestine</p>
+                        <p>e. rectum</p>
+                        <p>f. mouth</p>
+                        <p>g. small intestine</p>
+                    </div>
+                    <button id="revealButton">Reveal Answer</button>
+                    <div class="answer" id="answer">
+                        <p>f. mouth</p>
+                        <p>a. oesophagus</p>
+                        <p>b. stomach</p>
+                        <p>g. small intestine</p>
+                        <p>d. large intestine</p>
+                        <p>e. rectum</p>
+                        <p>c. anus</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const sectionId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(sectionId);
+
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

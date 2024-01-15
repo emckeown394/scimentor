@@ -486,6 +486,44 @@ app.delete('/delete_topic/:id', (req, res) => {
   );
 });
 
+//reports
+app.get("/reports", async (req,res) => {
+  res.render('reports');
+});
+
+//cells
+app.get("/cells", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '1'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('cells', { title: 'Animal and Plant Cells', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//digestive
+app.get("/digestive", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '3'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('digestive', { title: 'Digestive System', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
 
 //quiz
 app.get("/quiz", async (req,res) => {
