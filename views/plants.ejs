@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plants</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Photosynthesis and Respiration in plants</a></li>
+                    <li><a href="#section2">How are plants adapted for photosynthesis?</a></li>
+                    <li><a href="#section3">Comparing photosynthesis and respiration in plants</a></li>
+                    <li><a href="#section4">When do plants respire?</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Photosynthesis and Respiration in plants</h1>
+                <section id="section1">
+                    <p>• <span class="bold">Photosynthesis</span> is a chemical process in which green plants make their own food using energy from the sun - this food is made in the form of glucose.</p>
+                    <p>• Photosynthesis occurs in <span class="bold">chloroplasts</span> found within cells. It is the chloroplasts that contain the green pigment chlorophyll which absorbs light.</p>
+                    <p>• The plant uses this <span class="bold">glucose</span> to grow as well as make other useful substances, such as cellulose found in the cell walls and starch used as energy storage.</p>
+                    <p>• The glucose can also be broken down in the plant by <span class="bold">respiration</span>.</p>
+                    <img src="/images/photosynthesis_equation.png" class="top_img">
+                    <div class="question">
+                        What are the four things needed for photosynthesis?
+                    </div>
+                    <button id="revealButton">Reveal Answer</button>
+                    <div class="answer" id="answer">
+                        Carbon Dioxide, Water, Sunlight, Chlorophyll
+                    </div>
+                </section>
+                <section id="section2">
+                    <h2>How are plants adapted for photosynthesis?</h2>
+                    <p>Plants are adapted to carry out the process of respiration and photosynthesis. Gases such as oxygen and carbon dioxide can travel through tiny holes underneath the leaf called stomata. 
+                        Carbon dioxide diffuses into the cells found within the leaf to help carry out the process of photosynthesis, whilst oxygen is released from these cells as a product of photosynthesis.</p>
+                    <img src="/images/photosynthesis.png" class="top_img">
+                    <p>Plants have adaptions to help them to photosynthesise and survive.</p>
+                    <img src="/images/photo_tree.png" class="top_img">
+                </section>
+                <section id="section3">
+                    <h2>Comparing photosynthesis and respiration in plants</h2>
+                    <p>Photosynthesis:</p>
+                    <span class="bold">Carbon dioxide + water -> glucose + oxygen</span>
+                    <p>Respiration:</p>
+                    <span class="bold">Oxygen + glucose -> water + carbon dioxide</span>
+                    <p>The gas carbon dioxide is needed for photosynthesis to take place in plants and is also produced when plants respire. Oxygen is a product of photosynthesis.</p>
+                    <p>If you memorise one of these equations, then you already know the other, as you can read it backwards.</p>
+                </section>
+                <section id="section4">
+                    <h2>When do plants respire?</h2>
+                    <p>Plants respire all the time, whether it is dark or light. However, they only photosynthesise when they are in the light.</p>
+                    <p>The table shows the difference between photosynthesis and respiration at different times of the day.</p>
+                    <table>
+                        <tr>
+                            <th>Time</th>
+                            <th>Photosynthesis</th>
+                            <th>Respiration</th>
+                            <th>Gases into leaf</th>
+                            <th>Gases out of leaf</th>
+                        </tr>
+                        <tr>
+                            <td><span class="bold">Day</span>(light)</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>Crabon Dioxide</td>
+                            <td>Oxygen, water vapour</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bold">Night</span>(dark)</td>
+                            <td>X</td>
+                            <td>✓</td>
+                            <td>No gas exchange as stomata close at night</td>
+                            <td>No gas exchange as stomata close at night</td>
+                        </tr>
+                    </table>
+                    <img src="/images/respiration.png" class="top_img">
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // Function to check if an element is in the viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Update Table of Contents active state
+    function updateActiveTOC() {
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+            const sectionId = anchor.getAttribute('href').substring(1);
+            const section = document.getElementById(sectionId);
+
+            if (isInViewport(section)) {
+                anchor.classList.add('active');
+            } else {
+                anchor.classList.remove('active');
+            }
+        });
+    }
+
+    // Attach update function to scroll event
+    window.addEventListener('scroll', updateActiveTOC);
+
+    // JavaScript for smooth scrolling to sections
+    document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Tupes of materials</a></li>
+                    <li><a href="#section2">Properties</a></li>
+                    <li><a href="#section3">Activity</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Materials - names & properties</h1>
+                <section id="section1">
+                    <h2>Types of materials</h2>
+                    <p>Materials have different properties that make them useful for different jobs.</p>
+                    <h2>Metals</h2>
+                    <p>Most metals are strong, hard and shiny materials that can be hammered into different shapes without breaking. They are good conductors
+                         of heat and electricity and some are magnetic. Their properties make them useful for objects such as cutlery, saucepans, cars and coins.</p>
+                    <h2>Plastics</h2>
+                    <p>Plastics are materials made from chemicals and are not found in nature. They are strong and waterproof. They can be made into any shape by applying heat.
+                        Plastics are not magnetic. They are good insulators and don't conduct heat or electricity. They're used to make things like bags, bottles and toys.</p>
+                    <h2>Glass</h2>
+                    <p>Glass is made by melting sand and other minerals together at very high temperatures. It is normally transparent and can be made into different shapes. 
+                        Thick glass can be strong, but thin glass breaks easily. It’s used for objects that need to be transparent, such as windows and spectacles.</p>
+                    <h2>Wood</h2>
+                    <p>Wood comes from trees. It is strong, flexible and long-lasting. It is an insulator of heat and electricity. It’s used to make things such as furniture.</p>
+                    <h2>Fabrics</h2>
+                    <p>Fabrics are made from thin fibres woven together. Different fabrics have different properties. They can be stretchy (a pair of tights), insulating (a woollen coat) or 
+                        absorbent(a towel). Fabrics are used to make clothes as they are flexible, warm and do not wear out easily.</p>
+                    <img src="/images/materials.png" class="top_img">
+                    <p>Natural materials like wool and metal, come from living things or in the ground. Synthetic materials, like plastics, are made form chemicals.</p>
+                </section>
+                <section id="section2">
+                    <h2>Properties</h2>
+                    <p><span class="bold">Propertires</span> describe how a material behaves, and explain why it is well suited for a particular use. For example, metal has a high melting point 
+                        (this is a property of most metals) so it is good to use to make a frying pan (this is the use of the material). </p>
+                    <div class="slideshow-container">
+
+                        <div class="mySlides fade">
+                          <div class="numbertext">1 / 6</div>
+                          <img src="/images/hard.png" style="width:100%" class="slide_img">
+                          <h3>Hard</h3>
+                          <p>A material is hard if you cannot easily scratch it. Lots of metals are hard.</p>
+                        </div>
+                        
+                        <div class="mySlides fade">
+                            <div class="numbertext">2 / 6</div>
+                            <img src="/images/soluable.png" style="width:100%" class="slide_img">
+                            <h3>Soluable</h3>
+                            <p>A solid is soluble if it dissolves into a specific liquid (usually water). Salt and sugar are soluble in water. Sand is insoluble (doesn’t dissolve).</p>
+                          </div>
+                        
+                          <div class="mySlides fade">
+                            <div class="numbertext">3 / 6</div>
+                            <img src="/images/transparent.png" style="width:100%" class="slide_img">
+                            <h3>Transparent</h3>
+                            <p>A material is transparent if you can see through it. Glass is transparent. The opposite to transparent is opaque.</p>
+                          </div>
+                        
+
+                          <div class="mySlides fade">
+                            <div class="numbertext">4 / 6</div>
+                            <img src="/images/electrical_conductor.png" style="width:100%" class="slide_img">
+                            <h3>Good electrical conductors</h3>
+                            <p>Metals and graphite are good electrical conductors because electricity flows through them easily. Plastics and glass are poor electrical conductors. We say they are electrical insulators.</p>
+                          </div>
+
+
+                          <div class="mySlides fade">
+                            <div class="numbertext">5 / 6</div>
+                            <img src="/images/thermal_conductors.png" style="width:100%" class="slide_img">
+                            <h3>Good thermal conductors</h3>
+                            <p>Metals are good thermal conductors because heat passes through them easily. Fabrics are poor thermal conductors.</p>
+                          </div>
+                    
+
+                          <div class="mySlides fade">
+                            <div class="numbertext">6 / 6</div>
+                            <img src="/images/magnetic.png" style="width:100%" class="slide_img">
+                            <h3>Magnetic</h3>
+                            <p>Specific metals like iron and steel are magnetic because they can be attracted to a magnet.</p>
+                          </div>
+                        
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                        
+                        </div>
+
+                        <div style="text-align:center">
+                            <span class="dot" onclick="currentSlide(1)"></span> 
+                            <span class="dot" onclick="currentSlide(2)"></span> 
+                            <span class="dot" onclick="currentSlide(3)"></span>
+                            <span class="dot" onclick="currentSlide(4)"></span> 
+                            <span class="dot" onclick="currentSlide(5)"></span> 
+                            <span class="dot" onclick="currentSlide(6)"></span>  
+                          </div>
+                </section>
+
+                <section id="section3">
+                    <h2>Activity: Spotting objects and materials</h2>
+                    <p>You will need a pen and paper for this activity</p>
+                    <p>• Make a list of some objects you can see around you.</p>
+                    <p>• Write down what material is used to make each object.</p>
+                    <p>• Explain why that material is used, and think about the properties of that material</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<!-- slideshow js -->
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

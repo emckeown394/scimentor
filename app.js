@@ -508,6 +508,23 @@ app.get("/cells", (req, res) => {
   });
 });
 
+//plants
+app.get("/plants", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '2'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('plants', { title: 'Plants', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
 //digestive
 app.get("/digestive", (req, res) => {
   const topicId = req.params.id;
@@ -518,6 +535,23 @@ app.get("/digestive", (req, res) => {
       let topicData = rows;
       let loggedIn = req.session.loggedin;
       res.render('digestive', { title: 'Digestive System', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//materials
+app.get("/materials", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '4'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('materials', { title: 'Materials', topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
