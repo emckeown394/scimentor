@@ -559,6 +559,57 @@ app.get("/materials", (req, res) => {
   });
 });
 
+//solids, liquids and gases
+app.get("/states_of_matter", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '6'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('states_of_matter', { title: 'Solids, Liquids and Gases', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//changing states
+app.get("/changing_states", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '7'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('changing_states', { title: 'Changing States', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//light
+app.get("/light", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '11'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('light', { title: 'Light', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
 //quiz
 app.get("/quiz", async (req,res) => {
   res.render('quiz');

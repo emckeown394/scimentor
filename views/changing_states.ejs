@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changing States</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Freezing and Melting</a></li>
+                    <li><a href="#section2">Heating up a Solid</a></li>
+                    <li><a href="#section3">Cooling down a Liquid</a></li>
+                    <li><a href="#section4">Heating up a Liquid</a></li>
+                    <li><a href="#section5">Cooling down a Gas</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Changing States</h1>
+                <section id="section1">
+                    <h2>Freezing and melting</h2>
+                    <p>• When we freeze a liquid it becomes a solid.</p>
+                    <p>• When we heat a solid it becomes a liquid.</p>
+                    <p>• Freezing and melting are totally reversable processes.</p>
+                </section>
+                <section id="section2">
+                    <h2>Heating up a solid</h2>
+                    <p>When some solids are heated, they <span class="bold">melt</span> and turns into a liquid. For example, wax and ice melt when they are heated. 
+                        The temperature this happens at is called the <span class="bold">melting point</span>, and it is measured in degrees Celsius (°C).</p>
+                    <p>The melting point of ice (solid water) is 0 degrees Celsius (0°C). Different materials have different melting points. 
+                        Chocolate melts at around 35°C.</p>
+                    <img src="/images/melting_ice.png" class="top_img">
+                    <p>As the ice heats up, it melts and turns into water</p>
+                </section>
+                <section id="section3">
+                    <h2>Cooling down a liquid</h2>
+                    <p>When a liquid is cooled, it <span class="bold">freezes</span> and turns into a solid. For example, water freezes into ice in puddles on a very cold day. 
+                        Freezing happens at the same temperature as the melting point.</p>
+                    <img src="/images/freezer.png" class="top_img">
+                    <p>The temperature is below 0°C in freezers so that they can make ice./p>
+                </section>
+                <section id="section4">
+                    <h2>Heating up a liquid</h2>
+                    <p>When a liquid is heated it <span class="bold">boils</span> and turns into a gas. For example, if water is heated in a pan or in a kettle, it boils and turns into steam.</p>
+                    <p>The temperature this happens at is called the <span class="bold">boiling point</span>. The boiling point of water is 100°C. The boiling point of ethanol (alcohol) is 78°C.</p>
+                    <p>If you heat water slowly at a lower temperature than boiling point, then the water on the surface will <span class="bold">evaporate</span>. For example the Sun may heat up water in a puddle and it will slowly evaporate. 
+                        The puddle may <span class="bold">evaporate</span> quicker on a very hot day, if it was windy or the water was spread out thinly across the surface.</p>
+                    <img src="/images/boiling_water.png" class="top_img">
+                    <p>We can boil water in a pan to cook food</p>
+                </section>
+                <section id="section5">
+                    <h2>Cooling down a gas</h2>
+                    <p>When a gas is cooled, it <span class="bold">condenses</span>, and changes into a liquid. For example, the steam from a boiling pan turns into condensation on a cold window in the kitchen.</p>
+                    <p>Condensing happens at the same temperature as the boiling point.</p>
+                    <img src="/images/condensing.png" class="top_img">
+                    <p>You can find condensation whilst taking a hot shower</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

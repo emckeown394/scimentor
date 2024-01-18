@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solids, Liquids and Gases</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">States of Matter</a></li>
+                    <li><a href="#section2">Solids</a></li>
+                    <li><a href="#section3">Liquids</a></li>
+                    <li><a href="#section4">Gases</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Solids, Liquids and Gases</h1>
+                <section id="section1">
+                    <h2>The states of matter</h2>
+                    <p>Solids, liquids and gases are called <span class="bold">the three states of matter</span></p>
+                    <img src="/images/slg.png" class="top_img">
+                </section>
+                <section id="section2">
+                    <h2>Solids</h2>
+                    <p>• They stay in one place and can be held.</p>
+                    <p>• They keep their shape. They do not flow like liquids.</p>
+                    <p>• They always take up the same amount of space. They do not spread out like gases.</p>
+                    <p>• Solids can be cut or shaped.</p>
+                    <p>•Even though they can be poured, sugar, salt and flour are all solids. Each grain of salt, for example, keeps the <span class="bold">same shape</span> and volume.</p>
+                    <img src="/images/solid.png" class="top_img">
+                    <p>Examples of solids include ice, wood and sand</p>
+                </section>
+                <section id="section3">
+                    <h2>Liquids</h2>
+                    <p>• They can <span class="bold">flow</span> or be poured easily. They are not easy to hold.</p>
+                    <p>• They change their shape depending on the container they are in.</p>
+                    <p>• Even when liquids change their shape, they always take up the same amount of space. Their volume stays the same.</p>
+                    <img src="/images/liquid.png" class="top_img">
+                    <p>Examples of liquids are water, honey and milk</p>
+                </section>
+                <section id="section4">
+                    <h2>Gases</h2>
+                    <p>• They are often invisable.</p>
+                    <p>• They do not have a fixed shape. They spread out and <span class="bold">change their shape</span> and volume to fill up whatever container they are in.</p>
+                    <p>• Gases can be squashed.</p>
+                    <img src="/images/gas.png" class="top_img">
+                    <p>Examples of liquids are steam, helium and oxygen</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>
