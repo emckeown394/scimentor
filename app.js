@@ -610,6 +610,40 @@ app.get("/light", (req, res) => {
   });
 });
 
+//magnets
+app.get("/magnets", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '12'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('magnets', { title: 'Magnets', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//sound
+app.get("/sound", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '13'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('sound', { title: 'Sound', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
 //quiz
 app.get("/quiz", async (req,res) => {
   res.render('quiz');

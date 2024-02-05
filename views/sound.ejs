@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnets</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">What is pitch?</a></li>
+                    <li><a href="#section2">Activity 1: Exploring different pitches</a></li>
+                    <li><a href="#section3">Weak and strong vibrations</a></li>
+                    <li><a href="#section4">Activity 2: Recording noises</a></li>
+                    <li><a href="#section5">How are sounds detected</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Sound</h1>
+                <section id="section1">
+                    <h2>What is pitch?</h2>
+                    <p>The <span class="bold">pitch</span> is how <span class="bold">high</span> or <span class="bold">low</span> the sound is. A high sound has a 
+                        <span class="bold">high pitch</span> and a low sound has a <span class="bold">low pitch.</span></p>
+                    <p>A tight drum skin gives a highter pitch sound than a loose drum skin.</p>
+                    <img src="/images/pitch.png" class="top_img">
+                    <p>Sounds can be high pitched, like the squeek of a mouse, or low pitched, like the roar of a lion.</p>
+                </section>
+                <section id="section2">
+                    <h2>Activity 1: Exploring different pitches</h2>
+                    <p>You will need 3 or 4 glasses or bottles, water and a spoon.</p>
+                    <p>Firstly, fill each glass or bottle with different amounts of water. Then, blow across the top of the bottle or tap the glass once with a spoon.</p>
+                    <p>• What do you notice?</p>
+                    <p>• Which produces the highest pitch? Which produces the lowest pitch?</p>
+                    <p>• Can you draw what the waves for the highest and the lowest pitch may look like?</p>
+                    </p>
+                    <img src="/images/water.png" class="top_img">
+                </section>
+                <section id="section3">
+                    <h2>Weak and strong vibrations</h2>
+                    <p>The <span class="bold">volume</span> of a sound us how <span class="bold">loud</span> or <span class="bold">quiet</span> the sound is.</p>
+                    <p>Sounds are vibrations that travel through the air.</p>
+                    <p>A nail hit with a hammer will make a <span class="bold">strong</span> vibration, which means it will make a <span class="bold">loud</span> sound.</p>
+                    <p>A nail hit gently with a hammer will make a <span class="bold">weak</span> vibration, which means it will make a <span class="bold">quiet</span> sound.</p>
+                    <img src="/images/hammer.png" class="top_img">
+                </section>
+                <section id="section4">
+                    <h2>Activity 2: Recording noises</h2>
+                    <p>What objects around you right now is capable of makeing a loud noise?</p>
+                    <p>Record the object making that noise.</p>
+                    <p>If your recording device shows the sound waves, take a look and write down what they look like.</p>
+                </section>
+                <section id="section5">
+                    <h2>How are sounds detected</h2>
+                    <p>Sounds are made when object vibrate. The vibration makes the air around the object vibrate and the air vibrations enter your ear.
+                        You hear them as sounds.
+                    </p>
+                    <p>Record the object making that noise.</p>
+                    <p>If your recording device shows the sound waves, take a look and write down what they look like.</p>
+                    <img src="/images/ear.png" class="top_img">
+                    <p>Sound is detected when the vibrations enter your ear and send messages to your brain.</p>
+                    <p><span class="bold">Sound waves</span> can travel through solids (such as metal, stone and wood), liquids (such as water) and gases (such as air).</p>
+                </section>
+            
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>
