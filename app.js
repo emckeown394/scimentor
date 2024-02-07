@@ -108,9 +108,9 @@ app.get("/topics", (req, res) => {
 });
 
 //biology topics
-app.get('/topic/:subjectId', (req, res) => {
+app.get('/topic/1', (req, res) => {
   const subjectId = req.params.subjectId;
-  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'biology'";
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '1'";
   connection.query(readsql, (err, rows) => {
     try {
       if (err) throw err;
@@ -125,9 +125,9 @@ app.get('/topic/:subjectId', (req, res) => {
 });
 
 //chemistry topics
-app.get('/topic/:subjectId', (req, res) => {
+app.get('/topic/2', (req, res) => {
   const subjectId = req.params.subject_id;
-  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'chemistry'";
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '2'";
   connection.query(readsql, (err, rows) => {
     try {
       if (err) throw err;
@@ -142,9 +142,9 @@ app.get('/topic/:subjectId', (req, res) => {
 });
 
 //physics topics
-app.get("/physics_topics", (req, res) => {
+app.get('/topic/6', (req, res) => {
   const subjectId = req.params.subject_id;
-  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_type) = 'physics'";
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '6'";
   connection.query(readsql, (err, rows) => {
     try {
       if (err) throw err;
@@ -492,7 +492,7 @@ app.get("/reports", async (req,res) => {
 });
 
 //cells
-app.get("/cells", (req, res) => {
+app.get("/topics/1", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '1'";
   connection.query(readsql, (err, rows) => {
@@ -509,7 +509,7 @@ app.get("/cells", (req, res) => {
 });
 
 //plants
-app.get("/plants", (req, res) => {
+app.get("/topics/2", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '2'";
   connection.query(readsql, (err, rows) => {
@@ -526,7 +526,7 @@ app.get("/plants", (req, res) => {
 });
 
 //digestive
-app.get("/digestive", (req, res) => {
+app.get("/topics/3", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '3'";
   connection.query(readsql, (err, rows) => {
@@ -543,7 +543,7 @@ app.get("/digestive", (req, res) => {
 });
 
 //materials
-app.get("/materials", (req, res) => {
+app.get("/topics/4", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '4'";
   connection.query(readsql, (err, rows) => {
@@ -559,8 +559,25 @@ app.get("/materials", (req, res) => {
   });
 });
 
+//rocks
+app.get("/topics/5", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '5'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('rocks', { title: 'Rocks', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
 //solids, liquids and gases
-app.get("/states_of_matter", (req, res) => {
+app.get("/topics/6", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '6'";
   connection.query(readsql, (err, rows) => {
@@ -577,7 +594,7 @@ app.get("/states_of_matter", (req, res) => {
 });
 
 //changing states
-app.get("/changing_states", (req, res) => {
+app.get("/topics/7", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '7'";
   connection.query(readsql, (err, rows) => {
@@ -594,7 +611,7 @@ app.get("/changing_states", (req, res) => {
 });
 
 //light
-app.get("/light", (req, res) => {
+app.get("/topics/11", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '11'";
   connection.query(readsql, (err, rows) => {
@@ -611,7 +628,7 @@ app.get("/light", (req, res) => {
 });
 
 //magnets
-app.get("/magnets", (req, res) => {
+app.get("/topics/12", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '12'";
   connection.query(readsql, (err, rows) => {
@@ -628,7 +645,7 @@ app.get("/magnets", (req, res) => {
 });
 
 //sound
-app.get("/sound", (req, res) => {
+app.get("/topics/13", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '13'";
   connection.query(readsql, (err, rows) => {

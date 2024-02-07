@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocks</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">What is a fossil?</a></li>
+                    <li><a href="#section2">The conditions for fossilisation</a></li>
+                    <li><a href="#section3">What is soil?</a></li>
+                    <li><a href="#section4">The different types of soil</a></li>
+                    <li><a href="#section5">Rocks</a></li>
+                    <li><a href="#section6">Properties and uses: Soft and Hard rock</a></li>
+                    <li><a href="#section7">Properties and uses: Permeable and Impermeable rock</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Rocks</h1>
+                <section id="section1">
+                    <h2>What is a fossil?</h2>
+                    <p>A fossil is the preserved remains or traces of a dead organism. Fossils are formed through a process with multiple stages called
+                        <span class="bold">fossilisation</span> , and this takes place over many, many years.
+                    </p>
+                        <img src="/images/fossil.png" class="top_img">
+                </section>
+                <section id="section2">
+                    <h2>The conditions for fossilisation</h2>
+                    <p>Its very rare for living things to become fossilised. After most animals die, their bodies usually rot away and nothing is left behind.</p>
+                    <p>However, under certain special conditions, a fossil can form. </p>
+                    <p>After an animal dies, the soft parts of the body decompose. The hard parts, like the skeleton, are left behind. They become buried by 
+                        small particles of rock called <span class="bold">sediment.</span></p>
+                    <p>As more layers of sediment build up on top, the sediment around the skeleton begins to compact and turn to rock.</p>
+                    <p>The bones then start to be dissolved by water that passes through the rock. Minerals in the water replace the bone, leaving a 
+                        rock replica of the original bone called a fossil.</p>
+                        <img src="/images/fossilisation.png" class="top_img">
+                </section>
+                <section id="section3">
+                    <h2>What is soil?</h2>
+                    <p>We can find soil in lots of different places because it's really important for almost all plants. Soil helps plants stay upright and it 
+                        contains important substances to help them grow.</p>
+                    <p>Soil is a mixture of tiny particlesof dead and rotting plants and animals, rock, air and water.</p>
+                </section>
+                <section id="section4">
+                    <h2>The different types of soil</h2>
+                    <p>Different soils have different properties depending on what they are made from</p>
+                    <p><span class="bold">• Sandy soil </span> is pale coloured and has large particles. These create lots of small air gaps. Water drains
+                    through them easily so it usually feels dry.</p>
+                    <p><span class="bold">• Clay soil </span> is usually sticky and has small particles. They contain very few air gaps and water does not
+                    drain through easily.</p>
+                    <p><span class="bold">• Chalky soil </span> is a light brown soil. Water drains through it quickly.</p>
+                    <p><span class="bold">• Peat </span> does not contain any rock particles. It's made from very old, decayed plants and is dark, crumbly
+                    and rich in <span class="bold">nutrients.</span></p>
+                    <img src="/images/soil.png" class="top_img">
+                    <p>Soil contains alot of <span class="bold">minibeasts </span> (tiny animals that don't have a backbone) and <span class="bold">microorganisms </span>
+                    (which are too small to see).</p>
+                </section>
+                <section id="section5">
+                    <h2>Rocks</h2>
+                    <p>There are lots of types of rock and each type has different properties and uses. For example, some are strong and hard but others are soft and sandy.</p>
+                    <img src="/images/rocks.png" class="top_img">
+                </section>
+                <section id="section6">
+                    <h2>Properties and uses: Soft and Hard rock</h2>
+                    <p>Some rocks are hader than others. For example, granite is a very hard rock which makes it a good material for building.</p>
+                    <p>Chalk is a soft rock and wears away easily. This makes it good for making chalk sticks to write on blackboards.</p>
+                    <img src="/images/chalk.png" class="top_img">
+                </section>
+                <section id="section7">
+                    <h2>Properties and uses: Permeable and Impermeable rock</h2>
+                    <p>Some rocks, such as sandstone or chalk, let water soak through them. They are called permeable rocks.</p>
+                    <p>Other rocks, such as slate, do not let water soak through them. They are called impermeable rocks. Slate also splits easily into thin sheets.
+                        This makes it good for makingroof tiles.
+                    </p>
+                    <img src="/images/slate.png" class="top_img">
+                </section>
+            
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>
