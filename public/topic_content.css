@@ -89,6 +89,14 @@ section{
     padding: 1rem;
 }
 
+.top_img2 {
+    width: 50%;
+    border-radius: .5rem;
+    height: 30rem;
+    padding: 1rem;
+}
+
+
 .bold {
     font-weight: bold;
 }

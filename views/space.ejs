@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth and Space</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Earth</a></li>
+                    <li><a href="#section2">Solar System</a></li>
+                    <li><a href="#section3">The Sun</a></li>
+                    <li><a href="#section4">The Moon</a></li>
+                    <li><a href="#section5">Gravity</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Earth and Space</h1>
+                <section id="section1">
+                    <h2>Earth</h2>
+                    <p>• Planet Earth is about 4.5 billion years old..</p>
+                    <p>• It is one of the closest planets in our solar system to the Sun.</p>
+                    <p>• It takes Earth one year to orbit the sun.</p>
+                    <p>• Earth rotates on it's axis at 1000 miles an hour, completing one full rotation in 24 hours (1 day).</p>
+                    <img src="/images/earth.png" class="top_img2">
+                    <p>When the Earth rotates on its axis, half the Earth is facing the Sun which means it is daytime. The other half facing away from the Sun
+                        is in darkness so it is night time.
+                    </p>
+                </section>
+                <section id="section2">
+                    <h2>Solar System</h2>
+                    <p>• The Sun is a star.</p>
+                    <p>• The Earth is one of 8 planets that orbit around the Sun.</p>
+                    <p>• The planets are called Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.</p>
+                    <p>• The solar system is also home to lots of asteroids, moons, and dwarf planets such as Pluto.</p>
+                    <img src="/images/solar.png" class="top_img">
+                    <p>Examples of solids include ice, wood and sand</p>
+                </section>
+                <section id="section3">
+                    <h2>The Sun</h2>
+                    <p>The Sun is the star in the centre of our solar system and it's orbited by all the planets. Without the Sun, life on 
+                        Earth would not be possible as it provides heat and light for our planet.</p>
+                    <img src="/images/sun.png" class="top_img">
+                    <p>The Sun, like Earth, is roughly spherical in shape but it is much, much bigger: 109 times wider.</p>
+                    <p>As the Earth rotates on its axis, it rotates towards and away from the Sun and this is how we get night and day. Due to 
+                        the Earth's rotation, the Sun rises in the East and sets in the West.
+                    </p>
+                </section>
+                <section id="section4">
+                    <h2>The Moon</h2>
+                    <p>• The Moon is a lot smaller and closer to Earth than the Sun.</p>
+                    <p>• The Moon orbits the Earth. This takes 28 days or one lunar month.</p>
+                    <p>• The Moon reflects light from the Sun and that is why we can see it. It is not a source of light but acts like a mirror.</p>
+                    <p>As it orbits the Earth, we see the Moon from different angles each night. It appears to change shape as we see different 
+                        parts of the surface lit up. These shapes are called the phases of the Moon</p>
+                    <img src="/images/moon_phases.png" class="top_img">
+                    <p>The Moon also affects our life on Earth as its own centre of gravity helps to control the ocean's tides.</p>
+                </section>
+                <section id="section5">
+                    <h2>Gravity</h2>
+                    <p>• The force that pulls things to the centre of Earth (and other planets) is called <span class="bold">gravity.</span></p>
+                    <p>• Gravity also holds Earth and the other planets in their orbits around the Sun.</p>
+                    <p>• The force of gravity also exists on the Moon but is not as strong as it is on Earth. This is because the Moon is much 
+                        smaller than our planet.</p>
+                    <img src="/images/newton.png" class="top_img">
+                    <p>Isaac Newton is the scientist that discovered gravity.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

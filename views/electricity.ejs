@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/topic_content.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="page-content">
+        <div id="container">
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#section1">Electricity and its uses</a></li>
+                    <li><a href="#section2">Conductors</a></li>
+                    <li><a href="#section3">Insulators</a></li>
+                    <li><a href="#section4">Simple Circuit</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>Electricity</h1>
+                <section id="section1">
+                    <h2>Electricity and its uses</h2>
+                    <p>Electricity is created by <span class="bold">generators</span> which can be powered by gas, coal, oil, wind or solar.</p>
+                    <p>Appliances can convert electrical energy into other types such as:</p>
+                    <p>• light</p>
+                    <p>• heat</p>
+                    <p>• movement</p>
+                    <p>• sound</p>
+                        <img src="/images/generator.png" class="top_img">
+                        <p>Electricity is <span class="bold">dangerous</span>, so be careful when using electrical appliances.</p>
+                        <p>Electricity is very important - we use it all of the time. It powers most of our technologies, lights up our 
+                            rooms, warms us when we're cold and cools us down when we're hot.</p>
+                </section>
+                <section id="section2">
+                    <h2>Conductors</h2>
+                    <p>Some materials let electricity pass through them easily. These materials are known as <span class="bold">electrical conductors.</span></p>
+                    <p>Many <span class="bold">metals</span>, such as <span class="bold">copper, iron and steel,</span> are good electrical conductors. 
+                        That is why the parts of electrical objects that need to let electricity pass through are always made of metal.</p>
+                    <p>Metal is used in plugs to allow electricity to transfer from the wall socket, through the plug, and into a device such as a radio or TV.</p>
+                    <img src="/images/bulb.png" class="top_img2">
+                    <p>In a light bulb, the metal filament conducts electricity and causes the light bulb to light up.</p>
+                </section>
+                <section id="section3">
+                    <h2>Insulators</h2>
+                    <p>Some materials do not allow electricity to pass through them. These materials are known as <span class="bold">electrical insulators.</span></p>
+                    <p><span class="bold">Plastic, wood, glass </span>and <span class="bold">rubber</span> are good <span class="bold">electrical insulators.</span> That 
+                    is why they are used to cover materials that carry electricity.</p>
+                    <img src="/images/cord.png" class="top_img">
+                    <p>The plastic covering that surrounds wires is an electrical insulator. It stops you from getting an electric shock.</p> 
+                </section>
+                <section id="section4">
+                    <h2>Simple Circuit</h2>
+                    <p>A circuit always needs a <span class="bold">power source</span> , such as a battery, with wires connected to both the 
+                        positive (+) and negative (-) ends.</p>
+                    <p>A circuit can also contain other electrical components, such as wires, bulbs, buzzers or motors, which allow electricity to pass through.</p>
+                    <p>Electricity will only travel around a circuit that is complete. You can use a switch in a circuit to create a gap and this can be used 
+                        to switch the power on and off.</p>
+                    <p>When a switch is open (off), there is a gap in the circuit. Electricity cannot travel around the circuit. When a switch is closed (on), 
+                        it makes the circuit complete. Electricity can travel around the circuit.</p>
+                    <img src="/images/circuit.png" class="top_img">
+                </section>
+            
+            </div>
+        </div>
+    </div>
+
+    <%- include ('footer') %>
+
+    <script>
+        // JavaScript for smooth scrolling to sections
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const sectionId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('header').offsetHeight; // Adjust 'header' to your header's selector
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
+
+<script>
+    document.getElementById('revealButton').addEventListener('click', function() {
+        console.log("Button clicked!");
+    });
+</script>
+<script src="/app.js"></script>
+<script src="/script.js"></script>
+
+</body>
+</html>

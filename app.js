@@ -610,6 +610,24 @@ app.get("/topics/7", (req, res) => {
   });
 });
 
+//weather
+app.get("/topics/10", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '10'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('space', { title: 'Earth and Space', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+
 //light
 app.get("/topics/11", (req, res) => {
   const topicId = req.params.id;
@@ -654,6 +672,23 @@ app.get("/topics/13", (req, res) => {
       let topicData = rows;
       let loggedIn = req.session.loggedin;
       res.render('sound', { title: 'Sound', topicId, topicData, loggedIn });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to load topics page');
+    }
+  });
+});
+
+//electricity
+app.get("/topics/14", (req, res) => {
+  const topicId = req.params.id;
+  let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '14'";
+  connection.query(readsql, (err, rows) => {
+    try {
+      if (err) throw err;
+      let topicData = rows;
+      let loggedIn = req.session.loggedin;
+      res.render('electricity', { title: 'Electricity', topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
