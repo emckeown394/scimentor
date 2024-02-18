@@ -12,20 +12,17 @@
    <link rel="stylesheet" href="/public/quiz.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Quiz</h1>
-        <div class="quiz">
-            <h2 id="question">Question goes here</h2>
-            <div id="answer-btns">
-                <button class="btn">Answer 1</button>
-                <button class="btn">Answer 2</button>
-                <button class="btn">Answer 3</button>
-                <button class="btn">Answer 4</button>
-            </div>
-            <button id="next-btn">Next Question</button>
-        </div>
+    <div class="quiz-container">
+        <div id="questionCount"></div>
+        <h2>Quiz</h2>
+        <img id="questionImage" src="" alt="Question Image" style="display: none; width: 100%; max-width: 400px; height: auto; text-align: center;">
+        <div id="question" class="question"></div>
+        <div id="choices"></div>
+        <div id="feedback" style="display:none;"></div>
+        <button id="nextQuestion" style="display: none;">Next</button>
+        <div id="score" class="score"></div>
     </div>
-    <script src="/script.js"></script>
-    <!-- <script src="/app.js"></script> -->
+
+    <script src="/quiz.js"></script>
 </body>
 </html>
