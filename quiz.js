@@ -207,9 +207,9 @@ function displayScore() {
     const resultImage = document.createElement('img');
     resultImage.src = selectedImage;
     resultImage.alt = "Quiz Result";
-    resultImage.style.width = '220px'; // Adjust the size as needed
-    resultImage.style.display = 'block'; // Ensure it's visible
-    resultImage.style.margin = '0 auto'; // Center the image
+    resultImage.style.width = '300px';
+    resultImage.style.display = 'block';
+    resultImage.style.margin = '0 auto';
     scoreElement.appendChild(resultImage);
 
     //hide feedback
@@ -222,6 +222,10 @@ function displayScore() {
 
     //hide question count
     questionCount.style.display = 'none';
+
+    //hide next button
+    const nextQuestion = document.getElementById('nextQuestion');
+    nextQuestion.style.display = 'none';
 
     //display final score
     const scoreDisplay = document.createElement('div');
@@ -241,6 +245,9 @@ function displayScore() {
     homeButton.classList.add('home-btn');
     homeButton.addEventListener('click', () => window.location.href = '/homepage');
     scoreElement.appendChild(homeButton);
+
+    //send students score to database
+    sendScore(student_id, score);
 }
 
 function retakeQuiz() {
@@ -256,3 +263,25 @@ function retakeQuiz() {
 }
 
 displayQuestion();
+
+function sendScore(student_id, score) {
+    fetch('api/scores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({student_id, score})
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network reponse was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success', data);
+    })
+    .catch((error) => {
+        console.error('Error', error);
+    });
+}

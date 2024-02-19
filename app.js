@@ -215,6 +215,12 @@ app.get("/update_profile", (req,res) => {
   res.render('update_profile');
 });
 
+//progress page
+app.get("/progress", (req, res) => {
+  const userName = req.session.user ? req.session.user.name : "Guest";
+  res.render("progress", {name: userName});
+});
+
 //student signup
 app.get("/signup", async (req,res) => {
   res.render('signup');
@@ -225,8 +231,7 @@ app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
 
   // Regular expression to check password requirements
-  // Must contain at least one uppercase and lower case letter, one digit 
-  //and be at least 8 characters long
+  // Must contain at least one uppercase and lower case letter, one digit and be at least 8 characters long
   const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   // Check if the password meets the requirements
@@ -640,7 +645,7 @@ app.get("/topics/7", (req, res) => {
   });
 });
 
-//weather
+//Earth and Space
 app.get("/topics/10", (req, res) => {
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '10'";
@@ -729,6 +734,24 @@ app.get("/topics/14", (req, res) => {
 //quiz
 app.get("/quiz", async (req,res) => {
   res.render('quiz');
+});
+
+app.post('/api/scores', (req, res) => {
+  // Extract student ID and score from the request body
+  const { student_id, score } = req.body;
+
+  console.log(`Received score update for student ${student_id}: ${score}`);
+
+  const query = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?) ON DUPLICATE KEY UPDATE biology_score = VALUES(biology_score);`;
+
+  db.query(query, [student_id, score], (err, result) => {
+    if (err) {
+      res.status(500).send('Error saving score');
+    } else {
+      console.log('Score saved successfully:', result);
+      res.status(200).send('Score saved successfully');
+    }
+  });
 });
 
 //logout
