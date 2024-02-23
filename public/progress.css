@@ -1,0 +1,70 @@
+.progress{
+    min-height: 75vh;
+}
+
+.progress .details{
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+.progress .details .user{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.progress .details .user img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: .5rem;
+}
+
+.progress .details .user h3{
+    font-size: 2.5rem;
+    margin: .5rem 0;
+}
+
+.progress .details .user p{
+    font-size: 2rem;
+    color: var(--light-color);
+}
+
+.progress .details .box-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.5rem;
+}
+
+.progress .details .box-container .box{
+    background-color: var(--light-bg);
+    border-radius: .5rem;
+    padding: 2rem;
+    flex: 1 1 30rem;
+}
+
+.progress .details .box-container .box .flex{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.flex h3{
+    font-size: 2rem;
+    margin: .5rem 0;
+}
+
+.score {
+    font-size: 1.5rem;
+}
+
+.inline-btn {
+    text-align: center;
+    justify-content: center;
+    padding: 1.5rem;
+    margin-bottom: .5rem;
+}

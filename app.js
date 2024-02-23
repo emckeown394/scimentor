@@ -1,5 +1,6 @@
 const express = require("express");
 let app = express();
+//db connection
 const connection = require("./connection.js");
 const mysql  = require('mysql');
 const session = require('express-session');
@@ -9,6 +10,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const { name } = require("ejs");
+//message pop-ups
 const flash = require('express-flash');
 
 
@@ -31,18 +33,34 @@ console.log(" Server is listening on //localhost:3000/ ");
 
 
 //middleware
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname,+ "/public"));
 app.use(session({
     secret: 'sw-dev-2023', 
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false }
   }));
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.json());
 
 //used for error messages
 app.use(flash());
 
+//load environment variables before they're processed
+dotenv.config();
+
+//function to see if user is logged in
+function isAuthenticated(req, res, next) {
+  if (req.session.loggedin) {
+    // If the user is authenticated, proceed
+    next();
+  } else {
+    // If the user is not authenticated, redirect to the login page
+    res.redirect('/login');
+  }
+}
 
 //index page
 app.get("/", (req,res) => {
@@ -205,18 +223,18 @@ app.get("/teacher_topics", (req, res) => {
 });
 
 //profile page
-app.get("/profile", (req, res) => {
+app.get("/profile", isAuthenticated, (req, res) => {
   const userName = req.session.user ? req.session.user.name : "Guest";
   res.render("profile", { name: userName });
 });
 
 //update profile page
-app.get("/update_profile", (req,res) => {
+app.get("/update_profile", isAuthenticated, (req,res) => {
   res.render('update_profile');
 });
 
 //progress page
-app.get("/progress", (req, res) => {
+app.get("/progress", isAuthenticated, (req, res) => {
   const userName = req.session.user ? req.session.user.name : "Guest";
   res.render("progress", {name: userName});
 });
@@ -318,6 +336,8 @@ app.post('/login', function (req, res) {
                 email: userEmail,
                 image: userImg,
               };
+
+              console.log(`Logged in student_id: ${req.session.student_id}`);
 
               res.redirect('/homepage');
             } else {
@@ -440,7 +460,7 @@ app.post('/teacher_login', function(req,res) {
 });
 
 //create subject
-app.get("/create_subject", async (req,res) => {
+app.get("/create_subject", isAuthenticated, async (req,res) => {
   res.render('create_subject');
 });
 
@@ -463,7 +483,7 @@ app.post('/create_subject', (req, res) => {
 });
 
 //create topic
-app.get("/create_topic", async (req,res) => {
+app.get("/create_topic", isAuthenticated, async (req,res) => {
   res.render('create_topic');
 });
 
@@ -522,7 +542,7 @@ app.delete('/delete_topic/:id', (req, res) => {
 });
 
 //reports
-app.get("/reports", async (req,res) => {
+app.get("/reports", isAuthenticated, async (req,res) => {
   res.render('reports');
 });
 
@@ -732,26 +752,34 @@ app.get("/topics/14", (req, res) => {
 });
 
 //quiz
-app.get("/quiz", async (req,res) => {
-  res.render('quiz');
+app.get("/quiz", isAuthenticated, async (req,res) => {
+  const studentId = req.session.student_id;
+  res.render('quiz', { studentId });
 });
 
+
 app.post('/api/scores', (req, res) => {
-  // Extract student ID and score from the request body
-  const { student_id, score } = req.body;
-
-  console.log(`Received score update for student ${student_id}: ${score}`);
-
-  const query = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?) ON DUPLICATE KEY UPDATE biology_score = VALUES(biology_score);`;
-
-  db.query(query, [student_id, score], (err, result) => {
-    if (err) {
-      res.status(500).send('Error saving score');
-    } else {
-      console.log('Score saved successfully:', result);
-      res.status(200).send('Score saved successfully');
-    }
-  });
+  if (req.session.student_id) {
+    // Extract student ID and score from the request body
+    const student_id = req.session.student_id;
+    const { score } = req.body;
+    
+    console.log(`Received score update for student ${student_id}: ${score}`);
+    
+    const query = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?) ON DUPLICATE KEY UPDATE biology_score = VALUES(biology_score);`;
+    
+    db.query(query, [student_id, score], (err, result) => {
+      if (err) {
+        res.status(500).send('Error saving score');
+      } else {
+        console.log('Score saved successfully:', result);
+        res.status(200).send('Score saved successfully');
+      }
+    });
+    
+  } else {
+    console.log('Student ID not found in session');
+  }
 });
 
 //logout

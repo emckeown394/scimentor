@@ -22,7 +22,9 @@
         <button id="nextQuestion" style="display: none;">Next</button>
         <div id="score" class="score"></div>
     </div>
-
+    <script>
+        localStorage.setItem('studentId', '<%= studentId %>');
+    </script>
     <script src="/quiz.js"></script>
 </body>
 </html>

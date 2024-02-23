@@ -186,7 +186,7 @@ document.getElementById('nextQuestion').addEventListener('click', function() {
 });
 
 function displayScore() {
-    //hide questions and choices
+    const student_id = localStorage.getItem('studentId'); 
     questionElement.style.display = 'none';
     choicesElement.innerHTML = ''; 
 
@@ -267,6 +267,7 @@ displayQuestion();
 function sendScore(student_id, score) {
     fetch('api/scores', {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
