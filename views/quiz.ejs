@@ -14,7 +14,7 @@
 <body>
     <div class="quiz-container">
         <div id="questionCount"></div>
-        <h2>Quiz</h2>
+        <h2><%= subject %> quiz</h2>
         <img id="questionImage" src="" alt="Question Image" style="display: none; width: 100%; max-width: 400px; height: auto; text-align: center;">
         <div id="question" class="question"></div>
         <div id="choices"></div>
@@ -25,6 +25,6 @@
     <script>
         localStorage.setItem('studentId', '<%= studentId %>');
     </script>
-    <script src="/quiz.js"></script>
+    <script src="/<%= subject %> _quiz.js"></script>
 </body>
 </html>

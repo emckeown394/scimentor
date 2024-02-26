@@ -236,6 +236,26 @@ app.get("/update_profile", isAuthenticated, (req,res) => {
 //progress page
 app.get("/progress", isAuthenticated, (req, res) => {
   const userName = req.session.user ? req.session.user.name : "Guest";
+  // Query to select biology, chemistry, and physics scores
+  const query = 'SELECT biology_score, chemistry_score, physics_score FROM students_scores WHERE student_id = ?';
+  connection.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error("Database query error:", error);
+      return res.status(500).send("Error fetching user scores");
+    }
+
+    // Extract scores from query results, defaulting to 'No score available' if not found
+    const scores = results[0] ? results[0] : { biology_score: 'No score available', chemistry_score: 'No score available', physics_score: 'No score available' };
+
+    // Render the progress page with the user's name and scores
+    const userName = req.session.user.name;
+    res.render("progress", {
+      name: userName,
+      biologyScore: scores.biology_score,
+      chemistryScore: scores.chemistry_score,
+      physicsScore: scores.physics_score
+    });
+  });
   res.render("progress", {name: userName});
 });
 
@@ -751,34 +771,59 @@ app.get("/topics/14", (req, res) => {
   });
 });
 
-//quiz
-app.get("/quiz", isAuthenticated, async (req,res) => {
+//Quiz
+app.get("/quiz/:subject", isAuthenticated, async (req,res) => {
   const studentId = req.session.student_id;
-  res.render('quiz', { studentId });
+  const subject = req.params.subject;
+  res.render('quiz', { studentID: studentId, subject: subject });
 });
 
 
-app.post('/api/scores', (req, res) => {
+app.post('/api/biology_scores', (req, res) => {
   if (req.session.student_id) {
-    // Extract student ID and score from the request body
     const student_id = req.session.student_id;
-    const { score } = req.body;
-    
-    console.log(`Received score update for student ${student_id}: ${score}`);
-    
-    const query = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?) ON DUPLICATE KEY UPDATE biology_score = VALUES(biology_score);`;
-    
-    db.query(query, [student_id, score], (err, result) => {
+    const { bio_score } = req.body;
+
+    // Check if there's an existing score for the student
+    const selectQuery = `SELECT biology_score FROM students_scores WHERE student_id = ? LIMIT 1;`;
+
+    db.query(selectQuery, [student_id], (err, results) => {
       if (err) {
-        res.status(500).send('Error saving score');
+        console.error('Error fetching existing score:', err);
+        return res.status(500).send('Error fetching existing score');
+      }
+
+      // If a score exists and the new score is higher, update it
+      if (results.length > 0 && bio_score > results[0].bio_score) {
+        const updateQuery = `UPDATE students_scores SET biology_score = ? WHERE student_id = ?;`;
+        db.query(updateQuery, [bio_score, student_id], (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating score:', updateErr);
+            return res.status(500).send('Error updating score');
+          }
+          console.log('Score updated successfully:', updateResult);
+          res.status(200).send('Score updated successfully');
+        });
+      } else if (results.length === 0) {
+        // If no existing score, insert the new score
+        const insertQuery = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?);`;
+        db.query(insertQuery, [student_id, bio_score], (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error('Error inserting score:', insertErr);
+            return res.status(500).send('Error inserting score');
+          }
+          console.log('Score inserted successfully:', insertResult);
+          res.status(200).send('Score inserted successfully');
+        });
       } else {
-        console.log('Score saved successfully:', result);
-        res.status(200).send('Score saved successfully');
+        // Existing score is higher or equal; do not update
+        console.log('Existing score is higher or equal; not updated.');
+        res.status(200).send('Score not updated, existing score is higher or equal.');
       }
     });
-    
   } else {
     console.log('Student ID not found in session');
+    res.status(403).send('Authentication required');
   }
 });
 
