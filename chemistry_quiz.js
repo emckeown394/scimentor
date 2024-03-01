@@ -2,7 +2,7 @@ const chemQuizQuestions = [
     { 
         question: "What material is a good conductor of heat & electricity?", 
         choices: ["Metals", "Plastics", "Glass", "Wood", "Fabrics"], 
-        correctAnswer: "Metal",
+        correctAnswer: "Metals",
         image: "https://d1uvxqwmcz8fl1.cloudfront.net/tes/resources/11310181/ea0266e6-5cdd-4e93-be12-6e1f84f0b049/image?width=500&height=500&version=1663665026912"
     },
     { 
@@ -26,7 +26,7 @@ const chemQuizQuestions = [
     { 
         question: "Fossils provide _____ for how living things & the environment have changed over time?", 
         choices: ["smells", "evidence", "dinosaurs", "food"], 
-        correctAnswer: "Evidence",
+        correctAnswer: "evidence",
         image: "https://media.istockphoto.com/id/1360683145/vector/cartoon-dinosaurs-fossils-ancient-triceratops-dinosaur-skeleton-ammonite-and-leaf-fossil.jpg?s=612x612&w=0&k=20&c=4mDYmT_W4PfZu0Ndy8MRBgPG8zkGERmaKCTP4mAHrwE="
     },
     { 
@@ -55,7 +55,7 @@ const chemQuizQuestions = [
     },
     { 
         question: "What are solids, liquids and gases?", 
-        choices: ["Differebt animals", "States of matter", "Tyes of processes", "Different forces"], 
+        choices: ["Different animals", "States of matter", "Tyes of processes", "Different forces"], 
         correctAnswer: "States of matter",
         image: "https://edcraft.io/wp-content/uploads/2021/08/solids-liquids-and-gases-for-kids.png"
     },
@@ -176,7 +176,7 @@ function selectChoice(chosenAnswer) {
     feedbackElement.style.display = 'block';
 
     if (chosenAnswer === chemQuizQuestions[currentQuestionIndex].correctAnswer) {
-        bio_score++;
+        chem_score++;
         feedbackElement.textContent = '✓ Correct!';
         feedbackElement.style.color = 'green';
     } else {
@@ -256,6 +256,8 @@ function displayScore() {
     scoreDisplay.textContent = `Your score: ${chem_score}/${chemQuizQuestions.length}`;
     scoreElement.appendChild(scoreDisplay);
 
+    console.log('Chemistry score:', chem_score);
+
     // Create and append the Retake Quiz button
     const retakeButton = document.createElement('button');
     retakeButton.textContent = 'Retake Quiz';
@@ -289,7 +291,7 @@ function retakeQuiz() {
 displayQuestion();
 
 function sendScore(student_id, chem_score) {
-    fetch('api/biology_scores', {
+    fetch('api/chemistry_scores', {
         method: 'POST',
         credentials: 'include',
         headers: {

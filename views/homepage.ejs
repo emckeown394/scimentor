@@ -14,21 +14,21 @@
 </head>
 <body>
     <%- include ('header') %>
-    <section class="subjects">
-        <h1 class="heading">Subjects</h1>
-        <div class="box-container">
-            <% rowdata.forEach((subjects) => { %>
-                <div class="box" data-subjects-id="<%= subjects.id %>">
-                    <h1 class="sub_name"><%= subjects.name %></h1>
-                    <img src="<%= subjects.image %>" class="thumbnail">
-                    <a href="/topic/<%= subjects.id %>" class="inline-btn">View Topics</a>
-                    <a href="biology_quiz" class="quiz-btn">Take Quiz</a>
-                </div>
-            <% }) %>
-        </div>
-    </section>
-    <%- include ('footer') %>
-    <script src="app.js"></script>
-    <script src="script.js"></script>
+<section class="subjects">
+    <h1 class="heading">Subjects</h1>
+    <div class="box-container">
+        <% rowdata.forEach((subject) => { %>
+            <div class="box" data-subject-id="<%= subject.id %>">
+                <h1 class="sub_name"><%= subject.name %></h1>
+                <img src="<%= subject.image %>" class="thumbnail">
+                <a href="/topic/<%= subject.id %>" class="inline-btn">View Topics</a>
+                <a href="/quiz/<%= subject.name.toLowerCase() %>" class="quiz-btn">Take Quiz</a>
+            </div>
+        <% }) %>
+    </div>
+</section>
+<%- include ('footer') %>
+<script src="app.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

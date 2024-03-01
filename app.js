@@ -235,10 +235,12 @@ app.get("/update_profile", isAuthenticated, (req,res) => {
 
 //progress page
 app.get("/progress", isAuthenticated, (req, res) => {
-  const userName = req.session.user ? req.session.user.name : "Guest";
+  const studentId = req.session.student_id;
+  const userName = req.session.user ? req.session.user.name : "Guest"; // Correct use of userName
   // Query to select biology, chemistry, and physics scores
   const query = 'SELECT biology_score, chemistry_score, physics_score FROM students_scores WHERE student_id = ?';
-  connection.query(query, [userId], (error, results) => {
+  
+  connection.query(query, [studentId], (error, results) => {
     if (error) {
       console.error("Database query error:", error);
       return res.status(500).send("Error fetching user scores");
@@ -248,15 +250,13 @@ app.get("/progress", isAuthenticated, (req, res) => {
     const scores = results[0] ? results[0] : { biology_score: 'No score available', chemistry_score: 'No score available', physics_score: 'No score available' };
 
     // Render the progress page with the user's name and scores
-    const userName = req.session.user.name;
     res.render("progress", {
-      name: userName,
-      biologyScore: scores.biology_score,
-      chemistryScore: scores.chemistry_score,
-      physicsScore: scores.physics_score
+      name: userName, // Use the already defined userName
+      biologyScore: scores.biology_score || 'No score available',
+      chemistryScore: scores.chemistry_score || 'No score available',
+      physicsScore: scores.physics_score || 'No score available'
     });
   });
-  res.render("progress", {name: userName});
 });
 
 //student signup
@@ -771,11 +771,19 @@ app.get("/topics/14", (req, res) => {
   });
 });
 
-//Quiz
+//Quiz page rendering
 app.get("/quiz/:subject", isAuthenticated, async (req,res) => {
   const studentId = req.session.student_id;
   const subject = req.params.subject;
-  res.render('quiz', { studentID: studentId, subject: subject });
+  const subjectId = req.params.subjectId;
+  res.render('quiz', { studentId: studentId, subject: subject, subjectId: subjectId });
+});
+
+//fetching quiz questions and answers
+app.get('/api/quiz/:subjectId', async (req, res) => {
+  const subjectId = req.params.subjectId;
+  const questionsAndChoices = await getQuestionsAndChoicesForSubject(subjectId);
+  res.json(questionsAndChoices);
 });
 
 
@@ -808,6 +816,102 @@ app.post('/api/biology_scores', (req, res) => {
         // If no existing score, insert the new score
         const insertQuery = `INSERT INTO students_scores (student_id, biology_score) VALUES (?, ?);`;
         db.query(insertQuery, [student_id, bio_score], (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error('Error inserting score:', insertErr);
+            return res.status(500).send('Error inserting score');
+          }
+          console.log('Score inserted successfully:', insertResult);
+          res.status(200).send('Score inserted successfully');
+        });
+      } else {
+        // Existing score is higher or equal; do not update
+        console.log('Existing score is higher or equal; not updated.');
+        res.status(200).send('Score not updated, existing score is higher or equal.');
+      }
+    });
+  } else {
+    console.log('Student ID not found in session');
+    res.status(403).send('Authentication required');
+  }
+});
+
+app.post('/api/chemistry_scores', (req, res) => {
+  if (req.session.student_id) {
+    const student_id = req.session.student_id;
+    const { chem_score } = req.body;
+
+    // Check if there's an existing score for the student
+    const selectQuery = `SELECT chemistry_score FROM students_scores WHERE student_id = ? LIMIT 1;`;
+
+    db.query(selectQuery, [student_id], (err, results) => {
+      if (err) {
+        console.error('Error fetching existing score:', err);
+        return res.status(500).send('Error fetching existing score');
+      }
+
+      // If a score exists and the new score is higher, update it
+      if (results.length > 0 && chem_score > results[0].chem_score) {
+        const updateQuery = `UPDATE students_scores SET chemistry_score = ? WHERE student_id = ?;`;
+        db.query(updateQuery, [chem_score, student_id], (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating score:', updateErr);
+            return res.status(500).send('Error updating score');
+          }
+          console.log('Score updated successfully:', updateResult);
+          res.status(200).send('Score updated successfully');
+        });
+      } else if (results.length === 0) {
+        // If no existing score, insert the new score
+        const insertQuery = `INSERT INTO students_scores (student_id, chemistry_score) VALUES (?, ?);`;
+        db.query(insertQuery, [student_id, chem_score], (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error('Error inserting score:', insertErr);
+            return res.status(500).send('Error inserting score');
+          }
+          console.log('Score inserted successfully:', insertResult);
+          res.status(200).send('Score inserted successfully');
+        });
+      } else {
+        // Existing score is higher or equal; do not update
+        console.log('Existing score is higher or equal; not updated.');
+        res.status(200).send('Score not updated, existing score is higher or equal.');
+      }
+    });
+  } else {
+    console.log('Student ID not found in session');
+    res.status(403).send('Authentication required');
+  }
+});
+
+app.post('/api/physics_scores', (req, res) => {
+  if (req.session.student_id) {
+    const student_id = req.session.student_id;
+    const { phy_score } = req.body;
+
+    // Check if there's an existing score for the student
+    const selectQuery = `SELECT physics_score FROM students_scores WHERE student_id = ? LIMIT 1;`;
+
+    db.query(selectQuery, [student_id], (err, results) => {
+      if (err) {
+        console.error('Error fetching existing score:', err);
+        return res.status(500).send('Error fetching existing score');
+      }
+
+      // If a score exists and the new score is higher, update it
+      if (results.length > 0 && phy_score > results[0].phy_score) {
+        const updateQuery = `UPDATE students_scores SET physics_score = ? WHERE student_id = ?;`;
+        db.query(updateQuery, [phy_score, student_id], (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating score:', updateErr);
+            return res.status(500).send('Error updating score');
+          }
+          console.log('Score updated successfully:', updateResult);
+          res.status(200).send('Score updated successfully');
+        });
+      } else if (results.length === 0) {
+        // If no existing score, insert the new score
+        const insertQuery = `INSERT INTO students_scores (student_id, physics_score) VALUES (?, ?);`;
+        db.query(insertQuery, [student_id, phy_score], (insertErr, insertResult) => {
           if (insertErr) {
             console.error('Error inserting score:', insertErr);
             return res.status(500).send('Error inserting score');
