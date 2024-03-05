@@ -211,7 +211,8 @@ app.get("/update_profile", isAuthenticated, (req,res) => {
 //progress page
 app.get("/progress", isAuthenticated, (req, res) => {
   const studentId = req.session.student_id;
-  const userName = req.session.user ? req.session.user.name : "Guest"; // Correct use of userName
+  const userName = req.session.user ? req.session.user.name : "Guest";
+
   // Query to select biology, chemistry, and physics scores
   const query = 'SELECT biology_score, chemistry_score, physics_score FROM students_scores WHERE student_id = ?';
   
@@ -224,12 +225,38 @@ app.get("/progress", isAuthenticated, (req, res) => {
     // Extract scores from query results, defaulting to 'No score available' if not found
     const scores = results[0] ? results[0] : { biology_score: 'No score available', chemistry_score: 'No score available', physics_score: 'No score available' };
 
+    let bioScorePercentage = (scores.biology_score / 16) * 100;
+    let chemScorePercentage = (scores.chemistry_score / 20) * 100;
+    let phyScorePercentage = (scores.physics_score / 20) * 100;
+
+    function getScoreImage(scorePercentage, subject) {
+      let basePath = `/progress_img/${subject}_`;
+      if (scorePercentage <= 0) {
+          return `${basePath}0.png`;
+      } else if (scorePercentage <= 25) {
+          return `${basePath}25.png`;
+      } else if (scorePercentage <= 50) {
+          return `${basePath}50.png`;
+      } else if (scorePercentage < 100) {
+          return `${basePath}75.png`;
+      } else {
+          return `${basePath}100.png`;
+      }
+  }
+
+  const bioScoreImg = getScoreImage(bioScorePercentage, 'bio');
+  const chemScoreImg = getScoreImage(chemScorePercentage, 'chem');
+  const phyScoreImg = getScoreImage(phyScorePercentage, 'phy');
+    
     // Render the progress page with the user's name and scores
     res.render("progress", {
       name: userName, // Use the already defined userName
       biologyScore: scores.biology_score || 'No score available',
       chemistryScore: scores.chemistry_score || 'No score available',
-      physicsScore: scores.physics_score || 'No score available'
+      physicsScore: scores.physics_score || 'No score available',
+      bioScoreImg: bioScoreImg,
+      chemScoreImg: chemScoreImg,
+      phyScoreImg: phyScoreImg
     });
   });
 });

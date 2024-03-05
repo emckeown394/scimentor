@@ -68,3 +68,10 @@
     padding: 1.5rem;
     margin-bottom: .5rem;
 }
+
+.score-image img {
+    display: block;
+    margin-top: 20px;
+    max-width: 320px;
+    height: auto;
+}
