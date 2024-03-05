@@ -210,7 +210,7 @@ document.getElementById('nextQuestion').addEventListener('click', function() {
 });
 
 function displayScore() {
-    const student_id = localStorage.getItem('studentId'); 
+    const studentId = localStorage.getItem('studentId'); 
     questionElement.style.display = 'none';
     choicesElement.innerHTML = ''; 
 
@@ -273,7 +273,7 @@ function displayScore() {
     scoreElement.appendChild(homeButton);
 
     //send students score to database
-    sendScore(student_id, chem_score);
+    sendScore(studentId, chem_score);
 }
 
 function retakeQuiz() {
@@ -290,14 +290,15 @@ function retakeQuiz() {
 
 displayQuestion();
 
-function sendScore(student_id, chem_score) {
-    fetch('api/chemistry_scores', {
+function sendScore(studentId, chem_score) {
+    console.log('Sending score to server:', { studentId, chem_score });
+    fetch('/api/chemistry_scores', {
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({student_id, chem_score})
+        body: JSON.stringify({studentId: studentId, chem_score: chem_score})
     })
     .then(response => {
         if (!response.ok) {

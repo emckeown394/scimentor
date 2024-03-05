@@ -17,29 +17,35 @@
     <header class="header">
         <div class="flex">
 
-            <a href="homepage" class="logo">
+            <a href="/homepage" class="logo">
                 <img src="/images/scimentor logo.png" alt="SciMentor Logo">
             </a>
     
             <div class="icons">
-                <a href="topics">
+                <a href="/topics">
                     <div id="topics-btn" class="fas fa-book" data-tooltip="Topics"></div>
                 </a>
-                <a href="progress">
+                <a href="/progress">
                     <div id="progress-btn" class="fas fa-medal" data-tooltip="Progress"></div>
                 </a>
                 <div id="user-btn" class="fas fa-user" data-tooltip="Profile"></div>
             </div>
 
-            <div class="prof">
-                <img src="/images/pic-1.jpg" alt="">
-                <!-- <h3>name</h3>
-                <span>student</span> -->
-                <a href="profile" class="profile-btn">view profile</a>
-                <div class="flex-btn">
-                    <a href="/logout" class="logout-btn">logout</a>
+            <% if (loggedIn) { %>
+                <div class="prof">
+                    <img src="/images/pic-1.jpg" alt="">
+                    <a href="/profile" class="profile-btn">view profile</a>
+                    <div class="flex-btn">
+                        <a href="/logout" class="logout-btn">logout</a>
+                    </div>
                 </div>
-            </div>
+                <% } else { %>
+                    <div class="prof">
+                        <div class="flex-btn">
+                            <a href="/login" class="profile-btn">login</a>
+                        </div>
+                    </div>
+                <% } %>
     
         </div>
     </header>

@@ -1,3 +1,6 @@
+const subjectId = localStorage.getItem('subjectId'); 
+console.log(`Subject ID: ${subjectId}`);
+
 const bioQuizQuestions = [
     { 
         question: "What cell component doesn't appear in both plant and animal cells?", 
@@ -186,7 +189,7 @@ document.getElementById('nextQuestion').addEventListener('click', function() {
 });
 
 function displayScore() {
-    const student_id = localStorage.getItem('studentId'); 
+    const studentId = localStorage.getItem('studentId'); 
     questionElement.style.display = 'none';
     choicesElement.innerHTML = ''; 
 
@@ -246,8 +249,10 @@ function displayScore() {
     homeButton.addEventListener('click', () => window.location.href = '/homepage');
     scoreElement.appendChild(homeButton);
 
+    console.log(`Student ID: ${studentId}, Biology Score: ${bio_score}`);
+
     //send students score to database
-    sendScore(student_id, bio_score);
+    sendScore(studentId, bio_score);
 }
 
 function retakeQuiz() {
@@ -264,14 +269,14 @@ function retakeQuiz() {
 
 displayQuestion();
 
-function sendScore(student_id, bio_score) {
-    fetch('api/biology_scores', {
+function sendScore(studentId, bio_score) {
+    fetch('/api/biology_scores', {
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({student_id, bio_score})
+        body: JSON.stringify({studentId: studentId, bio_score: bio_score})
     })
     .then(response => {
         if (!response.ok) {

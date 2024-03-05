@@ -72,7 +72,7 @@ const phyQuizQuestions = [
         image: "https://www.stanfordmagnets.com/wp-content/uploads/2020/06/How_Magnets_Work-2-1.png"
     },
     { 
-        question: "What is the pich of a sound?", 
+        question: "What is the pitch of a sound?", 
         choices: ["How loud a sound is", "How quiet a sound is", "The distance of a sound", "How high or low a sound is"], 
         correctAnswer: "How high or low a sound is",
         image: "https://musiccrashcourses.com/images/other/soundwave.png"
@@ -210,7 +210,7 @@ document.getElementById('nextQuestion').addEventListener('click', function() {
 });
 
 function displayScore() {
-    const student_id = localStorage.getItem('studentId'); 
+    const studentId = localStorage.getItem('studentId'); 
     questionElement.style.display = 'none';
     choicesElement.innerHTML = ''; 
 
@@ -271,7 +271,7 @@ function displayScore() {
     scoreElement.appendChild(homeButton);
 
     //send students score to database
-    sendScore(student_id, phy_score);
+    sendScore(studentId, phy_score);
 }
 
 function retakeQuiz() {
@@ -288,14 +288,14 @@ function retakeQuiz() {
 
 displayQuestion();
 
-function sendScore(student_id, phy_score) {
-    fetch('api/physics_scores', {
+function sendScore(studentId, phy_score) {
+    fetch('/api/physics_scores', {
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({student_id, phy_score})
+        body: JSON.stringify({studentId: studentId, phy_score: phy_score})
     })
     .then(response => {
         if (!response.ok) {

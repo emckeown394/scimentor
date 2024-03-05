@@ -1,8 +1,10 @@
-const student_id = localStorage.getItem('subjectId'); 
+const subjectId = localStorage.getItem('subjectId'); 
+console.log(`Subject ID: ${subjectId}`);
 
 fetch(`/api/quiz/${subjectId}`)
   .then(response => response.json())
   .then(quizData => {
+    console.log(quizData);
     initializeQuiz(quizData);
   })
   .catch(error => console.error('Failed to load quiz data:', error));
@@ -32,6 +34,8 @@ function displayQuestion() {
         return;
     }
 
+    choiceButton.onclick = () => selectChoice(choice.is_correct === 1);
+
     const currentQuestion = quizQuestions[currentQuestionIndex];
     questionElement.textContent = currentQuestion.question_text;
     choicesElement.innerHTML = ''; // Clear previous choices
@@ -53,6 +57,7 @@ function displayQuestion() {
     // Update question count display
     const questionCount = document.getElementById('questionCount');
     questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+    
 }
 
 function selectChoice(isCorrect) {
