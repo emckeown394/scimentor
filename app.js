@@ -54,7 +54,6 @@ dotenv.config();
 //function to see if user is logged in
 function isAuthenticated(req, res, next) {
   if (req.session.loggedin) {
-    // If the user is authenticated, proceed
     next();
   } else {
     // If the user is not authenticated, redirect to the login page
@@ -67,6 +66,25 @@ app.use((req, res, next) => {
   next();
 });
 
+//middleware to fetch user image for all templates
+app.use((req, res, next) => {
+  if (req.session.student_id) {
+    const studentId = req.session.student_id;
+    const query = "SELECT image FROM students WHERE id = ?";
+    connection.query(query, [studentId], (err, results) => {
+      if (err) {
+        console.error("Error fetching user image:", err);
+        next();
+      } else {
+        res.locals.userImage = results.length > 0 ? results[0].image : null;
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
+
 //index page
 app.get("/", (req,res) => {
   res.render('index');
@@ -74,7 +92,7 @@ app.get("/", (req,res) => {
 
 //header
 app.get("/header", (req, res) => {
-  res.render("header");
+  res.render('header');
 });
 
 //logo top
@@ -149,7 +167,7 @@ app.get('/topic/1', (req, res) => {
 
 //chemistry topics
 app.get('/topic/2', (req, res) => {
-  const subjectId = req.params.subject_id;
+  const subjectId = req.params.subjectId;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '2'";
   connection.query(readsql, (err, rows) => {
     try {
@@ -229,19 +247,20 @@ app.get("/progress", isAuthenticated, (req, res) => {
     let chemScorePercentage = (scores.chemistry_score / 20) * 100;
     let phyScorePercentage = (scores.physics_score / 20) * 100;
 
-    function getScoreImage(scorePercentage, subject) {
+    function getScoreImage(score, subject) {
       let basePath = `/progress_img/${subject}_`;
-      if (scorePercentage <= 0) {
-          return `${basePath}0.png`;
-      } else if (scorePercentage <= 25) {
-          return `${basePath}25.png`;
-      } else if (scorePercentage <= 50) {
-          return `${basePath}50.png`;
-      } else if (scorePercentage < 100) {
-          return `${basePath}75.png`;
-      } else {
-          return `${basePath}100.png`;
-      }
+      let scorePercentage = isNaN(score) ? 0 : parseFloat(score); //if no score available set to 0
+      if (scorePercentage >= 1 && scorePercentage <= 25) {
+        return `${basePath}25.png`;
+    } else if (scorePercentage >= 26 && scorePercentage <= 50) {
+        return `${basePath}50.png`;
+    } else if (scorePercentage >= 51 && scorePercentage <= 75) {
+        return `${basePath}75.png`;
+    } else if (scorePercentage >= 100) {
+        return `${basePath}100.png`;
+    } else {
+        return `${basePath}0.png`;
+    }
   }
 
   const bioScoreImg = getScoreImage(bioScorePercentage, 'bio');
@@ -250,7 +269,7 @@ app.get("/progress", isAuthenticated, (req, res) => {
     
     // Render the progress page with the user's name and scores
     res.render("progress", {
-      name: userName, // Use the already defined userName
+      name: userName,
       biologyScore: scores.biology_score || 'No score available',
       chemistryScore: scores.chemistry_score || 'No score available',
       physicsScore: scores.physics_score || 'No score available',
@@ -268,7 +287,7 @@ app.get("/signup", async (req,res) => {
 
 //adding student signup credentials to database
 app.post('/signup', (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, profileImage } = req.body;
 
   // Regular expression to check password requirements
   // Must contain at least one uppercase and lower case letter, one digit and be at least 8 characters long
@@ -306,8 +325,8 @@ app.post('/signup', (req, res) => {
       const hashedPassword = bcrypt.hashSync(password, 10);
 
       db.query(
-        `INSERT INTO students (name, email, password) VALUES (?, ?, ?)`,
-        [name, email, hashedPassword],
+        `INSERT INTO students (name, email, password, image) VALUES (?, ?, ?, ?)`,
+        [name, email, hashedPassword, profileImage],
         (err) => {
           if (err) {
             console.error(err);
