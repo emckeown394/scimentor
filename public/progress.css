@@ -15,8 +15,8 @@
 }
 
 .progress .details .user img{
-    height: 10rem;
-    width: 10rem;
+    height: 15rem;
+    width: 15rem;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: .5rem;
