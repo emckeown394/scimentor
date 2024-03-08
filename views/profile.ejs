@@ -22,7 +22,11 @@
 
         <div class="details">
             <div class="user">
-                <img src="/images/pic-1.jpg" alt="">
+                <% if (userImage === 'm') { %>
+                    <img src="/images/users/m_user.png" alt="Male Profile Image">
+                <% } else { %>
+                    <img src="/images/users/f_user.png" alt="Female Profile Image">
+                <% } %>
                 <h3><%= name %></h3>
                 <p>student</p>
                 <a href="update_profile" class="inline-btn">update profile</a>
