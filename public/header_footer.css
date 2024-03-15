@@ -13,6 +13,11 @@
 
 }
 
+body {
+    display: block;
+    margin: 0;
+}
+
 /* header */
 .header{
     background-color: var(--white);
@@ -148,12 +153,6 @@
 @media (max-width:991px){
     html{
         font-size: 55%;
-    }
-}
-
-@media (max-width:768px){
-    #search-btn{
-        display: inline-block;
     }
 }
 
