@@ -51,13 +51,23 @@ app.use(flash());
 //load environment variables before they're processed
 dotenv.config();
 
-//function to see if user is logged in
+//function to see if student is logged in
 function isAuthenticated(req, res, next) {
   if (req.session.loggedin) {
     next();
   } else {
     // If the user is not authenticated, redirect to the login page
     res.redirect('/login');
+  }
+}
+
+//function to see if teacher is logged in
+function isTAuthenticated(req, res, next) {
+  if (req.session.loggedin) {
+    next();
+  } else {
+    // If the user is not authenticated, redirect to the login page
+    res.redirect('/teacher_login');
   }
 }
 
@@ -249,7 +259,7 @@ app.get("/progress", isAuthenticated, (req, res) => {
 
     function getScoreImage(score, subject) {
       let basePath = `/progress_img/${subject}_`;
-      let scorePercentage = isNaN(score) ? 0 : parseFloat(score); //if no score available set to 0
+      let scorePercentage = isNaN(score) ? 0 : parseFloat(score);
       if (scorePercentage >= 1 && scorePercentage <= 25) {
         return `${basePath}25.png`;
     } else if (scorePercentage >= 26 && scorePercentage <= 50) {
@@ -501,7 +511,7 @@ app.post('/teacher_login', function(req,res) {
 });
 
 //create subject
-app.get("/create_subject", isAuthenticated, async (req,res) => {
+app.get("/create_subject", isTAuthenticated, async (req,res) => {
   res.render('create_subject');
 });
 
@@ -524,7 +534,7 @@ app.post('/create_subject', (req, res) => {
 });
 
 //create topic
-app.get("/create_topic", isAuthenticated, async (req,res) => {
+app.get("/create_topic", isTAuthenticated, async (req,res) => {
   res.render('create_topic');
 });
 
@@ -583,8 +593,113 @@ app.delete('/delete_topic/:id', (req, res) => {
 });
 
 //reports
-app.get("/reports", isAuthenticated, async (req,res) => {
-  res.render('reports');
+app.get("/reports/:studentId", isTAuthenticated, async (req, res) => {
+  const studentId = req.params.studentId;
+  const teacherId = req.session.teacher_id;
+
+  // Fetch student information
+  const studentQuery = 'SELECT id, name, image FROM students WHERE id = ?';
+  db.query(studentQuery, [studentId], (studentErr, studentResults) => {
+    if (studentErr || studentResults.length === 0) {
+      console.error('Error fetching student:', studentErr);
+      return res.status(500).send('Error fetching student information');
+    }
+
+    const student = studentResults[0];
+
+    // Fetch quiz scores for the student
+    const scoresQuery = 'SELECT biology_score, chemistry_score, physics_score FROM students_scores WHERE student_id = ?';
+    db.query(scoresQuery, [studentId], (scoresErr, scoresResults) => {
+      if (scoresErr) {
+        console.error('Error fetching scores:', scoresErr);
+        return res.status(500).send('Error fetching student scores');
+      }
+
+      const scores = scoresResults.length > 0 ? scoresResults[0] : {biology_score: 0, chemistry_score: 0, physics_score: 0};
+
+      // Calculate the image paths based on the scores
+      const images = {
+        biology: getScoreImage(scores.biology_score, 'bio'),
+        chemistry: getScoreImage(scores.chemistry_score, 'chem'),
+        physics: getScoreImage(scores.physics_score, 'phy')
+      };
+
+      // Render the report page with the fetched data
+      res.render('reports', {
+        teacherId: teacherId,
+        student: student,
+        scores: scores,
+        images: images
+      });
+    });
+  });
+});
+
+function getScoreImage(score, subject) {
+  let basePath = `/progress_img/${subject}_`;
+  let scorePercentage = (score / maximumScoreForSubject(subject)) * 100; 
+  if (scorePercentage >= 1 && scorePercentage <= 25) {
+    return `${basePath}25.png`;
+} else if (scorePercentage >= 26 && scorePercentage <= 50) {
+    return `${basePath}50.png`;
+} else if (scorePercentage >= 51 && scorePercentage <= 75) {
+    return `${basePath}75.png`;
+} else if (scorePercentage >= 100) {
+    return `${basePath}100.png`;
+} else {
+    return `${basePath}0.png`;
+}
+}
+
+function maximumScoreForSubject(subject) {
+  switch (subject) {
+    case 'bio': return 16;
+    case 'chem': return 20;
+    case 'phy': return 20;
+    default: return 100;
+  }
+}
+
+//students
+app.get("/students", isTAuthenticated, async (req, res) => {
+  try {
+    const query = 'SELECT id, name, image FROM students';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching students:', err);
+        return res.status(500).send('Error fetching student list');
+      }
+      res.render('students', { rowdata: results });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to load the students page');
+  }
+});
+
+
+//post report to database
+app.post('/api/reports', (req, res) => {
+
+  const { studentId, teacherId, specialEdNeedt, content } = req.body;
+
+  if (!studentId || !teacherId || !content) {
+      return res.status(400).send({ message: 'Missing required report fields.' });
+  }
+
+  const insertReportQuery = `
+      INSERT INTO reports (student_id, teacher_id, SEN, content)
+      VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(insertReportQuery, [studentId, teacherId, specialEdNeed, content], (err, result) => {
+      if (err) {
+          console.error('Error inserting report into the database:', err);
+          return res.status(500).send({ message: 'Failed to create report.' });
+      }
+
+      res.status(201).send({ message: 'Report created successfully.', reportId: result.insertId });
+  });
 });
 
 //cells
