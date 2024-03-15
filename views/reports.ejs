@@ -16,19 +16,62 @@
 <body>
     <%- include ('teacher_header') %>
 
-    <h1>Create Student Report</h1>
-    <form id="reportForm">
-        <label for="studentSelect">Select Student:</label>
-        <select id="studentSelect" required>
-            <!-- Options will be dynamically loaded here -->
-        </select>
-
-        <label for="reportContent">Report:</label>
-        <textarea id="reportContent" required></textarea>
-
-        <button type="submit">Send Report</button>
-    </form>
-
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h1>Academic Student Report</h1>
+                <% if (student) { %>
+                    <div class="student-info">
+                        <% if (student.image === 'm') { %>
+                            <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img">
+                        <% } else { %>
+                            <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img">
+                        <% } %>
+                        <h2><%= student.name %></h2>
+                    </div>
+                    <div class="mb-3">
+                        <label for="specialEdSelect" class="form-label">Special Educational Needs:</label>
+                        <select id="specialEdSelect" required>
+                            <option value="1">Autism</option>
+                            <option value="2">Education Psycology</option>
+                            <option value="3">Language and Communication</option>
+                            <option value="4">Literacy</option>
+                            <option value="5">Vision Impairment and Deafness</option>
+                            <option value="6">None</option>
+                          </select>
+                    </div>
+                    <div id="studentScores" class="scores-container">
+                        <div class="score-item">
+                            <div id="biologyScore">Biology Score: <%= scores.biology_score %>/16</div>
+                            <% if (images.biology) { %>
+                                <img id="biologyImage" src="<%= images.biology %>" alt="Biology Score Image">
+                            <% } %>
+                        </div>
+                        <div class="score-item">
+                            <div id="chemistryScore">Chemistry Score: <%= scores.chemistry_score %>/20</div>
+                            <% if (images.chemistry) { %>
+                                <img id="chemistryImage" src="<%= images.chemistry %>" alt="Chemistry Score Image">
+                            <% } %>
+                        </div>
+                        <div class="score-item">
+                            <div id="physicsScore">Physics Score: <%= scores.physics_score %>/20</div>
+                            <% if (images.physics) { %>
+                                <img id="physicsImage" src="<%= images.physics %>" alt="Physics Score Image">
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>    
+                <form id="reportForm" action="/api/reports" method="POST">
+                    <div class="mb-3">
+                        <label for="reportContent" class="form-label">Report:</label>
+                        <textarea id="reportContent" class="form-control" required></textarea>
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary">Send Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <%- include ('footer') %>
 
     <script src="script.js"></script>

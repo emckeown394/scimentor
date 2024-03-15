@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/students.css">
+   
+</head>
+<body>
+    <%- include ('teacher_header') %>
+    <section class="students">
+        <h1 class="heading">Students</h1>
+        <div class="box-container">
+            <% rowdata.forEach((students) => { %>
+                <div class="box" data-students-id="<%= students.id %>">
+                    <% if (students.image === 'm') { %>
+                        <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img">
+                    <% } else { %>
+                        <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img">
+                    <% } %>
+                    <h1 class="stu_name"><%= students.name %></h1>
+                    <a href="/reports/<%= students.id %>" class="inline-btn">Create Report</a>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <div class="reports">
+        <a href="/all_reports" class="inline-btn">All Reports</a>
+    </div>
+    <%- include ('footer') %>
+</body>
+</html>
