@@ -37,8 +37,17 @@
                         <input type="password" class="form-control" id="password-upd" name="password" placeholder="confirm your new password">
                     </div>
                     <div class="mb-3">
-                        <p>change profile image</p>
-                        <input type="file" accept="image/*" id="img-upd" name="image">                        
+                        <p>Change profile image</p>
+                        <div class="image-options">
+                            <label>
+                                <input type="radio" name="profileImage" value="m">
+                                <img src="/images/users/m_user.png" alt="Male" style="width: 100px; height: 100px; cursor: pointer;">
+                            </label>
+                            <label>
+                                <input type="radio" name="profileImage" value="f">
+                                <img src="/images/users/f_user.png" alt="Female" style="width: 100px; height: 100px; cursor: pointer;">
+                            </label>
+                        </div>                        
                     </div>
                     <div>
                         <p>Are you sure your new details are correct?</p>

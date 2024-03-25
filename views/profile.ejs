@@ -29,36 +29,31 @@
                 <% } %>
                 <h3><%= name %></h3>
                 <p>student</p>
+                <p><%= email %></p>
+                <p class="login_streak">Login Streak: <%= loginStreak %> day(s)</p>
                 <a href="update_profile" class="inline-btn">update profile</a>
             </div>
         
+            <h1 class="heading">Medals</h1>
 
             <div class="box-container">
             
-                <div class="box">
-                 <div class="flex">
-                    <h3>Biology</h3>
-                 </div>
-                 <a href="#" class="inline-btn">view progress</a>
-                </div>
-
-                <div class="box">
-                    <div class="flex">
-                        <h3>Chemistry</h3>
+                <% rowdata.forEach((subject) => { %>
+                    <div class="box" data-subject-id="<%= subject.id %>">
+                        <h1 class="sub_name"><%= subject.name %> Medal</h1>
+                        <% if (subject.score >= subject.maxScore) { %>
+                            <!-- Display unlocked badge if score equals or exceeds max score -->
+                            <img src="<%= subject.unlockedBadge %>" alt="Unlocked Badge" class="achievement_badge">
+                            <!-- used to  -->
+                            <p class="unlocked_text">Get <%= subject.maxScore %> / <%= subject.maxScore %> in the quiz to unlock medal</p>
+                        <% } else { %>
+                            <!-- Display locked badge by default -->
+                            <img src="<%= subject.lockedBadge %>" alt="Locked Badge" class="achievement_badge">
+                            <p>Get <%= subject.maxScore %> / <%= subject.maxScore %> in the quiz to unlock medal</p>
+                        <% } %>
+                        <a href="/subject_progress/<%= subject.name %>" class="inline-btn">View Progress</a>
                     </div>
-                    <a href="#" class="inline-btn">view progress</a>
-                   </div>
-
-                   <div class="box">
-                    <div class="flex">
-                        <h3>Physics</h3>
-                    </div>
-                    <a href="#" class="inline-btn">view progress</a>
-                   </div>
-
-            </div>
-
-        </div>
+                <% }) %>
     </section>
 
     <%- include ('footer') %>

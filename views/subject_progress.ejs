@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= subjectName %> Progress</title>
+</head>
+<body>
+    <h1><%= subjectName %> Progress</h1>
+    <p>Score: <%= score %> / <%= maxScore %></p>
+    <% if (scoreImage) { %>
+        <img src="<%= scoreImage %>" alt="Score Image">
+    <% } else { %>
+        <p>No score image available.</p>
+    <% } %>
+</body>
+</html>

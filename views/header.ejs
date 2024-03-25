@@ -33,7 +33,11 @@
 
             <% if (loggedIn) { %>
                 <div class="prof">
-                    <img src="/images/pic-1.jpg" alt="">
+                    <% if (userImage === 'm') { %>
+                        <img src="/images/users/m_user.png" alt="Male Profile Image">
+                    <% } else { %>
+                        <img src="/images/users/f_user.png" alt="Female Profile Image">
+                    <% } %>
                     <a href="/profile" class="profile-btn">view profile</a>
                     <div class="flex-btn">
                         <a href="/logout" class="logout-btn">logout</a>
