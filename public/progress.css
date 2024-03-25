@@ -75,3 +75,10 @@
     max-width: 320px;
     height: auto;
 }
+
+.thumbnail {
+    width: 100%;
+    border-radius: .5rem;
+    height: 55rem;
+    padding: 1rem;
+}
