@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 //for hashing passwords
 const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 const cookieParser = require('cookie-parser');
 const { name } = require("ejs");
 //message pop-ups
@@ -108,6 +109,283 @@ app.get("/header", (req, res) => {
 //logo top
 app.get("/logo_top", (req,res) => {
   res.render('logo_top');
+});
+
+//student signup
+app.get("/signup", async (req,res) => {
+  res.render('signup');
+});
+
+//adding student signup credentials to database
+app.post('/signup', (req, res) => {
+  const { name, email, password, profileImage } = req.body;
+
+  // Regular expression to check password requirements
+  // Must contain at least one uppercase and lower case letter, one digit and be at least 8 characters long
+  const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+  // Check if the password meets the requirements
+  if (!password.match(passwordCheck)) {
+    return res.render('signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
+
+  }
+
+  // Check if the email contains "@"
+  if (!email.includes('@')) {
+    console.log('Invalid email format:', email);
+    return res.render('signup', {error: 'Your email must include an @ symbol. Please enter a valid email'});
+  }
+
+
+  // Query to check if the users email already exists in the database
+  db.query(
+    `SELECT COUNT(*) AS count FROM students WHERE email = ?`,
+    [email],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.render('signup', {error: 'This email already exists. Please enter another email'});
+      }
+
+      // If the email already exists, inform the student to provide a different email
+      if (results[0].count > 0) {
+        return res.render('signup', {error: 'This email already exists. Please enter another email'});
+      }
+
+      // If all conditions are met, hash the password and insert user into the database
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      db.query(
+        `INSERT INTO students (name, email, password, image) VALUES (?, ?, ?, ?)`,
+        [name, email, hashedPassword, profileImage],
+        (err) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('An error occurred during signup.');
+          } else {
+            res.redirect('/login');
+          }
+        }
+      );
+    }
+  );
+});
+
+// student login
+app.get("/login", async (req,res) => {
+  res.render('login');
+});
+
+//retrieving login credentials to database
+app.post('/login', function (req, res) {
+  let email = req.body.email;
+  let password = req.body.password;
+
+  if (email && password) {
+    connection.query(
+      'SELECT * FROM students WHERE email = ?',
+      [email],
+      function (error, rows, fields) {
+        if (error) throw error;
+        let numrows = rows.length;
+
+        if (numrows > 0) {
+          const storedPassword = rows[0].password;
+          const userName = rows[0].name;
+          const userEmail = rows[0].email;
+          const userImg = rows[0].image;
+
+          bcrypt.compare(password, storedPassword, function (err, result) {
+            if (err) throw err;
+
+            if (result) {
+              // Store user information in the session
+              req.session.loggedin = true;
+              req.session.email = email;
+              req.session.student_id = rows[0].id;
+              req.session.user = {
+                name: userName,
+                email: userEmail,
+                image: userImg,
+              };
+
+              console.log(`Logged in student_id: ${req.session.student_id}`);
+
+              const studentId = req.session.student_id;
+              const { last_login_date, login_streak } = db.query('SELECT last_login_date, login_streak FROM students WHERE id = ?', [studentId]);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              
+              const lastLoginDate = new Date(last_login_date);
+              lastLoginDate.setHours(0, 0, 0, 0);
+              
+              const yesterday = new Date();
+              yesterday.setDate(yesterday.getDate() - 1);
+              yesterday.setHours(0, 0, 0, 0);
+              
+              let newStreak = login_streak;
+  
+              if (lastLoginDate.toString() === yesterday.toString()) {
+                // If last login was yesterday, increase the streak
+                newStreak++;
+              } else if (lastLoginDate < yesterday) {
+                // If last login was before yesterday, reset the streak
+                newStreak = 1;
+              }
+              
+              // Update last_login_date and login_streak in the database
+              db.query(
+                'UPDATE students SET last_login_date = ?, login_streak = ? WHERE id = ?',
+                [today, newStreak, studentId]
+                );
+
+              res.redirect('/homepage');
+            } else {
+              return res.render('login', { error: 'Invalid email or password. Please try again' });
+            }
+          });
+        } else {
+          return res.render('login', { error: 'Invalid email or password. Please try again' });
+        }
+      }
+    );
+  } else {
+    res.send('Enter Email and Password');
+  }
+});
+
+//reset password
+app.get("/reset_password", async (req,res) => {
+  res.render('reset_password');
+});
+
+app.post('/reset_password', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+      return res.status(400).send('Email and new password are required.');
+  }
+
+  try {
+      const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+      const updateQuery = 'UPDATE students SET password = ? WHERE email = ?';
+      const result = await db.query(updateQuery, [hashedPassword, email]);
+
+      if (result.affectedRows === 0) {
+          return res.status(404).send('Email not found.');
+      }
+
+      res.redirect('/login');
+  } catch (error) {
+      console.error('Error updating password:', error);
+      res.status(500).send('Error resetting password.');
+  }
+});
+
+//teacher signup
+app.get("/teachers_signup", async (req,res) => {
+  res.render('teachers_signup');
+});
+
+//adding teacher signup credentials to database
+app.post('/teachers_signup', (req, res) => {
+  const { name, email, password } = req.body;
+
+  // Regular expression to check password requirements
+  // Must contain at least one uppercase and lower case letter, one digit 
+  //and be at least 8 characters long
+  const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+  // Check if the password meets the requirements
+  if (!password.match(passwordCheck)) {
+    return res.render('teachers_signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
+
+  }
+
+  // Check if the email contains "@"
+  if (!email.includes('@')) {
+    console.log('Invalid email format:', email);
+    return res.render('teachers_signup', {error: 'Email must contain an @ symbol. Please use a valid format'});
+  }
+
+
+  // Query to check if the teachers email already exists in the database
+  db.query(
+    `SELECT COUNT(*) AS count FROM teachers WHERE email = ?`,
+    [email],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        req.flash('error', 'This email already exists. Please use another email');
+        return res.redirect('/teachers_signup');
+      }
+
+      // If the email already exists, inform the teacher to provide a different email
+      if (results[0].count > 0) {
+        req.flash('error', 'This email already exists. Please use another email');
+        return res.redirect('/teachers_signup');
+      }
+
+      // If all conditions are met, hash the password and insert teacher into the database
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      db.query(
+        `INSERT INTO teachers (name, email, password) VALUES (?, ?, ?)`,
+        [name, email, hashedPassword],
+        (err) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('An error occurred during signup.');
+          } else {
+            res.redirect('/teacher_login');
+          }
+        }
+      );
+    }
+  );
+});
+
+//teacher login
+app.get("/teacher_login", async (req,res) => {
+  res.render('teacher_login');
+});
+
+//retrieving teacher credentials from database
+app.post('/teacher_login', function(req,res) {
+  let email = req.body.email;
+  let password = req.body.password;
+
+  if (email && password) {
+    connection.query(
+      'SELECT * FROM teachers WHERE email = ?',
+      [email],
+      function(error, rows) {
+        if (error) throw error;
+        let numrows = rows.length;
+
+        if (numrows > 0) {
+          const storedPassword = rows[0].password;
+          bcrypt.compare(password, storedPassword, function(err, result) {
+            if (err) throw err;
+
+            if (result) {
+              req.session.loggedin = true;
+              req.session.email = email;
+              req.session.teacher_id = rows[0].id;
+              res.redirect('/teacher_homepage');
+            }else{
+              return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
+            }
+          });
+        }else{
+          return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
+        }
+      }
+    );
+  }else{
+    res.send('Enter Email and Password');
+  }
 });
 
 //student homepage
@@ -225,15 +503,120 @@ app.get("/teacher_topics", (req, res) => {
   });
 });
 
+function queryAsync(sql, params) {
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+}
+
 //profile page
-app.get("/profile", isAuthenticated, (req, res) => {
-  const userName = req.session.user ? req.session.user.name : "Guest";
-  res.render("profile", { name: userName });
+app.get("/profile", isAuthenticated, async (req, res) => {
+  const studentId = req.session.student_id;
+
+  try {
+    const userDetailsResult = await queryAsync('SELECT name, email, image, login_streak FROM students WHERE id = ?', [studentId]);
+    if (userDetailsResult.length === 0) {
+      console.log('No user found with that ID');
+      return res.redirect('/login');
+    }
+    const userDetails = userDetailsResult[0]; // Access the first object in the array
+
+    const subjectsResult = await queryAsync('SELECT id, name, image FROM subjects');
+    const scoresResult = await queryAsync('SELECT * FROM students_scores WHERE student_id = ?', [studentId]);
+
+    let scoresMap = {};
+    if (scoresResult.length > 0) {
+      scoresMap = scoresResult[0];
+    }
+
+    const maxScores = {
+      biology: 16,
+      chemistry: 20,
+      physics: 20,
+    };
+
+    subjectsResult.forEach(subject => {
+      const subjectName = subject.name.toLowerCase();
+      subject.score = scoresMap[`${subjectName}_score`] || 0; // Get the score for the subject, default to 0 if not found
+      subject.maxScore = maxScores[subjectName];
+      
+      if (subject.score >= subject.maxScore) {
+        subject.unlockedBadge = `/images/badges/${subjectName}_unlocked.png`;
+      } else {
+        subject.lockedBadge = `/images/badges/${subjectName}_locked.png`;
+      }
+    });
+
+    res.render("profile", {
+      name: userDetails.name,
+      email: userDetails.email,
+      userImage: userDetails.image,
+      loginStreak: userDetails.login_streak,
+      rowdata: subjectsResult,
+    });
+  } catch (error) {
+    console.error('Error loading profile:', error);
+    res.status(500).send('Error loading profile');
+  }
 });
 
 //update profile page
 app.get("/update_profile", isAuthenticated, (req,res) => {
   res.render('update_profile');
+});
+
+//post report to database
+app.post('/update-profile', async (req, res) => {
+  const { name, email, password, profileImage } = req.body;
+  const studentId = req.session.student_id;
+
+  // Initialize parts of the query based on provided fields
+  let updateParts = [];
+  let queryParams = [];
+
+  if (name) {
+    updateParts.push('name = ?');
+    queryParams.push(name);
+  }
+
+  if (email) {
+    updateParts.push('email = ?');
+    queryParams.push(email);
+  }
+
+  if (profileImage) {
+    updateParts.push('image = ?');
+    queryParams.push(profileImage);
+  }
+
+  // if (password) {
+  //   const passwordString = String(password).trim(); // Convert to string and then trim
+  //   if(passwordString.length > 0) { // Check that the trimmed string is not empty
+  //       const hashedPassword = bcrypt.hashSync(passwordString, 10);
+  //       updateParts.push('password = ?');
+  //       queryParams.push(hashedPassword);
+  //   }
+  // }
+
+  // // Only proceed if there are parts of the query to update
+  if (updateParts.length > 0) {
+    queryParams.push(studentId);
+    const updateQuery = `UPDATE students SET ${updateParts.join(', ')} WHERE id = ?`;
+
+    db.query(updateQuery, queryParams, (error) => {
+      if (error) {
+        console.error('Error updating profile:', error);
+        return res.status(500).send({ message: 'Failed to update profile.' });
+      }
+      console.log('Profile updated successfully');
+      return res.redirect('/profile');
+    });
+  } else {
+    res.status(400).send({ message: 'No fields provided for update.' });
+  }
 });
 
 //progress page
@@ -290,223 +673,35 @@ app.get("/progress", isAuthenticated, (req, res) => {
   });
 });
 
-//student signup
-app.get("/signup", async (req,res) => {
-  res.render('signup');
-});
+//specific progress page
+app.get('/subject_progress/:subjectName', isAuthenticated, async (req, res) => {
+  const subjectName = req.params.subjectName.toLowerCase();
+  const studentId = req.session.studentId;
 
-//adding student signup credentials to database
-app.post('/signup', (req, res) => {
-  const { name, email, password, profileImage } = req.body;
+  const scoreField = `${subjectName}_score`;
+  const scoresQuery = `SELECT ${scoreField} FROM students_scores WHERE student_id = ?`;
 
-  // Regular expression to check password requirements
-  // Must contain at least one uppercase and lower case letter, one digit and be at least 8 characters long
-  const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-  // Check if the password meets the requirements
-  if (!password.match(passwordCheck)) {
-    return res.render('signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
-
-  }
-
-  // Check if the email contains "@"
-  if (!email.includes('@')) {
-    console.log('Invalid email format:', email);
-    return res.render('signup', {error: 'Your email must include an @ symbol. Please enter a valid email'});
-  }
-
-
-  // Query to check if the users email already exists in the database
-  db.query(
-    `SELECT COUNT(*) AS count FROM students WHERE email = ?`,
-    [email],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.render('signup', {error: 'This email already exists. Please enter another email'});
-      }
-
-      // If the email already exists, inform the student to provide a different email
-      if (results[0].count > 0) {
-        return res.render('signup', {error: 'This email already exists. Please enter another email'});
-      }
-
-      // If all conditions are met, hash the password and insert user into the database
-      const hashedPassword = bcrypt.hashSync(password, 10);
-
-      db.query(
-        `INSERT INTO students (name, email, password, image) VALUES (?, ?, ?, ?)`,
-        [name, email, hashedPassword, profileImage],
-        (err) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send('An error occurred during signup.');
-          } else {
-            res.redirect('/login');
+  try {
+      db.query(scoresQuery, [studentId], (error, results) => {
+          if (error || results.length === 0) {
+              console.error('Error fetching scores:', error);
+              return res.status(500).send('Error fetching student scores');
           }
-        }
-      );
-    }
-  );
-});
 
-// student login
-app.get("/login", async (req,res) => {
-  res.render('login');
-});
+          const score = results[0][scoreField];
+          const maxScore = subjectName === 'biology' ? 16 : 20;
+          const scoreImage = getScoreImage(score, subjectName);
 
-//retrieving login credentials to database
-app.post('/login', function (req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
-
-  if (email && password) {
-    connection.query(
-      'SELECT * FROM students WHERE email = ?',
-      [email],
-      function (error, rows, fields) {
-        if (error) throw error;
-        let numrows = rows.length;
-
-        if (numrows > 0) {
-          const storedPassword = rows[0].password;
-          const userName = rows[0].name;
-          const userEmail = rows[0].email;
-          const userImg = rows[0].image;
-
-          bcrypt.compare(password, storedPassword, function (err, result) {
-            if (err) throw err;
-
-            if (result) {
-              // Store user information in the session
-              req.session.loggedin = true;
-              req.session.email = email;
-              req.session.student_id = rows[0].id;
-              req.session.user = {
-                name: userName,
-                email: userEmail,
-                image: userImg,
-              };
-
-              console.log(`Logged in student_id: ${req.session.student_id}`);
-
-              res.redirect('/homepage');
-            } else {
-              return res.render('login', { error: 'Invalid email or password. Please try again' });
-            }
+          res.render('subject_progress', {
+              subjectName: subjectName,
+              score: score || 'No score available',
+              maxScore: maxScore,
+              scoreImage: scoreImage
           });
-        } else {
-          return res.render('login', { error: 'Invalid email or password. Please try again' });
-        }
-      }
-    );
-  } else {
-    res.send('Enter Email and Password');
-  }
-});
-
-//teacher signup
-app.get("/teachers_signup", async (req,res) => {
-  res.render('teachers_signup');
-});
-
-//adding teacher signup credentials to database
-app.post('/teachers_signup', (req, res) => {
-  const { name, email, password } = req.body;
-
-  // Regular expression to check password requirements
-  // Must contain at least one uppercase and lower case letter, one digit 
-  //and be at least 8 characters long
-  const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-  // Check if the password meets the requirements
-  if (!password.match(passwordCheck)) {
-    return res.render('teachers_signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
-
-  }
-
-  // Check if the email contains "@"
-  if (!email.includes('@')) {
-    console.log('Invalid email format:', email);
-    return res.render('teachers_signup', {error: 'Email must contain an @ symbol. Please use a valid format'});
-  }
-
-
-  // Query to check if the teachers email already exists in the database
-  db.query(
-    `SELECT COUNT(*) AS count FROM teachers WHERE email = ?`,
-    [email],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        req.flash('error', 'This email already exists. Please use another email');
-        return res.redirect('/teachers_signup');
-      }
-
-      // If the email already exists, inform the teacher to provide a different email
-      if (results[0].count > 0) {
-        req.flash('error', 'This email already exists. Please use another email');
-        return res.redirect('/teachers_signup');
-      }
-
-      // If all conditions are met, hash the password and insert teacher into the database
-      const hashedPassword = bcrypt.hashSync(password, 10);
-
-      db.query(
-        `INSERT INTO teachers (name, email, password) VALUES (?, ?, ?)`,
-        [name, email, hashedPassword],
-        (err) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send('An error occurred during signup.');
-          } else {
-            res.redirect('/teacher_login');
-          }
-        }
-      );
-    }
-  );
-});
-
-//teacher login
-app.get("/teacher_login", async (req,res) => {
-  res.render('teacher_login');
-});
-
-//retrieving teacher credentials from database
-app.post('/teacher_login', function(req,res) {
-  let email = req.body.email;
-  let password = req.body.password;
-
-  if (email && password) {
-    connection.query(
-      'SELECT * FROM teachers WHERE email = ?',
-      [email],
-      function(error, rows) {
-        if (error) throw error;
-        let numrows = rows.length;
-
-        if (numrows > 0) {
-          const storedPassword = rows[0].password;
-          bcrypt.compare(password, storedPassword, function(err, result) {
-            if (err) throw err;
-
-            if (result) {
-              req.session.loggedin = true;
-              req.session.email = email;
-              req.session.student_id = rows[0].id;
-              res.redirect('/teacher_homepage');
-            }else{
-              return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
-            }
-          });
-        }else{
-          return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
-        }
-      }
-    );
-  }else{
-    res.send('Enter Email and Password');
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Failed to load subject progress page');
   }
 });
 
