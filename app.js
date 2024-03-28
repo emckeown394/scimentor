@@ -792,11 +792,12 @@ app.get("/reports/:studentId", isTAuthenticated, async (req, res) => {
   const studentId = req.params.studentId;
   const teacherId = req.session.teacher_id;
 
+  console.log(`Student: ${studentId} Teacher: ${teacherId}`);
+
   // Fetch student information
   const studentQuery = 'SELECT id, name, image FROM students WHERE id = ?';
   db.query(studentQuery, [studentId], (studentErr, studentResults) => {
     if (studentErr || studentResults.length === 0) {
-      console.error('Error fetching student:', studentErr);
       return res.status(500).send('Error fetching student information');
     }
 
@@ -837,7 +838,7 @@ function getScoreImage(score, subject) {
     return `${basePath}25.png`;
 } else if (scorePercentage >= 26 && scorePercentage <= 50) {
     return `${basePath}50.png`;
-} else if (scorePercentage >= 51 && scorePercentage <= 75) {
+} else if (scorePercentage >= 51 && scorePercentage <= 99) {
     return `${basePath}75.png`;
 } else if (scorePercentage >= 100) {
     return `${basePath}100.png`;
@@ -874,27 +875,29 @@ app.get("/students", isTAuthenticated, async (req, res) => {
 
 
 //post report to database
-app.post('/api/reports', (req, res) => {
+app.post('/api/reports/:studentId', (req, res) => {
 
-  const { studentId, teacherId, specialEdNeedt, content } = req.body;
+  const { studentId } = req.params;
+  const teacherId = req.session.teacher_id;
+  const { specialEdNeed, content } = req.body;
 
   if (!studentId || !teacherId || !content) {
       return res.status(400).send({ message: 'Missing required report fields.' });
   }
 
   const insertReportQuery = `
-      INSERT INTO reports (student_id, teacher_id, SEN, content)
+      INSERT INTO reports (studentId, teacherId, SEN, content)
       VALUES (?, ?, ?, ?)
   `;
 
   db.query(insertReportQuery, [studentId, teacherId, specialEdNeed, content], (err, result) => {
-      if (err) {
-          console.error('Error inserting report into the database:', err);
-          return res.status(500).send({ message: 'Failed to create report.' });
-      }
-
-      res.status(201).send({ message: 'Report created successfully.', reportId: result.insertId });
-  });
+    if (err) {
+        console.error('Error inserting report into the database:', err);
+        return res.status(500).send({ message: 'Failed to create report.' });
+    }
+    console.log(`Report created successfully. Report ID: ${result.insertId}`);
+    res.redirect('/students');
+});
 });
 
 //cells
