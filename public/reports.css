@@ -143,3 +143,9 @@ img {
     object-fit: cover;
     margin-bottom: .5rem;
 }
+
+#biologyScore,
+#chemistryScore,
+#physicsScore {
+    font-size: 1.8rem;
+}
