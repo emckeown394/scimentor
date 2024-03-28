@@ -29,17 +29,6 @@
                         <% } %>
                         <h2><%= student.name %></h2>
                     </div>
-                    <div class="mb-3">
-                        <label for="specialEdSelect" class="form-label">Special Educational Needs:</label>
-                        <select id="specialEdSelect" required>
-                            <option value="1">Autism</option>
-                            <option value="2">Education Psycology</option>
-                            <option value="3">Language and Communication</option>
-                            <option value="4">Literacy</option>
-                            <option value="5">Vision Impairment and Deafness</option>
-                            <option value="6">None</option>
-                          </select>
-                    </div>
                     <div id="studentScores" class="scores-container">
                         <div class="score-item">
                             <div id="biologyScore">Biology Score: <%= scores.biology_score %>/16</div>
@@ -61,10 +50,21 @@
                         </div>
                     </div>
                 <% } %>    
-                <form id="reportForm" action="/api/reports" method="POST">
+                <form id="reportForm" action="/api/reports/<%= student.id %>" method="POST">
+                    <div class="mb-3">
+                        <label for="specialEdSelect" class="form-label">Special Educational Needs:</label>
+                        <select id="specialEdSelect" name="specialEdNeed" required>
+                            <option value="Autism">Autism</option>
+                            <option value="Education Psycology">Education Psycology</option>
+                            <option value="Language and Communication">Language and Communication</option>
+                            <option value="Literacy">Literacy</option>
+                            <option value="Vision Impairment and Deafness">Vision Impairment and Deafness</option>
+                            <option value="None">None</option>
+                          </select>
+                    </div>
                     <div class="mb-3">
                         <label for="reportContent" class="form-label">Report:</label>
-                        <textarea id="reportContent" class="form-control" required></textarea>
+                        <textarea id="reportContent" class="form-control" name="content" required></textarea>
                     </div>
     
                     <button type="submit" class="btn btn-primary">Send Report</button>
