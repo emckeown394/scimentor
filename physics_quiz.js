@@ -1,7 +1,7 @@
 const phyQuizQuestions = [
     { 
         question: "A planet is a _____.", 
-        choices: ["big rock in space,", "Plastics", "celestial body that orbits a star", "ball of fire", "star"], 
+        choices: ["big rock in space,", "celestial body that orbits a star", "ball of fire", "star"], 
         correctAnswer: "celestial body that orbits a star",
         image: "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/3156018/planet-clipart-md.png"
     },

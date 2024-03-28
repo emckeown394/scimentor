@@ -647,7 +647,7 @@ app.get("/progress", isAuthenticated, (req, res) => {
         return `${basePath}25.png`;
     } else if (scorePercentage >= 26 && scorePercentage <= 50) {
         return `${basePath}50.png`;
-    } else if (scorePercentage >= 51 && scorePercentage <= 75) {
+    } else if (scorePercentage >= 51 && scorePercentage <= 99) {
         return `${basePath}75.png`;
     } else if (scorePercentage >= 100) {
         return `${basePath}100.png`;
@@ -663,6 +663,7 @@ app.get("/progress", isAuthenticated, (req, res) => {
     // Render the progress page with the user's name and scores
     res.render("progress", {
       name: userName,
+      studentId: studentId,
       biologyScore: scores.biology_score || 'No score available',
       chemistryScore: scores.chemistry_score || 'No score available',
       physicsScore: scores.physics_score || 'No score available',
@@ -673,35 +674,64 @@ app.get("/progress", isAuthenticated, (req, res) => {
   });
 });
 
-//specific progress page
-app.get('/subject_progress/:subjectName', isAuthenticated, async (req, res) => {
-  const subjectName = req.params.subjectName.toLowerCase();
-  const studentId = req.session.studentId;
-
-  const scoreField = `${subjectName}_score`;
-  const scoresQuery = `SELECT ${scoreField} FROM students_scores WHERE student_id = ?`;
+// student progress report
+app.get("/progress_report/:studentId", isAuthenticated, async (req, res) => {
+  const studentId = req.params.studentId; // Use param from URL, not session
 
   try {
-      db.query(scoresQuery, [studentId], (error, results) => {
-          if (error || results.length === 0) {
-              console.error('Error fetching scores:', error);
-              return res.status(500).send('Error fetching student scores');
-          }
-
-          const score = results[0][scoreField];
-          const maxScore = subjectName === 'biology' ? 16 : 20;
-          const scoreImage = getScoreImage(score, subjectName);
-
-          res.render('subject_progress', {
-              subjectName: subjectName,
-              score: score || 'No score available',
-              maxScore: maxScore,
-              scoreImage: scoreImage
-          });
+    // Fetch student details
+    const studentDetails = await new Promise((resolve, reject) => {
+      db.query('SELECT name, image, login_streak FROM students WHERE id = ?', [studentId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results[0] || null); // Directly resolve the student object or null if not found
+        }
       });
+    });
+
+    if (!studentDetails) {
+      console.log('No user found with that ID');
+      return res.redirect('/login');
+    }
+
+    // Fetch student scores
+    const scores = await new Promise((resolve, reject) => {
+      db.query('SELECT biology_score, chemistry_score, physics_score FROM students_scores WHERE student_id = ?', [studentId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results[0] || {biology_score: 0, chemistry_score: 0, physics_score: 0}); // Use default scores if no results
+        }
+      });
+    });
+
+    // Assuming getScoreImage is a synchronous function
+    const images = {
+      biology: getScoreImage(scores.biology_score, 'bio'),
+      chemistry: getScoreImage(scores.chemistry_score, 'chem'),
+      physics: getScoreImage(scores.physics_score, 'phy')
+    };
+
+    // Fetch report details. Fetches the latest report created as there could be many
+    const reportQuery = 'SELECT * FROM reports WHERE studentId = ? ORDER BY created_at DESC LIMIT 1';
+    const [reports] = db.query(reportQuery, [studentId]);
+
+    let report = null;
+    if (reports.length > 0) {
+        report = reports[0];
+    }
+
+    // Render the page with student, scores, and report data
+    res.render("progress_report_page", {
+      student: studentDetails, // Use the details fetched from DB
+      scores: scores,
+      images: images,
+      report: report
+    });
   } catch (error) {
-      console.error(error);
-      res.status(500).send('Failed to load subject progress page');
+    console.error('Failed to fetch details:', error);
+    res.status(500).send('Server error');
   }
 });
 
@@ -881,7 +911,7 @@ app.post('/api/reports/:studentId', (req, res) => {
   const teacherId = req.session.teacher_id;
   const { specialEdNeed, content } = req.body;
 
-  if (!studentId || !teacherId || !content) {
+  if (!studentId || !teacherId || !specialEdNeed || !content) {
       return res.status(400).send({ message: 'Missing required report fields.' });
   }
 
