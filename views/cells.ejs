@@ -59,8 +59,8 @@
                     <div class="question">
                         What part of the cell is the flexible outer layer that surrounds the cell and controls which substances can pass into and out from it?
                     </div>
-                    <button id="revealButton">Reveal Answer</button>
-                    <div class="answer" id="answer">
+                    <button class="revealButton">Reveal Answer</button>
+                    <div class="answer" style="display: none;">
                         Cell Membrane
                     </div>
                 </section>
@@ -79,8 +79,8 @@
                     <div class="question">
                         What part of the cell is a space inside the cytoplasm that contains a watery liquid called cell sap. It keeps the cell firm?
                     </div>
-                    <button id="revealButton">Reveal Answer</button>
-                    <div class="answer" id="answer">
+                    <button class="revealButton">Reveal Answer</button>
+                    <div class="answer" style="display: none;">
                         Vacuole
                     </div>
                 </section>
@@ -112,8 +112,15 @@
     </script>
 
 <script>
-    document.getElementById('revealButton').addEventListener('click', function() {
-        console.log("Button clicked!");
+    document.querySelectorAll('.revealButton').forEach(button => {
+        button.addEventListener('click', function() {
+            const answerDiv = this.nextElementSibling;
+            if (answerDiv.style.display === "none") {
+                answerDiv.style.display = "block";
+            } else {
+                answerDiv.style.display = "none";
+            }
+        });
     });
 </script>
 <script src="/app.js"></script>

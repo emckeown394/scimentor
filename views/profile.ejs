@@ -42,16 +42,12 @@
                     <div class="box" data-subject-id="<%= subject.id %>">
                         <h1 class="sub_name"><%= subject.name %> Medal</h1>
                         <% if (subject.score >= subject.maxScore) { %>
-                            <!-- Display unlocked badge if score equals or exceeds max score -->
                             <img src="<%= subject.unlockedBadge %>" alt="Unlocked Badge" class="achievement_badge">
-                            <!-- used to  -->
                             <p class="unlocked_text">Get <%= subject.maxScore %> / <%= subject.maxScore %> in the quiz to unlock medal</p>
                         <% } else { %>
-                            <!-- Display locked badge by default -->
                             <img src="<%= subject.lockedBadge %>" alt="Locked Badge" class="achievement_badge">
                             <p>Get <%= subject.maxScore %> / <%= subject.maxScore %> in the quiz to unlock medal</p>
                         <% } %>
-                        <a href="/subject_progress/<%= subject.name %>" class="inline-btn">View Progress</a>
                     </div>
                 <% }) %>
     </section>

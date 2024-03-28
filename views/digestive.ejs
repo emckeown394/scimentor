@@ -68,8 +68,8 @@
                     <div class="question">
                         What is produced by your liver and stored in the gall bladder?
                     </div>
-                    <button id="revealButton">Reveal Answer</button>
-                    <div class="answer" id="answer">
+                    <button class="revealButton">Reveal Answer</button>
+                    <div class="answer" style="display: none;">
                         Bile
                     </div>
                 </section>
@@ -85,8 +85,8 @@
                         <p>f. mouth</p>
                         <p>g. small intestine</p>
                     </div>
-                    <button id="revealButton">Reveal Answer</button>
-                    <div class="answer" id="answer">
+                    <button class="revealButton">Reveal Answer</button>
+                    <div class="answer" style="display: none;">
                         <p>f. mouth</p>
                         <p>a. oesophagus</p>
                         <p>b. stomach</p>
@@ -124,8 +124,15 @@
     </script>
 
 <script>
-    document.getElementById('revealButton').addEventListener('click', function() {
-        console.log("Button clicked!");
+    document.querySelectorAll('.revealButton').forEach(button => {
+        button.addEventListener('click', function() {
+            const answerDiv = this.nextElementSibling;
+            if (answerDiv.style.display === "none") {
+                answerDiv.style.display = "block";
+            } else {
+                answerDiv.style.display = "none";
+            }
+        });
     });
 </script>
 <script src="/app.js"></script>
