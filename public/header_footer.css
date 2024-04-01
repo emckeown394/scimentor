@@ -154,11 +154,19 @@ body {
     html{
         font-size: 55%;
     }
+    .header .flex .logo img {
+        width: auto;
+        max-height: 100px;
+    }
 }
 
-@media (max-width:450px){
+@media (max-width:480px){
     html{
         font-size: 50%;
+    }
+    .header .flex .logo img {
+        width: auto;
+        max-height: 80px;
     }
 }
 

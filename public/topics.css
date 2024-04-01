@@ -132,7 +132,7 @@ body {
     }
 
     .thumbnail {
-        height: auto;
+        width: 80%;
     }
 
     .inline-btn {
@@ -149,10 +149,12 @@ body {
 }
 
 /* Responsiveness for phone screens (450px) */
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 480px) {
     .box-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
         padding: 0.5rem;
+        width: 90%;
+        margin-left: 20px;
     }
 
     .box {
@@ -160,7 +162,7 @@ body {
     }
 
     .thumbnail {
-        height: 15rem;
+        width: 80%;
     }
 
     .inline-btn {

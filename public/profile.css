@@ -112,3 +112,38 @@ p {
     height: 30rem;
     padding: 1rem;
 }
+
+.box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.box-container .box{
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+}
+
+/* glow on hover */
+.box-container .box:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+    cursor: pointer;
+}
+
+img {
+    width: 45%;
+    border-radius: .5rem;
+    height: 15rem;
+    padding: 1rem;
+}
+
+.stu_name{
+    font-size: 3rem;
+    color: var(--black);
+}

@@ -121,6 +121,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .score-item {
@@ -148,4 +149,19 @@ img {
 #chemistryScore,
 #physicsScore {
     font-size: 1.8rem;
+}
+
+.SEN,
+.content {
+    font-size: 2rem;
+}
+
+.SEN {
+    color: var(--light-color);
+}
+
+.border-bottom,
+.student-info {
+    border-bottom: 1px solid var(--light-bg); /* Light grey border */
+    padding-bottom: 15px; /* Add some padding if needed */
 }

@@ -22,8 +22,9 @@ body {
 
 #container {
     display: flex;
+    width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .page-content {
@@ -63,6 +64,11 @@ body {
     margin-bottom: 10px;
 }
 
+.page-content, #content, #table-of-contents {
+  padding: 10px;
+  margin: 5px;
+}
+
 .active {
     font-weight: bold;
 }
@@ -84,13 +90,14 @@ section{
 
 .top_img {
     width: 70%;
+    max-width: 100%;
     border-radius: .5rem;
-    height: 30rem;
+    height: auto;
     padding: 1rem;
 }
 
 .top_img2 {
-    width: 50%;
+    width: 45%;
     border-radius: .5rem;
     height: 30rem;
     padding: 1rem;
@@ -223,8 +230,85 @@ table {
     from {opacity: .4} 
     to {opacity: 1}
   }
-  
-  /* On smaller screens, decrease text size */
-  @media only screen and (max-width: 300px) {
-    .prev, .next,.text {font-size: 11px}
+
+  @media screen and (max-width: 768px) {
+
+    body {
+      font-size: 14px;
+    }
+
+    h1, h2 {
+      font-size: 18px;
+    }
+
+    .prev, .next {
+      font-size: 18px;
+    }
+    
+    #table-of-contents {
+      position: fixed;
+      top: 160px;
+      left: 20px;
+      width: 110px;
+      height: 100%;
+      overflow-y: auto;
+      z-index: 1000;
+      background-color: #f0f0f0;
+      max-height: 50vh;
+      margin-top: 65px;
   }
+
+    #content {
+        margin-left: 150px;
+    }
+
+    .slideshow-container, .mySlides, .slide_img {
+        width: 100%; /* Full width */
+    }
+
+    .top_img2 {
+      width: 50%;
+      border-radius: .5rem;
+      height: 30rem;
+      padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1, h2 {
+        font-size: 18px;
+    }
+
+    .prev, .next {
+        font-size: 18px;
+    }
+
+    #table-of-contents {
+      position: fixed;
+      top: 160px;
+      left: 20px;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      z-index: 1000;
+      background-color: #f0f0f0;
+      max-height: 170px;
+      margin-top: 0px;
+  }
+
+  #content {
+      margin-top: 220px;
+      margin-left: 0;
+  }
+
+  .top_img2 {
+    width: 40%;
+    border-radius: .5rem;
+    height: 20rem;
+    padding: 1rem;
+}
+}
