@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Report</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/reports.css">
+
+</head>
+<body>
+    <%- include ('header') %>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h1>Academic Student Report</h1>
+                <% if (student) { %>
+                    <div class="student-info">
+                        <% if (student.image === 'm') { %>
+                            <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img">
+                        <% } else { %>
+                            <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img">
+                        <% } %>
+                        <h2><%= student.name %></h2>
+                        <h2>Teacher: <%= teacherName %></h2>
+                    </div>
+                    <div id="studentScores" class="scores-container">
+                        <div class="score-item">
+                            <div id="biologyScore">Biology Score: <%= scores.biology_score %>/16</div>
+                            <img id="biologyImage" src="<%= bioScoreImg %>"" alt="Biology Score Image">
+                        </div>
+                        <div class="score-item">
+                            <div id="chemistryScore">Chemistry Score: <%= scores.chemistry_score %>/20</div>
+                            <img id="chemistryImage" src="<%= chemScoreImg %>" alt="Chemistry Score Image">
+                        </div>
+                        <div class="score-item">
+                            <div id="physicsScore">Physics Score: <%= scores.physics_score %>/20</div>
+                            <img id="physicsImage" src="<%= phyScoreImg %>" alt="Physics Score Image">
+                        </div>
+                    </div>
+                <% } %>
+                <% if (report) { %>
+                    <div>
+                        <div class="mb-3 border-bottom">
+                            <p class="SEN">Special Educational Needs: <%= report.SEN %></p>
+                        </div>
+                        <div class="mb-3">
+                            <h1>Report Notes</h1>
+                            <p class="content"><%= report.content %></p>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <p>No report found for this student.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%- include ('footer') %>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/styles.css">
+   <link rel="stylesheet" href="/public/profile.css">
+</head>
+<body>
+
+    <%- include ('teacher_header') %>
+
+    <section class="profile">
+
+        <h1 class="heading">Profile Details</h1>
+
+        <div class="details">
+            <div class="user">
+                <img src="/images/users/t_user.png" alt="">
+                <p>Teacher</p>
+                <p><%= email %></p>
+            </div>
+       
+            <h1 class="heading">Students</h1>
+
+         
+            <div class="box-container">
+                <% rowdata.forEach((students) => { %>
+                    <div class="box" data-students-id="<%= students.id %>">
+                        <% if (students.image === 'm') { %>
+                            <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img">
+                        <% } else { %>
+                            <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img">
+                        <% } %>
+                        <h1 class="stu_name"><%= students.name %></h1>
+                    </div>
+                <% }) %>
+            </div>
+    </section>
+
+    <%- include ('footer') %>
+    <script src="/app.js"></script>
+</body>
+</html>
