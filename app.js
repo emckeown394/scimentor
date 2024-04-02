@@ -323,6 +323,7 @@ app.get("/topics", (req, res) => {
 
 //biology topics
 app.get('/topic/1', (req, res) => {
+  const userType = req.session.userType;
   const subjectId = req.params.subjectId;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '1'";
   connection.query(readsql, (err, rows) => {
@@ -330,7 +331,7 @@ app.get('/topic/1', (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('biology_topics', { title: 'Biology Topics', subjectId, topicData, loggedIn });
+      res.render('biology_topics', { title: 'Biology Topics', userType: userType, subjectId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load biology topics page');
@@ -340,6 +341,7 @@ app.get('/topic/1', (req, res) => {
 
 //chemistry topics
 app.get('/topic/2', (req, res) => {
+  const userType = req.session.userType;
   const subjectId = req.params.subjectId;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '2'";
   connection.query(readsql, (err, rows) => {
@@ -347,7 +349,7 @@ app.get('/topic/2', (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('chemistry_topics', { title: 'Chemistry Topics', subjectId, topicData, loggedIn });
+      res.render('chemistry_topics', { title: 'Chemistry Topics', userType: userType, subjectId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load chemistry topics page');
@@ -357,6 +359,7 @@ app.get('/topic/2', (req, res) => {
 
 //physics topics
 app.get('/topic/6', (req, res) => {
+  const userType = req.session.userType;
   const subjectId = req.params.subject_id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE LOWER(subject_id) = '6'";
   connection.query(readsql, (err, rows) => {
@@ -364,7 +367,7 @@ app.get('/topic/6', (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('physics_topics', { title: 'Physics Topics', subjectId, topicData, loggedIn });
+      res.render('physics_topics', { title: 'Physics Topics', userType: userType, subjectId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load physics topics page');
@@ -624,7 +627,6 @@ app.get("/topics/1", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      console.log(userType);
       res.render('cells', { title: 'Animal and Plant Cells', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
@@ -635,6 +637,7 @@ app.get("/topics/1", (req, res) => {
 
 //plants
 app.get("/topics/2", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '2'";
   connection.query(readsql, (err, rows) => {
@@ -642,7 +645,7 @@ app.get("/topics/2", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('plants', { title: 'Plants', topicId, topicData, loggedIn });
+      res.render('plants', { title: 'Plants', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -652,6 +655,7 @@ app.get("/topics/2", (req, res) => {
 
 //digestive
 app.get("/topics/3", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '3'";
   connection.query(readsql, (err, rows) => {
@@ -659,7 +663,7 @@ app.get("/topics/3", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('digestive', { title: 'Digestive System', topicId, topicData, loggedIn });
+      res.render('digestive', { title: 'Digestive System', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -669,6 +673,7 @@ app.get("/topics/3", (req, res) => {
 
 //materials
 app.get("/topics/4", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '4'";
   connection.query(readsql, (err, rows) => {
@@ -676,7 +681,7 @@ app.get("/topics/4", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('materials', { title: 'Materials', topicId, topicData, loggedIn });
+      res.render('materials', { title: 'Materials', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -686,6 +691,7 @@ app.get("/topics/4", (req, res) => {
 
 //rocks
 app.get("/topics/5", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '5'";
   connection.query(readsql, (err, rows) => {
@@ -693,7 +699,7 @@ app.get("/topics/5", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('rocks', { title: 'Rocks', topicId, topicData, loggedIn });
+      res.render('rocks', { title: 'Rocks', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -703,6 +709,7 @@ app.get("/topics/5", (req, res) => {
 
 //solids, liquids and gases
 app.get("/topics/6", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '6'";
   connection.query(readsql, (err, rows) => {
@@ -710,7 +717,7 @@ app.get("/topics/6", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('states_of_matter', { title: 'Solids, Liquids and Gases', topicId, topicData, loggedIn });
+      res.render('states_of_matter', { title: 'Solids, Liquids and Gases', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -720,6 +727,7 @@ app.get("/topics/6", (req, res) => {
 
 //changing states
 app.get("/topics/7", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '7'";
   connection.query(readsql, (err, rows) => {
@@ -727,7 +735,7 @@ app.get("/topics/7", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('changing_states', { title: 'Changing States', topicId, topicData, loggedIn });
+      res.render('changing_states', { title: 'Changing States', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -737,6 +745,7 @@ app.get("/topics/7", (req, res) => {
 
 //Earth and Space
 app.get("/topics/10", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '10'";
   connection.query(readsql, (err, rows) => {
@@ -744,7 +753,7 @@ app.get("/topics/10", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('space', { title: 'Earth and Space', topicId, topicData, loggedIn });
+      res.render('space', { title: 'Earth and Space', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -755,6 +764,7 @@ app.get("/topics/10", (req, res) => {
 
 //light
 app.get("/topics/11", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '11'";
   connection.query(readsql, (err, rows) => {
@@ -762,7 +772,7 @@ app.get("/topics/11", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('light', { title: 'Light', topicId, topicData, loggedIn });
+      res.render('light', { title: 'Light', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -772,6 +782,7 @@ app.get("/topics/11", (req, res) => {
 
 //magnets
 app.get("/topics/12", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '12'";
   connection.query(readsql, (err, rows) => {
@@ -779,7 +790,7 @@ app.get("/topics/12", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('magnets', { title: 'Magnets', topicId, topicData, loggedIn });
+      res.render('magnets', { title: 'Magnets', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -789,6 +800,7 @@ app.get("/topics/12", (req, res) => {
 
 //sound
 app.get("/topics/13", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '13'";
   connection.query(readsql, (err, rows) => {
@@ -796,7 +808,7 @@ app.get("/topics/13", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('sound', { title: 'Sound', topicId, topicData, loggedIn });
+      res.render('sound', { title: 'Sound', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -806,6 +818,7 @@ app.get("/topics/13", (req, res) => {
 
 //electricity
 app.get("/topics/14", (req, res) => {
+  const userType = req.session.userType;
   const topicId = req.params.id;
   let readsql = "SELECT id, name, subject_type, image FROM topics WHERE id = '14'";
   connection.query(readsql, (err, rows) => {
@@ -813,7 +826,7 @@ app.get("/topics/14", (req, res) => {
       if (err) throw err;
       let topicData = rows;
       let loggedIn = req.session.loggedin;
-      res.render('electricity', { title: 'Electricity', topicId, topicData, loggedIn });
+      res.render('electricity', { title: 'Electricity', userType: userType, topicId, topicData, loggedIn });
     } catch (err) {
       console.error(err);
       res.status(500).send('Failed to load topics page');
@@ -1127,7 +1140,8 @@ app.get("/create_subject", isTAuthenticated, async (req,res) => {
 
 //adding subject info to database
 app.post('/create_subject', (req, res) => {
-  const { sub_name, sub_img } = req.body;
+  const sub_name = req.body['sub-name']; 
+  const sub_img = req.body['sub-img'];
 
   db.query(
     `INSERT INTO subjects (name, image) VALUES (?, ?)`,
@@ -1150,18 +1164,34 @@ app.get("/create_topic", isTAuthenticated, async (req,res) => {
 
 //adding topic info to database
 app.post('/create_topic', (req, res) => {
-  const { top_name, sub_name, sub_img } = req.body;
+  const top_name = req.body['top-name'];
+  const sub_name = req.body['sub-name']; // This is the name of the subject
+  const top_img = req.body['top-img'];
 
+  // First, fetch the subject ID based on the subject name
   db.query(
-    `INSERT INTO topics (name, subject_type, image) VALUES (?, ?, ?)`,
-    [top_name, sub_name, sub_img],
-    (err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('An error occurred during topic creation.');
-      } else {
-        res.redirect('/teacher_topics');
+    `SELECT id FROM subjects WHERE name = ? LIMIT 1`,
+    [sub_name],
+    (subErr, subResults) => {
+      if (subErr || subResults.length === 0) {
+        console.error(subErr || 'Subject not found');
+        return res.status(500).send('An error occurred during topic creation: Subject not found.');
       }
+
+      const subjectId = subResults[0].id;
+
+      db.query(
+        `INSERT INTO topics (name, subject_id, subject_type, image) VALUES (?, ?, ?, ?)`,
+        [top_name, subjectId, sub_name, top_img],
+        (topicErr) => {
+          if (topicErr) {
+            console.error(topicErr);
+            res.status(500).send('An error occurred during topic creation.');
+          } else {
+            res.redirect('/teacher_topics');
+          }
+        }
+      );
     }
   );
 });
@@ -1217,6 +1247,7 @@ app.get("/teacher_profile", isTAuthenticated, async (req, res) => {
     const studentResult = await queryAsync('SELECT id, name, image FROM students');
 
     res.render("teacher_profile", {
+      name: teacherDetails.name,
       email: teacherDetails.email,
       rowdata: studentResult,
     });

@@ -286,7 +286,17 @@ function retakeQuiz() {
     displayQuestion(); 
 }
 
+//button to exit quiz
+function addExitButton() {
+    const exitButton = document.createElement('button');
+    exitButton.textContent = 'Exit Quiz';
+    exitButton.classList.add('exit-btn');
+    exitButton.addEventListener('click', () => window.location.href = '/homepage');
+    document.body.appendChild(exitButton);
+}
+
 displayQuestion();
+addExitButton();
 
 function sendScore(studentId, phy_score) {
     fetch('/api/physics_scores', {
