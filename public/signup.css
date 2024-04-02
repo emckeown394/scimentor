@@ -22,6 +22,7 @@ body {
 
 h1 {
     color: var(--orange);
+    font-size: 30px;
 }
 
 span{
@@ -135,4 +136,37 @@ input[type="text"], input[type="password"], input[type="email"] {
     font-size: 1rem;
     padding: .5rem;
     color: var(--red);
+}
+
+.forgot-password {
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        min-height: 66vh;
+    }
+    p {
+        font-size: 16px;
+    }
+    .form-label {
+        font-size: 14px;
+    }
+    .btn-primary,
+    .login__btn {
+        font-size: 14px;
+    }
+    a {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        min-height: 67vh;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
 }

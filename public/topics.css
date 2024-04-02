@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@1&family=Kumbh+Sans:wght@400;700&display=swap');
 
 :root {
-    --main-color: #3c89e7;
-    --white: #fff;
-    --black: #2c3e50;
-    --light-bg: #eee;
+    --main-color:#3c89e7;
+    --red:#e74c3c;
+    --orange:#f39c12;
+    --green:#3cd951;
+    --white:#fff;
+    --black:#2c3e50;
+    --light-color:#888;
+    --light-bg:#eee;
+    --border:.1rem solid rgba(0,0,0,.2);
 }
 
 body {
@@ -17,9 +22,9 @@ body {
     font-size: 3.5rem;
     padding: 1rem;
     text-align: center;
+    color: var(--orange);
 }
 
-/* Box container styling */
 .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -28,7 +33,6 @@ body {
     justify-content: center;
 }
 
-/* Individual box styling */
 .box {
     display: flex;
     flex-direction: column;
@@ -58,7 +62,8 @@ body {
     text-align: center;
     padding: 2rem;
     min-height: 35rem;
-    max-width: 35rem;
+    max-width: 33rem;
+    margin-left: 15px;
 }
 
 /* Glow on hover */
@@ -146,12 +151,16 @@ body {
     .sub_type {
         padding: 0.5rem;
     }
+
+    .create {
+        max-width: 38rem;
+        margin-left: 8px;
+    }
 }
 
 /* Responsiveness for phone screens (450px) */
 @media screen and (max-width: 480px) {
     .box-container {
-        /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
         padding: 0.5rem;
         width: 90%;
         margin-left: 20px;
@@ -165,16 +174,16 @@ body {
         width: 80%;
     }
 
-    .inline-btn {
-        padding: 0.5rem 1rem;
-        font-size: 1.5rem;
-    }
-
     .top_name {
         font-size: 1.2rem;
     }
 
     .sub_type {
         padding: 0.3rem;
+    }
+
+    .create {
+        max-width: 44rem;
+        margin-left: 22px;
     }
 }

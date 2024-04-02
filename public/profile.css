@@ -30,7 +30,13 @@ body{
     min-height: 75vh;
 }
 
+.heading {
+    color: var(--orange);
+}
+
 .profile .details{
+    display: flex;
+    flex-direction: column;
     background-color: var(--light-bg);
     border-radius: .5rem;
     padding: 2rem;
@@ -146,4 +152,22 @@ img {
 .stu_name{
     font-size: 3rem;
     color: var(--black);
+}
+
+
+/* media responsiveness */
+@media (max-width: 768px) {
+    .box {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile .achievement_badge {
+        max-width: 170px;
+    }
+
+    .profile .box-container .box .student_img {
+        height: 18rem;
+    }
 }

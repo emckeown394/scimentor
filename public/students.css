@@ -27,7 +27,6 @@
     color: #fff;
 }
 
-/* change scrollbar to blue colour to match theme */
 *::-webkit-scrollbar{
     height: .5rem;
     width: 1rem;
@@ -83,24 +82,30 @@ img {
     padding: 1rem;
 }
 
+.students {
+    min-height: 77vh;
+}
+
 .students .box-container{
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     gap: 1.5rem;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .students .box-container .box{
+    width: calc(33.333% - 20px);
     border-radius: .5rem;
     background-color: var(--white);
     padding: 2rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* glow on hover */
 .students .box-container .box:hover {
     box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
     cursor: pointer;
@@ -122,4 +127,34 @@ img {
 .inline-btn:hover{
     background-color: var(--black);
     color: var(--white);
+}
+
+/* Media Responsiveness */
+
+@media screen and (max-width: 768px) {
+    .students .box {
+        flex: 0 0 calc(50% - 20px);
+    }
+    .students .box img {
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .students .box {
+        flex: 0 0 100%; /* Full width boxes */
+        margin: 10px 0;
+    }
+
+    .students .box-container, .reports {
+        padding: 0 10px; /* Add padding on the sides */
+    }
+    
+    .students h1, .reports a {
+        text-align: center; /* Center-align text for smaller screens */
+    }
+    
+    .students .box img {
+        height: 180px; /* Adjust image height for consistency */
+    }
 }

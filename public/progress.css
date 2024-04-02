@@ -75,3 +75,20 @@
     max-width: 320px;
     height: auto;
 }
+
+/* media responsiveness */
+@media (max-width: 768px) {
+    .box {
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 480px) {
+    .box-container, .box {
+        width: 100%; 
+    }
+
+    .box {
+        margin-bottom: 20px; 
+    }
+}

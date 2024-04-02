@@ -162,6 +162,6 @@ img {
 
 .border-bottom,
 .student-info {
-    border-bottom: 1px solid var(--light-bg); /* Light grey border */
-    padding-bottom: 15px; /* Add some padding if needed */
+    border-bottom: 2px solid var(--light-bg);
+    padding-bottom: 15px;
 }

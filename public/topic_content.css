@@ -204,7 +204,6 @@ table {
     top: 0;
   }
   
-  /* dots */
   .dot {
     cursor: pointer;
     height: 15px;
@@ -263,7 +262,7 @@ table {
     }
 
     .slideshow-container, .mySlides, .slide_img {
-        width: 100%; /* Full width */
+        width: 100%;
     }
 
     .top_img2 {
@@ -310,5 +309,5 @@ table {
     border-radius: .5rem;
     height: 20rem;
     padding: 1rem;
-}
+  }
 }
