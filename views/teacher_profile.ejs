@@ -24,19 +24,19 @@
             <div class="user">
                 <img src="/images/users/t_user.png" alt="">
                 <p>Teacher</p>
+                <p><%= name %></p>
                 <p><%= email %></p>
             </div>
        
             <h1 class="heading">Students</h1>
 
-         
             <div class="box-container">
                 <% rowdata.forEach((students) => { %>
                     <div class="box" data-students-id="<%= students.id %>">
                         <% if (students.image === 'm') { %>
-                            <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img">
+                            <img src="/images/users/m_user.png" alt="Male Profile Image" id="student_img" class="student_img">
                         <% } else { %>
-                            <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img">
+                            <img src="/images/users/f_user.png" alt="Female Profile Image" id="student_img" class="student_img">
                         <% } %>
                         <h1 class="stu_name"><%= students.name %></h1>
                     </div>

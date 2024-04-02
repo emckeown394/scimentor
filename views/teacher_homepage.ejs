@@ -17,12 +17,12 @@
     <section class="subjects">
         <h1 class="heading">Subjects</h1>
         <div class="box-container">
-            <% rowdata.forEach((subjects) => { %>
-                <div class="box" data-subjects-id="<%= subjects.id %>">
-                    <h1 class="sub_name"><%= subjects.name %></h1>
-                    <img src="<%= subjects.image %>" class="thumbnail">
-                    <a href="topics" class="inline-btn">View Topics</a>
-                    <a href="" class="delete-btn" data-subject-id="<%= subjects.id %>">Delete Subject</a>
+            <% rowdata.forEach((subject) => { %>
+                <div class="box" data-subject-id="<%= subject.id %>">
+                    <h1 class="sub_name"><%= subject.name %></h1>
+                    <img src="<%= subject.image %>" class="thumbnail">
+                    <a href="/topic/<%= subject.id %>" class="inline-btn">View Topics</a>
+                    <a href="" class="delete-btn" data-subject-id="<%= subject.id %>">Delete Subject</a>
                 </div>
             <% }) %>
             <div class="create">

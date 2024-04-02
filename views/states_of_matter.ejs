@@ -14,7 +14,11 @@
 
 </head>
 <body>
-    <%- include ('header') %>
+    <% if (userType === 'teacher') { %>
+        <%- include('teacher_header') %>
+    <% } else { %>
+        <%- include('header') %>
+    <% } %>
 
     <div class="page-content">
         <div id="container">

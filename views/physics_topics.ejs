@@ -14,7 +14,11 @@
    
 </head>
 <body>
-    <%- include ('header') %>
+    <% if (userType === 'student') { %>
+        <%- include('header') %>
+    <% } else { %>
+        <%- include('teacher_header') %>
+    <% } %>
     <section class="topics">
 
         <h1 class="heading">Physics Topics</h1>
@@ -27,7 +31,11 @@
                         <h1 class="sub_type"><%= topics.subject_type %></h1>
                         <img src="<%= topics.image %>" class="thumbnail">
                         <div>
-                            <a href="/topics/<%= topics.id %>" class="inline-btn">Learn</a>
+                            <% if (userType === 'student') { %>
+                                <a href="/topics/<%= topics.id %>" class="inline-btn">Learn</a>
+                            <% } else { %>
+                                <a href="/topics/<%= topics.id %>" class="inline-btn">View</a>
+                            <% } %>
                         </div>
                     </div>
                 </div>
