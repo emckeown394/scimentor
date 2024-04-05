@@ -182,6 +182,11 @@ app.get("/login", async (req,res) => {
 });
 
 //retrieving login credentials to database
+app.get("/login", async (req,res) => {
+  res.render('login');
+});
+
+//retrieving login credentials to database
 app.post('/login', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
@@ -216,34 +221,6 @@ app.post('/login', function (req, res) {
 
               req.session.userType = 'student'; 
               console.log(`Logged in student_id: ${req.session.student_id}`);
-
-              const studentId = req.session.student_id;
-              const { last_login_date, login_streak } = db.query('SELECT last_login_date, login_streak FROM students WHERE id = ?', [studentId]);
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
-              
-              const lastLoginDate = new Date(last_login_date);
-              lastLoginDate.setHours(0, 0, 0, 0);
-              
-              const yesterday = new Date();
-              yesterday.setDate(yesterday.getDate() - 1);
-              yesterday.setHours(0, 0, 0, 0);
-              
-              let newStreak = login_streak;
-  
-              if (lastLoginDate.toString() === yesterday.toString()) {
-                // If last login was yesterday, increase the streak
-                newStreak++;
-              } else if (lastLoginDate < yesterday) {
-                // If last login was before yesterday, reset the streak
-                newStreak = 1;
-              }
-              
-              // Update last_login_date and login_streak in the database
-              db.query(
-                'UPDATE students SET last_login_date = ?, login_streak = ? WHERE id = ?',
-                [today, newStreak, studentId]
-                );
 
               res.redirect('/homepage');
             } else {
@@ -389,7 +366,7 @@ app.get("/profile", isAuthenticated, async (req, res) => {
   const studentId = req.session.student_id;
 
   try {
-    const userDetailsResult = await queryAsync('SELECT name, email, image, login_streak FROM students WHERE id = ?', [studentId]);
+    const userDetailsResult = await queryAsync('SELECT name, email, image FROM students WHERE id = ?', [studentId]);
     if (userDetailsResult.length === 0) {
       console.log('No user found with that ID');
       return res.redirect('/login');
@@ -551,7 +528,7 @@ app.get("/progress_report/:studentId", isAuthenticated, async (req, res) => {
 
   try {
     // Fetch student details
-    const userDetailsResult = await queryAsync('SELECT name, email, image, login_streak FROM students WHERE id = ?', [studentId]);
+    const userDetailsResult = await queryAsync('SELECT name, email, image FROM students WHERE id = ?', [studentId]);
     if (userDetailsResult.length === 0) {
       console.log('No user found with that ID');
       return res.redirect('/login');
@@ -1368,6 +1345,39 @@ app.post('/api/reports/:studentId', (req, res) => {
     console.log(`Report created successfully. Report ID: ${result.insertId}`);
     res.redirect('/students');
   });
+});
+
+//all reports
+app.get("/all_reports", isTAuthenticated, async (req, res) => {
+  const teacherId = req.session.teacher_id;
+
+  try {
+      const query = `
+      SELECT reports.id, students.name AS studentName, students.image, reports.content, reports.created_at 
+      FROM reports 
+      JOIN students ON reports.studentId = students.id 
+      WHERE reports.teacherId = ?
+      ORDER By reports.created_at DESC`;
+      db.query(query, [teacherId], (err, reports) => {
+        if (err) {
+          console.error('Error fetching reports:', err);
+          return res.status(500).send('Error fetching reports');
+        }
+        //formatting date and time in UK format
+        reports = reports.map(report => {
+          const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+          const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+          const datePart = new Date(report.created_at).toLocaleDateString('en-GB', dateOptions);
+          const timePart = new Date(report.created_at).toLocaleTimeString('en-GB', timeOptions);
+          report.created_at = `${datePart} ${timePart}`;
+          return report;
+        });
+        res.render('all_reports', { reports: reports });
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Failed to load the reports page');
+  }
 });
 
 //logout
