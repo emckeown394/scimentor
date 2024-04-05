@@ -111,7 +111,7 @@ img {
     cursor: pointer;
 }
 
-.inline-btn{
+.inline-btn {
     border-radius: .5rem;
     padding: 1rem 3rem;
     font-size: 1.8rem;
@@ -124,37 +124,84 @@ img {
     display: inline-block;
 }
 
-.inline-btn:hover{
+.inline-btn:hover {
     background-color: var(--black);
     color: var(--white);
+}
+
+/* all reports */
+
+.reports {
+    min-height: 77vh;
+}
+
+.reports .box-container{
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.reports .box-container .box{
+    width: calc(33.333% - 20px);
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reports .box-container .box:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+    cursor: pointer;
+}
+
+.report-content {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.report_date {
+    font-size: 15px;
+    margin-top: 10px;
 }
 
 /* Media Responsiveness */
 
 @media screen and (max-width: 768px) {
-    .students .box {
+    .students .box,
+    .reports .box {
         flex: 0 0 calc(50% - 20px);
     }
-    .students .box img {
+    .students .box img,
+    .reports .box .img {
         height: 150px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .students .box {
-        flex: 0 0 100%; /* Full width boxes */
+    .students .box,
+    .reports .box {
+        flex: 0 0 100%;
         margin: 10px 0;
     }
 
-    .students .box-container, .reports {
-        padding: 0 10px; /* Add padding on the sides */
+    .students .box-container, .reports,
+    .reports .box-container {
+        padding: 0 10px;
     }
     
-    .students h1, .reports a {
-        text-align: center; /* Center-align text for smaller screens */
+    .students h1, .reports a,
+    .reports h1 {
+        text-align: center;
     }
     
-    .students .box img {
-        height: 180px; /* Adjust image height for consistency */
+    .students .box img,
+    .reports .box img {
+        height: 180px;
     }
 }

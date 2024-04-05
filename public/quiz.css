@@ -58,7 +58,6 @@ h2{
     color: var(--black);
     border: none;
     border-radius: 5px;
-    /* cursor: pointer; */
     font-size: 16px;
     transition: background-color 0.3s ease;
     margin-bottom: .5rem;
@@ -164,7 +163,7 @@ h2{
 
 .exit-btn {
     border-radius: .5rem;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     font-size: 1rem;
     color: var(--white);
     text-transform: capitalize;
@@ -173,6 +172,21 @@ h2{
     margin-bottom: .5rem;
     margin-top: 15px;
     display: inline-block;
-    width: 50%;
+    width: 10%;
     background-color: var(--red);
+}
+
+@media (max-width: 768px) {
+    .exit-btn {
+        width: 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-container {
+        width: 75%;
+    }
+    .exit-btn {
+        width: 30%; 
+    }
 }
