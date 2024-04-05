@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reports</title>
+
+    <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="/public/students.css">
+   
+</head>
+<body>
+    <%- include ('teacher_header') %>
+    <section class="reports">
+        <h1 class="heading">All Reports</h1>
+        <div class="box-container">
+            <% reports.forEach((report) => { %>
+                <div class="box" data-report-id="<%= report.id %>">
+                    <% if (report.image === 'm') { %>
+                        <img src="/images/users/m_user.png" alt="Male Profile Image">
+                    <% } else { %>
+                        <img src="/images/users/f_user.png" alt="Female Profile Image">
+                    <% } %>
+                    <h1 class="stu_name"><%= report.studentName %></h1>
+                    <p class="report-content"><%= report.content %></p>
+                    <p class="report_date">Report Date: <%= report.created_at %></p>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <%- include ('footer') %>
+</body>
+</html>
