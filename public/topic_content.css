@@ -37,6 +37,11 @@ body {
     margin-left: 100px;
 }
 
+p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
 #table-of-contents {
     position: fixed;
     flex: 0 0 200px;
@@ -62,6 +67,7 @@ body {
     color: #333;
     display: block;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .page-content, #content, #table-of-contents {
@@ -73,8 +79,16 @@ body {
     font-weight: bold;
 }
 
-h1,h2{
+h1{
+  color: var(--main-color);
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+h2{
     color: var(--main-color);
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 li:hover {
@@ -97,7 +111,7 @@ section{
 }
 
 .top_img2 {
-    width: 45%;
+    width: 30%;
     border-radius: .5rem;
     height: 30rem;
     padding: 1rem;
@@ -106,18 +120,21 @@ section{
 
 .bold {
     font-weight: bold;
+    font-size: 16px;
 }
 
 .question {
     padding-top: 1rem;
     margin-bottom: 15px;
     color: var(--main-color);
+    font-size: 16px;
 }
 
 .answer {
     display: none;
     margin-top: 15px;
     color: var(--black);
+    font-size: 16px;
 }
 
 button {
@@ -232,7 +249,8 @@ table {
 
   @media screen and (max-width: 768px) {
 
-    body {
+    body,
+    .bold {
       font-size: 14px;
     }
 
@@ -248,14 +266,18 @@ table {
       position: fixed;
       top: 160px;
       left: 20px;
-      width: 110px;
+      width: 140px;
       height: 100%;
       overflow-y: auto;
       z-index: 1000;
       background-color: #f0f0f0;
       max-height: 50vh;
       margin-top: 65px;
-  }
+    }
+
+    #table-of-contents a {
+      font-size: 14px;
+    }
 
     #content {
         margin-left: 150px;
@@ -280,6 +302,15 @@ table {
 
     h1, h2 {
         font-size: 18px;
+    }
+
+    p,
+    .question,
+    .answer,
+    .bold,
+    th,
+    td {
+      font-size: 12px;
     }
 
     .prev, .next {
@@ -310,4 +341,8 @@ table {
     height: 20rem;
     padding: 1rem;
   }
+
+  /* table {
+    width: 70%;
+  } */
 }

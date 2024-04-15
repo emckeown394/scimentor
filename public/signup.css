@@ -33,7 +33,7 @@ span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 58vh;
+    min-height: 60vh;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;

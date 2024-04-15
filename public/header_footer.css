@@ -45,12 +45,12 @@ body {
 }
 
 .header .flex .icons div{
-    font-size: 3rem;
+    font-size: 4rem;
     color: var(--black);
     border-radius: .5rem;
-    height: 5.5rem;
+    height: 6rem;
     cursor: pointer;
-    width: 5.5rem;
+    width: 6.5rem;
     line-height: 5.4rem;
     background-color: var(--light-bg);
     text-align: center;

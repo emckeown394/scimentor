@@ -133,6 +133,7 @@ section{
     font-size: 3.5rem;
     padding: 2rem;
     text-align: center;
+    color: var(--orange);
 }
 
 .create {
