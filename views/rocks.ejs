@@ -10,11 +10,16 @@
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="/public/header_footer.css">
+   <link rel="stylesheet" href="/public/styles.css">
    <link rel="stylesheet" href="/public/topic_content.css">
 
 </head>
 <body>
-    <%- include ('header') %>
+    <% if (userType === 'student') { %>
+        <%- include('header') %>
+    <% } else { %>
+        <%- include('teacher_header') %>
+    <% } %>
 
     <div class="page-content">
         <div id="container">
