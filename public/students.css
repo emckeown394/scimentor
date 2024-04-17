@@ -56,6 +56,10 @@ section{
     margin: 0 auto;
 }
 
+.students {
+    min-height: 79vh;
+}
+
 .heading{
     font-size: 3.5rem;
     padding: 2rem;
@@ -80,10 +84,6 @@ img {
     border-radius: .5rem;
     height: 15rem;
     padding: 1rem;
-}
-
-.students {
-    min-height: 77vh;
 }
 
 .students .box-container{
@@ -132,7 +132,7 @@ img {
 /* all reports */
 
 .reports {
-    min-height: 77vh;
+    min-height: 79vh;
 }
 
 .reports .box-container{
@@ -153,6 +153,7 @@ img {
     transition: box-shadow 0.3s ease;
     text-align: center;
     margin-bottom: 20px;
+    min-height: 38vh;
 }
 
 .reports .box-container .box:hover {
@@ -162,12 +163,12 @@ img {
 
 .report-content {
     font-size: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .report_date {
     font-size: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 /* Media Responsiveness */

@@ -13,6 +13,25 @@
 
 }
 
+/* scrollbar */
+*::selection{
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+*::-webkit-scrollbar{
+    height: .5rem;
+    width: 1rem;
+}
+
+*::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: var(--main-color);
+}
+
 html {
     font-size: 62.5%;
     overflow-x: hidden;

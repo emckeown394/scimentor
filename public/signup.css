@@ -23,22 +23,49 @@ body {
 h1 {
     color: var(--orange);
     font-size: 30px;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 span{
     color: var(--red);
 }
 
-.container {
+.container_signup,
+.container_login,
+.container_update,
+.container_tsignup,
+.container_tlogin {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 60vh;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     text-align: center; 
 }
+
+.container_login,
+.container_tsignup,
+.container_tlogin {
+    min-height: 68.4vh;
+}
+
+.container_signup {
+    min-height: 69vh;
+}
+
 
 .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,6 +79,7 @@ span{
 
 .form-label {
     color: var(--black);
+    font-size: 16px;
 }
 
 .form-control {
@@ -89,13 +117,27 @@ input[type="text"], input[type="password"], input[type="email"] {
     background-color: #c6840a; 
 }
 
+.signup_btn {
+    background-color: var(--orange);
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.signup_btn:hover {
+    background-color: #c6840a; 
+}
+
 .ar {
     margin-top: 15px;
     color: var(--black)
 }
 
 .login__btn {
-    font-size: 1rem;
+    font-size: 16px;
     text-align: center;
     background-color: var(--main-color);
     color: #fff;
