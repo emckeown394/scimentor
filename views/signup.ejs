@@ -10,6 +10,7 @@
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="/public/signup.css">
+   <link rel="stylesheet" href="/public/styles.css">
    <link rel="stylesheet" href="/public/header_footer.css">
 
 
@@ -25,7 +26,7 @@
         <p class="err_msg"><%= locals.error %></p>
       <% } %>
 
-<div class="container mt-4">
+<div class="container_signup mt-4">
     <div class="card">
         <div class="card-body">
             <form action="/signup" method="POST">
@@ -44,7 +45,6 @@
                 <div class="mb-3">
                     <p>Select profile image <span>*</span></p>
                     <div class="image-options">
-                        <!-- Replace `imagePath1` with the actual path to your images -->
                         <label>
                             <input type="radio" name="profileImage" value="m" required>
                             <img src="/images/users/m_user.png" alt="Male" style="width: 100px; height: 100px; cursor: pointer;">
@@ -58,7 +58,7 @@
                 <div>
                     <p>By creating an account you agree to our <a href="/privacy" class="privacy-link">Terms & Privacy</a>.</p>
                 </div>
-                <button type="submit" class="btn btn-primary">SIGNUP</button>
+                <button type="submit" class="signup_btn">SIGNUP</button>
             </form>
 
             <p class="ar">Already registered?</p>
