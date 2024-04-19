@@ -46,7 +46,8 @@ span{
 .container_login,
 .container_update,
 .container_tsignup,
-.container_tlogin {
+.container_tlogin,
+.container_create {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -64,6 +65,10 @@ span{
 
 .container_signup {
     min-height: 69vh;
+}
+
+.container_create {
+    min-height: 65vh;
 }
 
 
