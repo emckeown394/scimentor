@@ -440,15 +440,6 @@ app.post('/update-profile', async (req, res) => {
     queryParams.push(profileImage);
   }
 
-  // if (password) {
-  //   const passwordString = String(password).trim(); // Convert to string and then trim
-  //   if(passwordString.length > 0) { // Check that the trimmed string is not empty
-  //       const hashedPassword = bcrypt.hashSync(passwordString, 10);
-  //       updateParts.push('password = ?');
-  //       queryParams.push(hashedPassword);
-  //   }
-  // }
-
   // // Only proceed if there are parts of the query to update
   if (updateParts.length > 0) {
     queryParams.push(studentId);
