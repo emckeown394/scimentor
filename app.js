@@ -1,5 +1,6 @@
 const express = require("express");
 let app = express();
+module.exports = app;
 //db connection
 const connection = require("./connection.js");
 const mysql  = require('mysql');
@@ -13,7 +14,10 @@ const cookieParser = require('cookie-parser');
 const { name } = require("ejs");
 //message pop-ups
 const flash = require('express-flash');
-
+//middleware for student authentication
+const isAuthenticated = require('./middlewares/isAuthenticated');
+//middleware for teacher authentication
+const isTAuthenticated = require('./middlewares/isTAuthenticated');
 
 // Database connection
 let db = mysql.createConnection({
@@ -51,26 +55,6 @@ app.use(flash());
 
 //load environment variables before they're processed
 dotenv.config();
-
-//function to see if student is logged in
-function isAuthenticated(req, res, next) {
-  if (req.session.loggedin) {
-    next();
-  } else {
-    // If the user is not authenticated, redirect to the login page
-    res.redirect('/login');
-  }
-}
-
-//function to see if teacher is logged in
-function isTAuthenticated(req, res, next) {
-  if (req.session.loggedin) {
-    next();
-  } else {
-    // If the user is not authenticated, redirect to the login page
-    res.redirect('/teacher_login');
-  }
-}
 
 app.use((req, res, next) => {
   res.locals.loggedIn = !!req.session.loggedin;
@@ -131,16 +115,14 @@ app.post('/signup', (req, res) => {
 
   // Check if the password meets the requirements
   if (!password.match(passwordCheck)) {
-    return res.render('signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
-
+    return res.status(400).render('signup', {error: 'Password must contain at least 1 lowercase and uppercase letter, 1 number and be at least 8 characters long. Please enter a new password'});
   }
 
   // Check if the email contains "@"
   if (!email.includes('@')) {
     console.log('Invalid email format:', email);
-    return res.render('signup', {error: 'Your email must include an @ symbol. Please enter a valid email'});
+    return res.status(400).render('signup', {error: 'Your email must include an @ symbol. Please enter a valid email'});
   }
-
 
   // Query to check if the users email already exists in the database
   db.query(
@@ -149,12 +131,13 @@ app.post('/signup', (req, res) => {
     (err, results) => {
       if (err) {
         console.error(err);
-        return res.render('signup', {error: 'This email already exists. Please enter another email'});
+        // Set appropriate status code for a database error during query
+        return res.status(500).render('signup', {error: 'Error checking user in database. Please try again later.'});
       }
 
       // If the email already exists, inform the student to provide a different email
       if (results[0].count > 0) {
-        return res.render('signup', {error: 'This email already exists. Please enter another email'});
+        return res.status(400).render('signup', {error: 'This email already exists. Please enter another email'});
       }
 
       // If all conditions are met, hash the password and insert user into the database
@@ -166,9 +149,10 @@ app.post('/signup', (req, res) => {
         (err) => {
           if (err) {
             console.error(err);
-            res.status(500).send('An error occurred during signup.');
+            return res.status(500).send('An error occurred during signup.');
           } else {
-            res.redirect('/login');
+            // Redirecting to login page with status 302 Found
+            return res.status(302).redirect('/login');
           }
         }
       );
@@ -182,59 +166,49 @@ app.get("/login", async (req,res) => {
 });
 
 //retrieving login credentials to database
-app.get("/login", async (req,res) => {
-  res.render('login');
-});
-
-//retrieving login credentials to database
 app.post('/login', function (req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
+  let { email, password } = req.body;
 
-  if (email && password) {
-    connection.query(
-      'SELECT * FROM students WHERE email = ?',
-      [email],
-      function (error, rows, fields) {
-        if (error) throw error;
-        let numrows = rows.length;
-
-        if (numrows > 0) {
-          const storedPassword = rows[0].password;
-          const userName = rows[0].name;
-          const userEmail = rows[0].email;
-          const userImg = rows[0].image;
-
-          bcrypt.compare(password, storedPassword, function (err, result) {
-            if (err) throw err;
-
-            if (result) {
-              // Store user information in the session
-              req.session.loggedin = true;
-              req.session.email = email;
-              req.session.student_id = rows[0].id;
-              req.session.user = {
-                name: userName,
-                email: userEmail,
-                image: userImg,
-              };
-
-              req.session.userType = 'student'; 
-              console.log(`Logged in student_id: ${req.session.student_id}`);
-
-              res.redirect('/homepage');
-            } else {
-              return res.render('login', { error: 'Invalid email or password. Please try again' });
-            }
-          });
-        } else {
-          return res.render('login', { error: 'Invalid email or password. Please try again' });
-        }
-      }
-    );
-  } else {
-    res.send('Enter Email and Password');
+  if (!email || !password) {
+    return res.status(400).send('Enter Email and Password'); 
   }
+
+  connection.query(
+    'SELECT * FROM students WHERE email = ?',
+    [email],
+    function (error, results) {
+      if (error) {
+        console.error('Database query error:', error);
+        return res.status(500).send('Error during login');
+      }
+
+      if (results.length > 0) {
+        const { password: storedPassword, name: userName, email: userEmail, image: userImg } = results[0];
+
+        bcrypt.compare(password, storedPassword, function (err, result) {
+          if (err) {
+            console.error('Bcrypt comparison error:', err);
+            return res.status(500).send('Error during login');
+          }
+
+          if (result) {
+            // Set session details here
+            req.session.loggedin = true;
+            req.session.email = userEmail;
+            req.session.student_id = results[0].id;
+            req.session.user = { name: userName, email: userEmail, image: userImg };
+            req.session.userType = 'student'; 
+            console.log(`Logged in student_id: ${results[0].id}`);
+            res.redirect('/homepage');
+          } else {
+            res.status(401).render('login', { error: 'Invalid email or password. Please try again' });
+          }
+        });
+      } else {
+        res.status(401).render('login', { error: 'Invalid email or password. Please try again' });
+      }
+    }
+  );
 });
 
 //reset password
@@ -246,23 +220,22 @@ app.post('/reset_password', async (req, res) => {
   const { email, newPassword } = req.body;
 
   if (!email || !newPassword) {
-      return res.status(400).send('Email and new password are required.');
+    return res.status(400).send('Email and new password are required.');
   }
 
   try {
-      const hashedPassword = bcrypt.hashSync(newPassword, 10);
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+    const updateQuery = 'UPDATE students SET password = ? WHERE email = ?';
+    const result = await db.query(updateQuery, [hashedPassword, email]);
 
-      const updateQuery = 'UPDATE students SET password = ? WHERE email = ?';
-      const result = await db.query(updateQuery, [hashedPassword, email]);
+    if (result.affectedRows === 0) {
+        return res.status(404).send('Email not found.');
+    }
 
-      if (result.affectedRows === 0) {
-          return res.status(404).send('Email not found.');
-      }
-
-      res.redirect('/login');
+    res.redirect('/login');
   } catch (error) {
-      console.error('Error updating password:', error);
-      res.status(500).send('Error resetting password.');
+    console.error('Error updating password:', error);
+    res.status(500).send('Error resetting password.');
   }
 });
 
@@ -362,13 +335,13 @@ function queryAsync(sql, params) {
 }
 
 //profile page
-app.get("/profile", isAuthenticated, async (req, res) => {
+app.get("/profile", isAuthenticated, async (req, res, next) => {
   const studentId = req.session.student_id;
 
   try {
     const userDetailsResult = await queryAsync('SELECT name, email, image FROM students WHERE id = ?', [studentId]);
     if (userDetailsResult.length === 0) {
-      console.log('No user found with that ID');
+      console.log('No student found with that ID');
       return res.redirect('/login');
     }
     const userDetails = userDetailsResult[0];
@@ -407,6 +380,7 @@ app.get("/profile", isAuthenticated, async (req, res) => {
       rowdata: subjectsResult,
     });
   } catch (error) {
+    next(error);
     console.error('Error loading profile:', error);
     res.status(500).send('Error loading profile');
   }
@@ -867,6 +841,7 @@ app.post('/api/biology_scores', (req, res) => {
       }
   });
 });
+
 
 app.post('/api/chemistry_scores', (req, res) => {
   const studentId = req.session.student_id;
