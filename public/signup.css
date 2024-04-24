@@ -180,7 +180,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 .err_msg {
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: .5rem;
     color: var(--red);
 }

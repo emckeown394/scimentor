@@ -85,6 +85,19 @@ body {
     background-color: #34b345; 
 }
 
+.guest-btn {
+    background-color: var(--red);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.guest-btn:hover {
+    background-color: #bb3d2f;
+}
+
 .logo__image img {
     max-width: auto; 
     height: 150px;
