@@ -100,11 +100,19 @@ body{
 }
 
 .profile .details .box-container .box{
-    background-color: var(--white);
+    width: calc(33.333% - 20px);
     border-radius: .5rem;
+    background-color: var(--white);
     padding: 2rem;
-    flex: 1 1 30rem;
-    border-color: var(--light-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile .details .box-container .box:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+    cursor: pointer;
 }
 
 .profile .details .box-container .box .flex{
