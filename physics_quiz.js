@@ -134,6 +134,7 @@ const questionElement = document.getElementById('question');
 const choicesElement = document.getElementById('choices');
 const scoreElement = document.getElementById('score');
 
+// display question function
 function displayQuestion() {
     // Proceed with displaying the question and choices as before
     const currentQuestion = phyQuizQuestions[currentQuestionIndex];
@@ -170,8 +171,9 @@ function displayQuestion() {
     });
 }
 
+// select choice function
 function selectChoice(chosenAnswer) {
-    //display feedback
+    //display feedback (correct/incorrect answers)
     const feedbackElement = document.getElementById('feedback');
     feedbackElement.style.display = 'block';
 
@@ -209,6 +211,7 @@ document.getElementById('nextQuestion').addEventListener('click', function() {
     this.style.display = 'none'; // Hide the Next button again
 });
 
+// display score function
 function displayScore() {
     const studentId = localStorage.getItem('studentId'); 
     questionElement.style.display = 'none';
@@ -274,6 +277,7 @@ function displayScore() {
     sendScore(studentId, phy_score);
 }
 
+// retake quiz function
 function retakeQuiz() {
     //reset quiz state
     currentQuestionIndex = 0;
@@ -298,6 +302,7 @@ function addExitButton() {
 displayQuestion();
 addExitButton();
 
+// send score function
 function sendScore(studentId, phy_score) {
     fetch('/api/physics_scores', {
         method: 'POST',

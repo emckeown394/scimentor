@@ -1108,7 +1108,7 @@ app.get("/create_topic", isTAuthenticated, async (req,res) => {
 //adding topic info to database
 app.post('/create_topic', (req, res) => {
   const top_name = req.body['top-name'];
-  const sub_name = req.body['sub-name']; // This is the name of the subject
+  const sub_name = req.body['sub-name'];
   const top_img = req.body['top-img'];
 
   // First, fetch the subject ID based on the subject name
