@@ -1011,12 +1011,19 @@ app.post('/teacher_login', function(req,res) {
   let email = req.body.email;
   let password = req.body.password;
 
+  if (!email || !password) {
+    return res.status(400).send('Enter Email and Password'); 
+  }
+
   if (email && password) {
     connection.query(
       'SELECT * FROM teachers WHERE email = ?',
       [email],
       function(error, rows) {
-        if (error) throw error;
+        if (error) {
+          console.error('Database query error:', error);
+          return res.status(500).send('Error during login');
+        }
         let numrows = rows.length;
 
         if (numrows > 0) {
@@ -1031,11 +1038,11 @@ app.post('/teacher_login', function(req,res) {
               req.session.userType = 'teacher'; 
               res.redirect('/teacher_homepage');
             }else{
-              return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
+              res.status(401).render('teacher_login', {error: 'Invalid email or password. Please try again'});
             }
           });
         }else{
-          return res.render('teacher_login', {error: 'Invalid email or password. Please try again'});
+          res.status(401).render('teacher_login', {error: 'Invalid email or password. Please try again'});
         }
       }
     );
