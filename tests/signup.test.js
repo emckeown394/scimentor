@@ -1,6 +1,6 @@
 const request = require('supertest');
-const app = require('../app'); // Ensure this path points to your Express app
-const db = require('../connection'); // Adjust to your actual path
+const app = require('../app');
+const db = require('../connection');
 const bcrypt = require('bcrypt');
 
 jest.mock('../connection');
