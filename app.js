@@ -540,7 +540,13 @@ app.get("/progress_report/:studentId", isAuthenticated, async (req, res) => {
   `, [studentId]);
     const report = reportResult.length > 0 ? reportResult[0] : null;
 
-    // Render the page
+    // Redirect if no report found
+    if (!report) {
+      req.flash('info', 'No report found');
+      return res.redirect('/progress');
+    }
+
+    // Render the page with the report
     res.render("progress_report", {
       student: userDetails,
       scores: scores,
