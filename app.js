@@ -392,7 +392,7 @@ app.get("/update_profile", isAuthenticated, (req,res) => {
 });
 
 app.post('/update-profile', async (req, res) => {
-  const { name, email, password, profileImage } = req.body;
+  const { name, email, profileImage } = req.body;
   const studentId = req.session.student_id;
 
   // Initialize parts of the query based on provided fields
