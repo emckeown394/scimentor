@@ -14,10 +14,10 @@
    
 </head>
 <body>
-    <% if (userType === 'student') { %>
-        <%- include('header') %>
-    <% } else { %>
+    <% if (userType === 'teacher') { %>
         <%- include('teacher_header') %>
+    <% } else { %>
+        <%- include('header') %>
     <% } %>
     <section class="topics">
 
